@@ -1,3 +1,1288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="description" content="ConvertX PDF Compressor - compress PDF files to a custom target size directly in your browser.">
+<meta name="theme-color" content="#0b1020">
+<title>PDF Compressor - ConvertX</title>
+
+<!--
+============================================================
+ ConvertX PDF Compressor
+ Version: 2.0
+ Client-side PDF compression/rebuild tool
+ Libraries:
+   PDF.js   -> renders PDF pages
+   PDF-LIB  -> creates the compressed PDF
+============================================================
+-->
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    margin:0;
+    min-height:100vh;
+    font-family:Inter,Arial,Helvetica,sans-serif;
+    color:#ffffff;
+    background:
+        radial-gradient(
+            circle at 15% 0%,
+            rgba(112,82,232,.30),
+            transparent 34%
+        ),
+        radial-gradient(
+            circle at 90% 10%,
+            rgba(0,183,255,.16),
+            transparent 30%
+        ),
+        #070a12;
+}
+
+button,
+input,
+select{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+a{
+    color:inherit;
+}
+
+.container{
+    width:min(1100px,94%);
+    margin:30px auto 70px;
+}
+
+.back{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    color:#b9aaff;
+    text-decoration:none;
+    font-weight:800;
+    margin-bottom:22px;
+}
+
+.back:hover{
+    color:#ffffff;
+}
+
+.hero{
+    margin-bottom:26px;
+}
+
+.badge{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    padding:7px 12px;
+    border:1px solid #34405a;
+    background:#101728;
+    border-radius:999px;
+    color:#c4cce0;
+    font-size:12px;
+    font-weight:800;
+    margin-bottom:15px;
+}
+
+h1{
+    margin:0;
+    font-size:clamp(32px,5vw,52px);
+    line-height:1.05;
+    letter-spacing:-1.5px;
+}
+
+.subtitle{
+    color:#9ca8bd;
+    margin:12px 0 0;
+    max-width:760px;
+    line-height:1.6;
+}
+
+.card{
+    background:rgba(16,22,36,.95);
+    border:1px solid #29344b;
+    border-radius:24px;
+    padding:26px;
+    box-shadow:
+        0 25px 80px rgba(0,0,0,.34),
+        inset 0 1px rgba(255,255,255,.025);
+}
+
+.drop-zone{
+    border:2px dashed #3b4862;
+    border-radius:20px;
+    padding:58px 20px;
+    text-align:center;
+    background:rgba(6,10,19,.38);
+    transition:
+        border-color .2s ease,
+        background .2s ease,
+        transform .2s ease;
+}
+
+.drop-zone:hover{
+    border-color:#8067ed;
+    background:rgba(128,103,237,.06);
+}
+
+.drop-zone.drag{
+    border-color:#9a84ff;
+    background:rgba(128,103,237,.12);
+    transform:scale(1.005);
+}
+
+.drop-icon{
+    width:80px;
+    height:80px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:0 auto 16px;
+    border-radius:22px;
+    background:#171d31;
+    border:1px solid #313c55;
+    font-size:42px;
+}
+
+.drop-zone h2{
+    margin:0 0 8px;
+    font-size:25px;
+}
+
+.drop-zone p{
+    margin:0 0 22px;
+    color:#9da8bc;
+}
+
+.file-input{
+    display:none;
+}
+
+.btn{
+    border:0;
+    border-radius:12px;
+    padding:13px 19px;
+    font-weight:850;
+    font-size:14px;
+    transition:
+        transform .15s ease,
+        opacity .15s ease,
+        filter .15s ease;
+}
+
+.btn:hover{
+    transform:translateY(-1px);
+    filter:brightness(1.05);
+}
+
+.btn:active{
+    transform:translateY(0);
+}
+
+.btn:disabled{
+    opacity:.45;
+    cursor:not-allowed;
+    transform:none;
+    filter:none;
+}
+
+.btn-primary{
+    color:#ffffff;
+    background:
+        linear-gradient(
+            135deg,
+            #8b6cff,
+            #6347d8
+        );
+    box-shadow:
+        0 8px 24px rgba(113,83,232,.22);
+}
+
+.btn-secondary{
+    color:#ffffff;
+    background:#283249;
+}
+
+.btn-danger{
+    color:#ffabb3;
+    background:#3b202d;
+}
+
+.btn-success{
+    color:#ffffff;
+    background:#236a49;
+}
+
+.file-panel{
+    display:none;
+    margin-top:20px;
+    padding:17px;
+    border-radius:16px;
+    background:#0b101c;
+    border:1px solid #29344b;
+}
+
+.file-row{
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
+
+.file-icon{
+    flex:0 0 auto;
+    width:48px;
+    height:48px;
+    border-radius:13px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#201d38;
+    border:1px solid #393456;
+    font-size:24px;
+}
+
+.file-info{
+    flex:1;
+    min-width:0;
+}
+
+.file-name{
+    font-weight:850;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+
+.file-meta{
+    margin-top:5px;
+    color:#8f9bb0;
+    font-size:13px;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:
+        repeat(3,minmax(0,1fr));
+    gap:12px;
+    margin-top:18px;
+}
+
+.stat{
+    padding:15px;
+    border-radius:14px;
+    background:#0b101c;
+    border:1px solid #29344b;
+}
+
+.stat-label{
+    color:#8996aa;
+    font-size:12px;
+    font-weight:700;
+    margin-bottom:7px;
+}
+
+.stat-value{
+    color:#ffffff;
+    font-size:18px;
+    font-weight:850;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+
+.settings{
+    margin-top:22px;
+    display:grid;
+    grid-template-columns:
+        repeat(2,minmax(0,1fr));
+    gap:16px;
+}
+
+.setting{
+    padding:18px;
+    border-radius:16px;
+    background:#0b101c;
+    border:1px solid #29344b;
+}
+
+.setting.full{
+    grid-column:1 / -1;
+}
+
+.setting-title{
+    margin:0 0 8px;
+    font-size:15px;
+    font-weight:850;
+}
+
+.setting-description{
+    color:#8794a9;
+    font-size:12px;
+    line-height:1.5;
+    margin-bottom:13px;
+}
+
+.label-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+    margin-bottom:9px;
+}
+
+.label{
+    font-size:13px;
+    color:#c4ccda;
+    font-weight:750;
+}
+
+.value{
+    color:#b9aaff;
+    font-weight:850;
+    font-size:13px;
+}
+
+.input,
+.select{
+    width:100%;
+    border:1px solid #34405a;
+    border-radius:11px;
+    background:#070c16;
+    color:#ffffff;
+    padding:12px 13px;
+    outline:none;
+}
+
+.input:focus,
+.select:focus{
+    border-color:#8369ee;
+    box-shadow:0 0 0 3px rgba(131,105,238,.10);
+}
+
+.range{
+    width:100%;
+    accent-color:#8369ee;
+}
+
+.target-row{
+    display:grid;
+    grid-template-columns:1fr 145px;
+    gap:10px;
+}
+
+.quick-targets{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:10px;
+}
+
+.quick-target{
+    border:1px solid #34405a;
+    background:#111829;
+    color:#b8c1d3;
+    border-radius:9px;
+    padding:8px 10px;
+    font-size:12px;
+    font-weight:750;
+}
+
+.quick-target:hover{
+    border-color:#7660db;
+    color:#ffffff;
+}
+
+.check-row{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    margin-top:12px;
+}
+
+.check-row input{
+    width:18px;
+    height:18px;
+    margin:1px 0 0;
+    accent-color:#8369ee;
+}
+
+.check-label{
+    color:#aab4c6;
+    font-size:13px;
+    line-height:1.5;
+}
+
+.page-range{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+
+.actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:22px;
+}
+
+.progress-panel{
+    display:none;
+    margin-top:20px;
+    padding:17px;
+    border:1px solid #29344b;
+    background:#0b101c;
+    border-radius:15px;
+}
+
+.progress-top{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:10px;
+    color:#b5bfd0;
+    font-size:13px;
+}
+
+.progress-percent{
+    color:#b9aaff;
+    font-weight:850;
+}
+
+.progress{
+    height:10px;
+    overflow:hidden;
+    border-radius:999px;
+    background:#20283a;
+}
+
+.progress-bar{
+    width:0%;
+    height:100%;
+    border-radius:999px;
+    background:
+        linear-gradient(
+            90deg,
+            #765be5,
+            #b8a9ff
+        );
+    transition:width .2s ease;
+}
+
+.progress-detail{
+    margin-top:9px;
+    color:#7f8ba0;
+    font-size:12px;
+}
+
+.status{
+    margin-top:20px;
+    padding:15px;
+    border-radius:13px;
+    background:#0b101c;
+    border:1px solid #29344b;
+    color:#aab5c8;
+    line-height:1.55;
+}
+
+.status.success{
+    color:#75e3a6;
+    border-color:#245d42;
+    background:#0b1913;
+}
+
+.status.error{
+    color:#ff8f9a;
+    border-color:#66323a;
+    background:#1a0d12;
+}
+
+.status.warning{
+    color:#ffd48a;
+    border-color:#695127;
+    background:#1a1509;
+}
+
+.result{
+    display:none;
+    margin-top:22px;
+    padding:20px;
+    border-radius:17px;
+    background:#0b101c;
+    border:1px solid #29344b;
+}
+
+.result-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+}
+
+.result-title{
+    font-size:18px;
+    font-weight:850;
+}
+
+.result-grid{
+    display:grid;
+    grid-template-columns:
+        repeat(4,minmax(0,1fr));
+    gap:10px;
+    margin-top:15px;
+}
+
+.result-item{
+    padding:13px;
+    border-radius:12px;
+    background:#101728;
+    border:1px solid #26334c;
+}
+
+.result-item small{
+    display:block;
+    color:#8591a6;
+    margin-bottom:5px;
+}
+
+.result-item strong{
+    font-size:15px;
+}
+
+.info-box{
+    margin-top:20px;
+    padding:16px;
+    border-radius:14px;
+    background:#10182a;
+    border:1px solid #263653;
+    color:#9ca8bb;
+    font-size:13px;
+    line-height:1.65;
+}
+
+.info-box strong{
+    color:#d8deea;
+}
+
+.footer{
+    text-align:center;
+    color:#69758a;
+    font-size:12px;
+    margin-top:22px;
+}
+
+.hidden{
+    display:none!important;
+}
+
+@media(max-width:800px){
+    .settings{
+        grid-template-columns:1fr;
+    }
+
+    .setting.full{
+        grid-column:auto;
+    }
+
+    .result-grid{
+        grid-template-columns:
+            repeat(2,minmax(0,1fr));
+    }
+}
+
+@media(max-width:600px){
+    .container{
+        width:94%;
+        margin-top:20px;
+    }
+
+    .card{
+        padding:16px;
+    }
+
+    .drop-zone{
+        padding:42px 14px;
+    }
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .target-row{
+        grid-template-columns:1fr;
+    }
+
+    .page-range{
+        grid-template-columns:1fr;
+    }
+
+    .result-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .file-row{
+        align-items:flex-start;
+    }
+
+    .file-row .btn{
+        padding:9px 10px;
+    }
+
+    .actions .btn{
+        flex:1 1 140px;
+    }
+}
+
+@media(max-width:390px){
+    .result-grid{
+        grid-template-columns:1fr;
+    }
+
+    h1{
+        font-size:32px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<main class="container">
+
+<a class="back" href="index.html">
+    ← Back to ConvertX
+</a>
+
+<header class="hero">
+
+    <div class="badge">
+        🛠️ ConvertX Tool
+    </div>
+
+    <h1>
+        PDF Compressor
+    </h1>
+
+    <p class="subtitle">
+        Compress PDF files directly in your browser.
+        Choose a target size in KB, MB or GB and adjust
+        quality and resolution.
+    </p>
+
+</header>
+
+<section class="card">
+
+    <div
+        class="drop-zone"
+        id="dropZone"
+    >
+
+        <div class="drop-icon">
+            📄
+        </div>
+
+        <h2>
+            Select your PDF
+        </h2>
+
+        <p>
+            Drag and drop a PDF here or choose a file
+        </p>
+
+        <button
+            type="button"
+            class="btn btn-primary"
+            id="chooseBtn"
+        >
+            Choose PDF
+        </button>
+
+        <input
+            class="file-input"
+            id="fileInput"
+            type="file"
+            accept=".pdf,application/pdf"
+        >
+
+    </div>
+
+    <div
+        class="file-panel"
+        id="filePanel"
+    >
+
+        <div class="file-row">
+
+            <div class="file-icon">
+                📕
+            </div>
+
+            <div class="file-info">
+
+                <div
+                    class="file-name"
+                    id="fileName"
+                >
+                    -
+                </div>
+
+                <div
+                    class="file-meta"
+                    id="fileMeta"
+                >
+                    -
+                </div>
+
+            </div>
+
+            <button
+                type="button"
+                class="btn btn-danger"
+                id="removeBtn"
+            >
+                Remove
+            </button>
+
+        </div>
+
+    </div>
+
+    <div
+        class="stats"
+        id="stats"
+    >
+
+        <div class="stat">
+
+            <div class="stat-label">
+                Original Size
+            </div>
+
+            <div
+                class="stat-value"
+                id="originalSize"
+            >
+                —
+            </div>
+
+        </div>
+
+        <div class="stat">
+
+            <div class="stat-label">
+                PDF Pages
+            </div>
+
+            <div
+                class="stat-value"
+                id="pageCount"
+            >
+                —
+            </div>
+
+        </div>
+
+        <div class="stat">
+
+            <div class="stat-label">
+                Target Size
+            </div>
+
+            <div
+                class="stat-value"
+                id="targetPreview"
+            >
+                —
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="settings">
+
+        <div class="setting">
+
+            <h3 class="setting-title">
+                🎯 Target Size
+            </h3>
+
+            <div class="setting-description">
+                Enter the approximate output size.
+            </div>
+
+            <div class="target-row">
+
+                <input
+                    id="targetValue"
+                    class="input"
+                    type="number"
+                    min="1"
+                    step="0.01"
+                    value="2"
+                    placeholder="Example: 2"
+                >
+
+                <select
+                    id="targetUnit"
+                    class="select"
+                >
+
+                    <option value="KB">
+                        KB
+                    </option>
+
+                    <option value="MB" selected>
+                        MB
+                    </option>
+
+                    <option value="GB">
+                        GB
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div class="quick-targets">
+
+                <button
+                    type="button"
+                    class="quick-target"
+                    data-value="500"
+                    data-unit="KB"
+                >
+                    500 KB
+                </button>
+
+                <button
+                    type="button"
+                    class="quick-target"
+                    data-value="1"
+                    data-unit="MB"
+                >
+                    1 MB
+                </button>
+
+                <button
+                    type="button"
+                    class="quick-target"
+                    data-value="2"
+                    data-unit="MB"
+                >
+                    2 MB
+                </button>
+
+                <button
+                    type="button"
+                    class="quick-target"
+                    data-value="5"
+                    data-unit="MB"
+                >
+                    5 MB
+                </button>
+
+                <button
+                    type="button"
+                    class="quick-target"
+                    data-value="10"
+                    data-unit="MB"
+                >
+                    10 MB
+                </button>
+
+            </div>
+
+        </div>
+
+        <div class="setting">
+
+            <h3 class="setting-title">
+                🖼️ Quality
+            </h3>
+
+            <div class="setting-description">
+                Lower quality usually produces a smaller PDF.
+            </div>
+
+            <div class="label-row">
+
+                <span class="label">
+                    JPEG Quality
+                </span>
+
+                <span
+                    class="value"
+                    id="qualityValue"
+                >
+                    70%
+                </span>
+
+            </div>
+
+            <input
+                class="range"
+                id="quality"
+                type="range"
+                min="20"
+                max="100"
+                value="70"
+            >
+
+        </div>
+
+        <div class="setting">
+
+            <h3 class="setting-title">
+                📐 Resolution
+            </h3>
+
+            <div class="setting-description">
+                Lower DPI can dramatically reduce the result size.
+            </div>
+
+            <select
+                class="select"
+                id="dpi"
+            >
+
+                <option value="72">
+                    72 DPI — Small
+                </option>
+
+                <option value="96" selected>
+                    96 DPI — Balanced
+                </option>
+
+                <option value="120">
+                    120 DPI — Good
+                </option>
+
+                <option value="150">
+                    150 DPI — High
+                </option>
+
+                <option value="200">
+                    200 DPI — Very High
+                </option>
+
+            </select>
+
+        </div>
+
+        <div class="setting">
+
+            <h3 class="setting-title">
+                🎨 Color
+            </h3>
+
+            <div class="setting-description">
+                Grayscale can reduce file size for documents.
+            </div>
+
+            <select
+                class="select"
+                id="colorMode"
+            >
+
+                <option value="color">
+                    Full Color
+                </option>
+
+                <option value="grayscale">
+                    Grayscale
+                </option>
+
+            </select>
+
+        </div>
+
+        <div class="setting full">
+
+            <h3 class="setting-title">
+                📑 Pages
+            </h3>
+
+            <div class="setting-description">
+                Compress all pages or specify a page range.
+            </div>
+
+            <div class="page-range">
+
+                <input
+                    id="startPage"
+                    class="input"
+                    type="number"
+                    min="1"
+                    value="1"
+                    placeholder="Start page"
+                >
+
+                <input
+                    id="endPage"
+                    class="input"
+                    type="number"
+                    min="1"
+                    placeholder="End page"
+                >
+
+            </div>
+
+            <label class="check-row">
+
+                <input
+                    id="allPages"
+                    type="checkbox"
+                    checked
+                >
+
+                <span class="check-label">
+                    Compress all pages
+                </span>
+
+            </label>
+
+        </div>
+
+        <div class="setting full">
+
+            <h3 class="setting-title">
+                ⚙️ Automatic Target Adjustment
+            </h3>
+
+            <div class="setting-description">
+                ConvertX will try several quality levels and keep
+                the smallest result that is close to your target.
+            </div>
+
+            <label class="check-row">
+
+                <input
+                    id="autoTarget"
+                    type="checkbox"
+                    checked
+                >
+
+                <span class="check-label">
+                    Automatically search for better quality when
+                    the first result is larger than the target.
+                </span>
+
+            </label>
+
+        </div>
+
+    </div>
+
+    <div
+        class="progress-panel"
+        id="progressPanel"
+    >
+
+        <div class="progress-top">
+
+            <span id="progressMessage">
+                Preparing...
+            </span>
+
+            <span
+                class="progress-percent"
+                id="progressPercent"
+            >
+                0%
+            </span>
+
+        </div>
+
+        <div class="progress">
+
+            <div
+                class="progress-bar"
+                id="progressBar"
+            ></div>
+
+        </div>
+
+        <div
+            class="progress-detail"
+            id="progressDetail"
+        >
+            Waiting
+        </div>
+
+    </div>
+
+    <div class="actions">
+
+        <button
+            type="button"
+            class="btn btn-secondary"
+            id="resetBtn"
+        >
+            Reset
+        </button>
+
+        <button
+            type="button"
+            class="btn btn-primary"
+            id="compressBtn"
+        >
+            Compress PDF
+        </button>
+
+    </div>
+
+    <div
+        class="status"
+        id="status"
+    >
+        Select a PDF file to begin.
+    </div>
+
+    <div
+        class="result"
+        id="result"
+    >
+
+        <div class="result-header">
+
+            <div class="result-title">
+                ✅ Compression Complete
+            </div>
+
+            <button
+                type="button"
+                class="btn btn-success"
+                id="downloadBtn"
+            >
+                Download PDF
+            </button>
+
+        </div>
+
+        <div class="result-grid">
+
+            <div class="result-item">
+
+                <small>
+                    Original
+                </small>
+
+                <strong
+                    id="resultOriginal"
+                >
+                    —
+                </strong>
+
+            </div>
+
+            <div class="result-item">
+
+                <small>
+                    Output
+                </small>
+
+                <strong
+                    id="resultOutput"
+                >
+                    —
+                </strong>
+
+            </div>
+
+            <div class="result-item">
+
+                <small>
+                    Reduction
+                </small>
+
+                <strong
+                    id="resultReduction"
+                >
+                    —
+                </strong>
+
+            </div>
+
+            <div class="result-item">
+
+                <small>
+                    Quality
+                </small>
+
+                <strong
+                    id="resultQuality"
+                >
+                    —
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="info-box">
+
+        <strong>
+            Privacy:
+        </strong>
+
+        Your selected PDF is processed locally in your browser.
+        It is not intentionally uploaded to a ConvertX server.
+
+        <br><br>
+
+        <strong>
+            Important:
+        </strong>
+
+        This compressor rebuilds pages as JPEG images.
+        Text may no longer be selectable/searchable after compression.
+        This approach is useful when reducing scanned/image-heavy PDFs.
+
+        <br><br>
+
+        <strong>
+            Target size:
+        </strong>
+
+        KB/MB/GB target is approximate because PDF container overhead,
+        page dimensions and image encoding make an exact byte size
+        impossible to guarantee for every PDF.
+
+    </div>
+
+</section>
+
+<footer class="footer">
+    ConvertX — On Platform, Multiple Tools
+</footer>
+
+</main>
+
+<!-- ==========================================================
+     PDF.JS
+=========================================================== -->
+
+<script
+src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs"
+type="module"
+></script>
+
 <script
 src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"
 ></script>
@@ -5,135 +1290,136 @@ src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"
 <script>
 "use strict";
 
-/* =========================================================
-   ConvertX PDF Compressor
-   Fixed version:
-   - Prevents detached ArrayBuffer errors
-   - Fresh PDF.js buffer for every attempt
-   - Supports KB / MB / GB target
-   - Quality control
-   - DPI control
-   - Grayscale mode
-   - Page range
-   - Auto target
-   - Download result
-========================================================= */
+/*
+============================================================
+ GLOBAL CONFIGURATION
+============================================================
+*/
 
-const PDFJS_URL =
-"https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs";
+const PDFJS_VERSION = "4.4.168";
 
 const PDFJS_WORKER =
-"https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.worker.min.mjs";
+    "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.worker.min.mjs";
 
-/* =========================================================
-   DOM
-========================================================= */
+const PDFJS_URL =
+    "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs";
+
+const PDFLIB_URL =
+    "https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js";
+
+/*
+============================================================
+ DOM REFERENCES
+============================================================
+*/
 
 const dropZone =
-document.getElementById("dropZone");
+    document.getElementById("dropZone");
 
 const chooseBtn =
-document.getElementById("chooseBtn");
+    document.getElementById("chooseBtn");
 
 const fileInput =
-document.getElementById("fileInput");
+    document.getElementById("fileInput");
 
 const filePanel =
-document.getElementById("filePanel");
+    document.getElementById("filePanel");
 
 const fileName =
-document.getElementById("fileName");
+    document.getElementById("fileName");
 
 const fileMeta =
-document.getElementById("fileMeta");
+    document.getElementById("fileMeta");
 
 const removeBtn =
-document.getElementById("removeBtn");
+    document.getElementById("removeBtn");
 
 const originalSize =
-document.getElementById("originalSize");
+    document.getElementById("originalSize");
 
 const pageCount =
-document.getElementById("pageCount");
+    document.getElementById("pageCount");
 
 const targetPreview =
-document.getElementById("targetPreview");
+    document.getElementById("targetPreview");
 
 const targetValue =
-document.getElementById("targetValue");
+    document.getElementById("targetValue");
 
 const targetUnit =
-document.getElementById("targetUnit");
+    document.getElementById("targetUnit");
 
 const quality =
-document.getElementById("quality");
+    document.getElementById("quality");
 
 const qualityValue =
-document.getElementById("qualityValue");
+    document.getElementById("qualityValue");
 
 const dpi =
-document.getElementById("dpi");
+    document.getElementById("dpi");
 
 const colorMode =
-document.getElementById("colorMode");
+    document.getElementById("colorMode");
 
 const startPage =
-document.getElementById("startPage");
+    document.getElementById("startPage");
 
 const endPage =
-document.getElementById("endPage");
+    document.getElementById("endPage");
 
 const allPages =
-document.getElementById("allPages");
+    document.getElementById("allPages");
 
 const autoTarget =
-document.getElementById("autoTarget");
+    document.getElementById("autoTarget");
 
 const compressBtn =
-document.getElementById("compressBtn");
+    document.getElementById("compressBtn");
 
 const resetBtn =
-document.getElementById("resetBtn");
+    document.getElementById("resetBtn");
 
 const statusBox =
-document.getElementById("status");
+    document.getElementById("status");
 
 const progressPanel =
-document.getElementById("progressPanel");
+    document.getElementById("progressPanel");
 
 const progressBar =
-document.getElementById("progressBar");
+    document.getElementById("progressBar");
 
 const progressMessage =
-document.getElementById("progressMessage");
+    document.getElementById("progressMessage");
 
 const progressPercent =
-document.getElementById("progressPercent");
+    document.getElementById("progressPercent");
 
 const progressDetail =
-document.getElementById("progressDetail");
+    document.getElementById("progressDetail");
 
 const result =
-document.getElementById("result");
+    document.getElementById("result");
 
 const resultOriginal =
-document.getElementById("resultOriginal");
+    document.getElementById("resultOriginal");
 
 const resultOutput =
-document.getElementById("resultOutput");
+    document.getElementById("resultOutput");
 
 const resultReduction =
-document.getElementById("resultReduction");
+    document.getElementById("resultReduction");
 
 const resultQuality =
-document.getElementById("resultQuality");
+    document.getElementById("resultQuality");
 
 const downloadBtn =
-document.getElementById("downloadBtn");
+    document.getElementById("downloadBtn");
 
-/* =========================================================
-   STATE
-========================================================= */
+/*
+============================================================
+ STATE
+============================================================
+*/
 
 let currentFile = null;
 
@@ -149,9 +1435,11 @@ let busy = false;
 
 let pdfjsLibInstance = null;
 
-/* =========================================================
-   PDF.JS LOADER
-========================================================= */
+/*
+============================================================
+ LOAD PDF.JS
+============================================================
+*/
 
 async function getPDFJS(){
 
@@ -161,15 +1449,22 @@ async function getPDFJS(){
 
     }
 
+    if(window.pdfjsLib){
+
+        pdfjsLibInstance =
+            window.pdfjsLib;
+
+        return pdfjsLibInstance;
+
+    }
+
     try{
 
         const module =
-        await import(
-            PDFJS_URL
-        );
+            await import(PDFJS_URL);
 
         pdfjsLibInstance =
-        module;
+            module;
 
         return pdfjsLibInstance;
 
@@ -188,14 +1483,16 @@ async function getPDFJS(){
 
 }
 
-/* =========================================================
-   CONFIGURE PDF.JS
-========================================================= */
+/*
+============================================================
+ PDF.JS WORKER
+============================================================
+*/
 
 async function configurePDFJS(){
 
     const lib =
-    await getPDFJS();
+        await getPDFJS();
 
     if(
         lib &&
@@ -203,7 +1500,7 @@ async function configurePDFJS(){
     ){
 
         lib.GlobalWorkerOptions.workerSrc =
-        PDFJS_WORKER;
+            PDFJS_WORKER;
 
     }
 
@@ -211,32 +1508,11 @@ async function configurePDFJS(){
 
 }
 
-/* =========================================================
-   SAFE COPY
-   IMPORTANT FIX FOR DETACHED ARRAYBUFFER
-========================================================= */
-
-function clonePDFBytes(
-    bytes
-){
-
-    if(!bytes){
-
-        throw new Error(
-            "PDF data is unavailable."
-        );
-
-    }
-
-    return new Uint8Array(
-        bytes
-    ).slice();
-
-}
-
-/* =========================================================
-   FILE PICKER
-========================================================= */
+/*
+============================================================
+ FILE PICKER
+============================================================
+*/
 
 chooseBtn.addEventListener(
     "click",
@@ -268,14 +1544,14 @@ fileInput.addEventListener(
 
         }
 
-        this.value = "";
-
     }
 );
 
-/* =========================================================
-   DRAG & DROP
-========================================================= */
+/*
+============================================================
+ DRAG EVENTS
+============================================================
+*/
 
 dropZone.addEventListener(
     "dragover",
@@ -338,13 +1614,13 @@ dropZone.addEventListener(
     }
 );
 
-/* =========================================================
-   ACCEPT PDF
-========================================================= */
+/*
+============================================================
+ ACCEPT PDF
+============================================================
+*/
 
-async function acceptPDF(
-    file
-){
+async function acceptPDF(file){
 
     if(!isPDF(file)){
 
@@ -356,10 +1632,7 @@ async function acceptPDF(
 
     }
 
-    if(
-        !file.size ||
-        file.size <= 0
-    ){
+    if(file.size <= 0){
 
         showError(
             "The selected PDF file is empty."
@@ -369,50 +1642,42 @@ async function acceptPDF(
 
     }
 
-    currentFile =
-    file;
+    currentFile = file;
 
-    currentPDFBytes =
-    null;
+    currentPDFBytes = null;
 
-    currentPageCount =
-    0;
+    currentPageCount = 0;
 
-    currentOutputBlob =
-    null;
+    currentOutputBlob = null;
 
-    currentOutputName =
-    "";
+    currentOutputName = "";
 
     fileName.textContent =
-    file.name;
+        file.name;
 
     fileMeta.textContent =
-    (
-        file.type ||
-        "application/pdf"
-    ) +
-    " • " +
-    formatBytes(
-        file.size
-    );
+        (
+            file.type ||
+            "application/pdf"
+        ) +
+        " • " +
+        formatBytes(
+            file.size
+        );
 
     originalSize.textContent =
-    formatBytes(
-        file.size
-    );
+        formatBytes(
+            file.size
+        );
 
     pageCount.textContent =
-    "Reading...";
+        "Reading...";
 
     filePanel.style.display =
-    "block";
+        "block";
 
     result.style.display =
-    "none";
-
-    progressPanel.style.display =
-    "none";
+        "none";
 
     try{
 
@@ -420,56 +1685,39 @@ async function acceptPDF(
             "Reading PDF..."
         );
 
-        /*
-         * Read the file once.
-         * Make TWO independent copies.
-         *
-         * One copy is retained by ConvertX.
-         * Another copy is handed to PDF.js.
-         */
-
-        const rawBytes =
-        new Uint8Array(
-            await file.arrayBuffer()
-        );
+        const bytes =
+            new Uint8Array(
+                await file.arrayBuffer()
+            );
 
         currentPDFBytes =
-        clonePDFBytes(
-            rawBytes
-        );
+            bytes;
 
         const pdfjs =
-        await configurePDFJS();
-
-        const pdfJSBytes =
-        clonePDFBytes(
-            currentPDFBytes
-        );
+            await configurePDFJS();
 
         const loadingTask =
-        pdfjs.getDocument({
-            data:
-            pdfJSBytes
-        });
+            pdfjs.getDocument({
+                data:bytes
+            });
 
         const pdf =
-        await loadingTask.promise;
+            await loadingTask.promise;
 
         currentPageCount =
-        pdf.numPages;
+            pdf.numPages;
 
         pageCount.textContent =
-        String(
-            currentPageCount
-        );
+            String(
+                currentPageCount
+            );
 
-        startPage.value =
-        "1";
+        startPage.value = "1";
 
         endPage.value =
-        String(
-            currentPageCount
-        );
+            String(
+                currentPageCount
+            );
 
         updateTargetPreview();
 
@@ -477,66 +1725,29 @@ async function acceptPDF(
             "PDF loaded successfully. Choose your compression settings."
         );
 
-        /*
-         * Destroy PDF.js document after reading.
-         * This releases worker resources.
-         */
-
-        try{
-
-            if(
-                pdf &&
-                typeof pdf.destroy ===
-                "function"
-            ){
-
-                await pdf.destroy();
-
-            }
-
-        }catch(cleanupError){
-
-            console.warn(
-                "PDF.js cleanup warning:",
-                cleanupError
-            );
-
-        }
-
     }catch(error){
 
-        console.error(
-            "PDF loading error:",
-            error
-        );
-
-        currentPDFBytes =
-        null;
-
-        currentPageCount =
-        0;
+        console.error(error);
 
         pageCount.textContent =
-        "Error";
+            "Error";
 
         showError(
             "Could not read this PDF. " +
-            getErrorMessage(
-                error
-            )
+            getErrorMessage(error)
         );
 
     }
 
 }
 
-/* =========================================================
-   PDF VALIDATION
-========================================================= */
+/*
+============================================================
+ PDF VALIDATION
+============================================================
+*/
 
-function isPDF(
-    file
-){
+function isPDF(file){
 
     if(!file){
 
@@ -545,30 +1756,27 @@ function isPDF(
     }
 
     const name =
-    String(
-        file.name ||
-        ""
-    ).toLowerCase();
+        String(
+            file.name || ""
+        ).toLowerCase();
 
     const type =
-    String(
-        file.type ||
-        ""
-    ).toLowerCase();
+        String(
+            file.type || ""
+        ).toLowerCase();
 
-    return (
-        type ===
-        "application/pdf" ||
-        name.endsWith(
-            ".pdf"
-        )
+    return(
+        type === "application/pdf" ||
+        name.endsWith(".pdf")
     );
 
 }
 
-/* =========================================================
-   REMOVE FILE
-========================================================= */
+/*
+============================================================
+ REMOVE FILE
+============================================================
+*/
 
 removeBtn.addEventListener(
     "click",
@@ -585,9 +1793,11 @@ removeBtn.addEventListener(
     }
 );
 
-/* =========================================================
-   RESET
-========================================================= */
+/*
+============================================================
+ RESET
+============================================================
+*/
 
 resetBtn.addEventListener(
     "click",
@@ -606,76 +1816,75 @@ resetBtn.addEventListener(
 
 function resetTool(){
 
-    currentFile =
-    null;
+    currentFile = null;
 
-    currentPDFBytes =
-    null;
+    currentPDFBytes = null;
 
-    currentPageCount =
-    0;
+    currentPageCount = 0;
 
-    currentOutputBlob =
-    null;
+    currentOutputBlob = null;
 
-    currentOutputName =
-    "";
+    currentOutputName = "";
 
-    fileInput.value =
-    "";
+    fileInput.value = "";
 
     filePanel.style.display =
-    "none";
+        "none";
 
     result.style.display =
-    "none";
+        "none";
 
     progressPanel.style.display =
-    "none";
+        "none";
 
     originalSize.textContent =
-    "—";
+        "—";
 
     pageCount.textContent =
-    "—";
+        "—";
 
     targetPreview.textContent =
-    "—";
+        "—";
 
     progressBar.style.width =
-    "0%";
+        "0%";
 
     progressPercent.textContent =
-    "0%";
+        "0%";
 
     progressMessage.textContent =
-    "Preparing...";
+        "Preparing...";
 
     progressDetail.textContent =
-    "Waiting";
+        "Waiting";
 
-    quality.value =
-    "70";
+    quality.value = "70";
 
     qualityValue.textContent =
-    "70%";
+        "70%";
 
-    dpi.value =
-    "120";
+    dpi.value = "96";
 
-    startPage.value =
-    "1";
+    colorMode.value =
+        "color";
 
-    endPage.value =
-    "1";
+    targetValue.value =
+        "2";
+
+    targetUnit.value =
+        "MB";
 
     allPages.checked =
-    true;
+        true;
 
-    currentOutputName =
-    "";
+    autoTarget.checked =
+        true;
 
-    updateTargetPreview();
+    startPage.value =
+        "1";
+
+    endPage.value =
+        "";
 
     showStatus(
         "Select a PDF file to begin."
@@ -683,178 +1892,199 @@ function resetTool(){
 
 }
 
-/* =========================================================
-   TARGET PREVIEW
-========================================================= */
+/*
+============================================================
+ QUICK TARGET BUTTONS
+============================================================
+*/
 
-function updateTargetPreview(){
+document
+    .querySelectorAll(
+        ".quick-target"
+    )
+    .forEach(
+        function(button){
 
-    if(
-        !targetValue ||
-        !targetUnit ||
-        !targetPreview
-    ){
+            button.addEventListener(
+                "click",
+                function(){
 
-        return;
+                    targetValue.value =
+                        this.dataset.value;
 
-    }
+                    targetUnit.value =
+                        this.dataset.unit;
 
-    const value =
-    Number(
-        targetValue.value
-    );
+                    updateTargetPreview();
 
-    const unit =
-    targetUnit.value;
-
-    if(
-        !Number.isFinite(
-            value
-        ) ||
-        value <= 0
-    ){
-
-        targetPreview.textContent =
-        "—";
-
-        return;
-
-    }
-
-    const bytes =
-    targetToBytes(
-        value,
-        unit
-    );
-
-    targetPreview.textContent =
-    formatBytes(
-        bytes
-    );
-
-}
-
-/* =========================================================
-   TARGET INPUT EVENTS
-========================================================= */
-
-if(targetValue){
-
-    targetValue.addEventListener(
-        "input",
-        updateTargetPreview
-    );
-
-}
-
-if(targetUnit){
-
-    targetUnit.addEventListener(
-        "change",
-        updateTargetPreview
-    );
-
-}
-
-if(quality){
-
-    quality.addEventListener(
-        "input",
-        function(){
-
-            qualityValue.textContent =
-            quality.value +
-            "%";
+                }
+            );
 
         }
     );
 
+/*
+============================================================
+ TARGET INPUT EVENTS
+============================================================
+*/
+
+targetValue.addEventListener(
+    "input",
+    updateTargetPreview
+);
+
+targetUnit.addEventListener(
+    "change",
+    updateTargetPreview
+);
+
+function updateTargetPreview(){
+
+    const bytes =
+        getTargetBytes();
+
+    if(
+        !Number.isFinite(bytes) ||
+        bytes <= 0
+    ){
+
+        targetPreview.textContent =
+            "Invalid";
+
+        return;
+
+    }
+
+    targetPreview.textContent =
+        formatBytes(
+            bytes
+        );
+
 }
 
-/* =========================================================
-   QUICK TARGET BUTTONS
-========================================================= */
+/*
+============================================================
+ QUALITY EVENT
+============================================================
+*/
 
-document
-.querySelectorAll(
-    ".quick-target"
-)
-.forEach(
-    function(button){
+quality.addEventListener(
+    "input",
+    function(){
 
-        button.addEventListener(
-            "click",
-            function(){
-
-                if(busy){
-
-                    return;
-
-                }
-
-                const value =
-                button.dataset.value;
-
-                const unit =
-                button.dataset.unit;
-
-                if(targetValue){
-
-                    targetValue.value =
-                    value;
-
-                }
-
-                if(targetUnit){
-
-                    targetUnit.value =
-                    unit;
-
-                }
-
-                updateTargetPreview();
-
-            }
-        );
+        qualityValue.textContent =
+            this.value + "%";
 
     }
 );
 
-/* =========================================================
-   ALL PAGES
-========================================================= */
+/*
+============================================================
+ ALL PAGES TOGGLE
+============================================================
+*/
 
-if(allPages){
+allPages.addEventListener(
+    "change",
+    function(){
 
-    allPages.addEventListener(
-        "change",
-        function(){
+        const disabled =
+            this.checked;
 
-            const disabled =
-            allPages.checked;
+        startPage.disabled =
+            disabled;
 
-            if(startPage){
+        endPage.disabled =
+            disabled;
 
-                startPage.disabled =
-                disabled;
+        if(disabled){
 
-            }
+            if(currentPageCount > 0){
 
-            if(endPage){
+                startPage.value =
+                    "1";
 
-                endPage.disabled =
-                disabled;
+                endPage.value =
+                    String(
+                        currentPageCount
+                    );
 
             }
 
         }
-    );
+
+    }
+);
+
+/*
+============================================================
+ INITIAL PAGE STATE
+============================================================
+*/
+
+startPage.disabled = true;
+
+endPage.disabled = true;
+
+/*
+============================================================
+ TARGET BYTES
+============================================================
+*/
+
+function getTargetBytes(){
+
+    const value =
+        Number(
+            targetValue.value
+        );
+
+    if(
+        !Number.isFinite(value) ||
+        value <= 0
+    ){
+
+        return NaN;
+
+    }
+
+    const unit =
+        targetUnit.value;
+
+    if(unit === "KB"){
+
+        return value *
+            1024;
+
+    }
+
+    if(unit === "MB"){
+
+        return value *
+            1024 *
+            1024;
+
+    }
+
+    if(unit === "GB"){
+
+        return value *
+            1024 *
+            1024 *
+            1024;
+
+    }
+
+    return NaN;
 
 }
 
-/* =========================================================
-   COMPRESS BUTTON
-========================================================= */
+/*
+============================================================
+ COMPRESS BUTTON
+============================================================
+*/
 
 compressBtn.addEventListener(
     "click",
@@ -866,162 +2096,140 @@ compressBtn.addEventListener(
 
         }
 
-        if(
-            !currentFile ||
-            !currentPDFBytes
-        ){
+        if(!currentFile){
 
             showError(
-                "Please select a PDF file first."
+                "Please select a PDF first."
             );
 
             return;
 
         }
 
-        if(
-            !currentPageCount ||
-            currentPageCount < 1
-        ){
+        if(!currentPDFBytes){
 
             showError(
-                "PDF page count is unavailable."
+                "The PDF is not ready yet. Please wait and try again."
             );
 
             return;
 
         }
 
-        busy =
-        true;
+        const targetBytes =
+            getTargetBytes();
+
+        if(
+            !Number.isFinite(targetBytes) ||
+            targetBytes <= 0
+        ){
+
+            showError(
+                "Enter a valid target size."
+            );
+
+            return;
+
+        }
+
+        let pages;
+
+        try{
+
+            pages =
+                getSelectedPages();
+
+        }catch(error){
+
+            showError(
+                getErrorMessage(error)
+            );
+
+            return;
+
+        }
+
+        busy = true;
 
         setBusyState(
             true
         );
 
-        progressPanel.style.display =
-        "block";
-
         result.style.display =
-        "none";
+            "none";
 
-        currentOutputBlob =
-        null;
+        progressPanel.style.display =
+            "block";
 
         try{
 
-            const pages =
-            getSelectedPages();
-
-            const selectedDPI =
-            Number(
-                dpi.value
-            ) || 120;
-
             const baseQuality =
-            Number(
-                quality.value
-            ) || 70;
-
-            const grayscale =
-            colorMode.value ===
-            "grayscale";
-
-            const targetBytes =
-            targetToBytes(
                 Number(
-                    targetValue.value
-                ),
-                targetUnit.value
-            );
-
-            let resultData;
-
-            if(
-                autoTarget &&
-                autoTarget.checked
-            ){
-
-                showStatus(
-                    "Finding the best compression for your target size..."
+                    quality.value
                 );
 
-                resultData =
-                await compressWithTargetSearch({
+            const selectedDPI =
+                Number(
+                    dpi.value
+                );
 
-                    pages:
-                    pages,
+            const grayscale =
+                colorMode.value ===
+                "grayscale";
 
-                    targetBytes:
-                    targetBytes,
+            let finalResult = null;
 
-                    baseQuality:
-                    baseQuality,
+            if(autoTarget.checked){
 
-                    selectedDPI:
-                    selectedDPI,
-
-                    grayscale:
-                    grayscale
-
-                });
+                finalResult =
+                    await compressWithTargetSearch({
+                        targetBytes,
+                        pages,
+                        baseQuality,
+                        selectedDPI,
+                        grayscale
+                    });
 
             }else{
 
-                showStatus(
-                    "Compressing PDF..."
-                );
-
-                resultData =
-                await buildCompressedPDF({
-
-                    pages:
-                    pages,
-
-                    jpegQuality:
-                    baseQuality / 100,
-
-                    dpi:
-                    selectedDPI,
-
-                    grayscale:
-                    grayscale,
-
-                    attempt:
-                    1,
-
-                    totalAttempts:
-                    1
-
-                });
+                finalResult =
+                    await buildCompressedPDF({
+                        pages,
+                        jpegQuality:
+                            baseQuality / 100,
+                        dpi:selectedDPI,
+                        grayscale,
+                        attempt:1,
+                        totalAttempts:1
+                    });
 
             }
 
             if(
-                !resultData ||
-                !resultData.blob
+                !finalResult ||
+                !finalResult.blob
             ){
 
                 throw new Error(
-                    "Compression produced no output."
+                    "No PDF output was created."
                 );
 
             }
 
             currentOutputBlob =
-            resultData.blob;
+                finalResult.blob;
 
             currentOutputName =
-            createOutputName(
-                currentFile.name
-            );
+                createOutputName(
+                    currentFile.name
+                );
 
             displayResult(
-                resultData
+                finalResult
             );
 
             showSuccess(
-                "Compression complete. Click Download PDF."
+                "PDF compression completed. Click Download PDF."
             );
 
         }catch(error){
@@ -1033,15 +2241,12 @@ compressBtn.addEventListener(
 
             showError(
                 "Compression failed: " +
-                getErrorMessage(
-                    error
-                )
+                getErrorMessage(error)
             );
 
         }finally{
 
-            busy =
-            false;
+            busy = false;
 
             setBusyState(
                 false
@@ -1052,9 +2257,11 @@ compressBtn.addEventListener(
     }
 );
 
-/* =========================================================
-   GET SELECTED PAGES
-========================================================= */
+/*
+============================================================
+ GET SELECTED PAGES
+============================================================
+*/
 
 function getSelectedPages(){
 
@@ -1069,15 +2276,12 @@ function getSelectedPages(){
 
     }
 
-    if(
-        allPages &&
-        allPages.checked
-    ){
+    if(allPages.checked){
 
         return Array.from(
             {
                 length:
-                currentPageCount
+                    currentPageCount
             },
             function(_,index){
 
@@ -1089,22 +2293,18 @@ function getSelectedPages(){
     }
 
     const start =
-    Number(
-        startPage.value
-    );
+        Number(
+            startPage.value
+        );
 
     const end =
-    Number(
-        endPage.value
-    );
+        Number(
+            endPage.value
+        );
 
     if(
-        !Number.isInteger(
-            start
-        ) ||
-        !Number.isInteger(
-            end
-        )
+        !Number.isInteger(start) ||
+        !Number.isInteger(end)
     ){
 
         throw new Error(
@@ -1158,37 +2358,23 @@ function getSelectedPages(){
 
 }
 
-/* =========================================================
-   TARGET SIZE SEARCH
-========================================================= */
+/*
+============================================================
+ TARGET SEARCH
+============================================================
+*/
 
-async function compressWithTargetSearch(
-    options
-){
+async function compressWithTargetSearch(options){
 
     const target =
-    options.targetBytes;
-
-    if(
-        !Number.isFinite(
-            target
-        ) ||
-        target <= 0
-    ){
-
-        throw new Error(
-            "Enter a valid target size."
-        );
-
-    }
+        options.targetBytes;
 
     const candidates =
-    createQualityCandidates(
-        options.baseQuality
-    );
+        createQualityCandidates(
+            options.baseQuality
+        );
 
-    let bestResult =
-    null;
+    let bestResult = null;
 
     for(
         let i = 0;
@@ -1197,15 +2383,13 @@ async function compressWithTargetSearch(
     ){
 
         const qualityValue =
-        candidates[i];
+            candidates[i];
 
         setProgress(
             5 +
             Math.round(
-                (
-                    i /
-                    candidates.length
-                ) *
+                (i /
+                candidates.length) *
                 80
             ),
             "Testing compression " +
@@ -1215,42 +2399,34 @@ async function compressWithTargetSearch(
         );
 
         const candidate =
-        await buildCompressedPDF({
-
-            pages:
-            options.pages,
-
-            jpegQuality:
-            qualityValue,
-
-            dpi:
-            options.selectedDPI,
-
-            grayscale:
-            options.grayscale,
-
-            attempt:
-            i + 1,
-
-            totalAttempts:
-            candidates.length
-
-        });
+            await buildCompressedPDF({
+                pages:
+                    options.pages,
+                jpegQuality:
+                    qualityValue,
+                dpi:
+                    options.selectedDPI,
+                grayscale:
+                    options.grayscale,
+                attempt:
+                    i + 1,
+                totalAttempts:
+                    candidates.length
+            });
 
         if(!bestResult){
 
             bestResult =
-            candidate;
+                candidate;
 
         }
 
         if(
-            candidate.blob.size <=
-            target
+            candidate.blob.size <= target
         ){
 
             bestResult =
-            candidate;
+                candidate;
 
             break;
 
@@ -1262,26 +2438,11 @@ async function compressWithTargetSearch(
         ){
 
             bestResult =
-            candidate;
+                candidate;
 
         }
 
-        /*
-         * Give browser time to release
-         * temporary objects between attempts.
-         */
-
         await yieldToBrowser();
-
-        await yieldToBrowser();
-
-    }
-
-    if(!bestResult){
-
-        throw new Error(
-            "Could not create a compressed PDF."
-        );
 
     }
 
@@ -1289,49 +2450,36 @@ async function compressWithTargetSearch(
 
 }
 
-/* =========================================================
-   QUALITY CANDIDATES
-========================================================= */
+/*
+============================================================
+ QUALITY CANDIDATES
+============================================================
+*/
 
 function createQualityCandidates(
     baseQuality
 ){
 
     const base =
-    Math.max(
-        0.20,
-        Math.min(
-            1,
-            baseQuality / 100
-        )
-    );
+        Math.max(
+            0.2,
+            Math.min(
+                1,
+                baseQuality / 100
+            )
+        );
 
     const candidates = [
-
         base,
-
-        base - 0.08,
-
-        base - 0.16,
-
-        base - 0.24,
-
-        base - 0.32,
-
-        0.55,
-
-        0.48,
-
-        0.42,
-
-        0.36,
-
-        0.30,
-
-        0.25,
-
-        0.20
-
+        base - .10,
+        base - .20,
+        base - .30,
+        base - .40,
+        .45,
+        .38,
+        .32,
+        .27,
+        .22
     ];
 
     const unique = [];
@@ -1343,18 +2491,18 @@ function createQualityCandidates(
     ){
 
         const value =
-        Math.max(
-            0.20,
-            Math.min(
-                1,
-                candidates[i]
-            )
-        );
+            Math.max(
+                .20,
+                Math.min(
+                    1,
+                    candidates[i]
+                )
+            );
 
         const rounded =
-        Math.round(
-            value * 100
-        ) / 100;
+            Math.round(
+                value * 100
+            ) / 100;
 
         if(
             !unique.includes(
@@ -1374,13 +2522,13 @@ function createQualityCandidates(
 
 }
 
-/* =========================================================
-   BUILD COMPRESSED PDF
-========================================================= */
+/*
+============================================================
+ BUILD COMPRESSED PDF
+============================================================
+*/
 
-async function buildCompressedPDF(
-    options
-){
+async function buildCompressedPDF(options){
 
     setProgress(
         8,
@@ -1388,7 +2536,7 @@ async function buildCompressedPDF(
     );
 
     const pdfjs =
-    await configurePDFJS();
+        await configurePDFJS();
 
     if(
         !window.PDFLib
@@ -1401,250 +2549,187 @@ async function buildCompressedPDF(
     }
 
     const PDFDocument =
-    window.PDFLib.PDFDocument;
+        window.PDFLib.PDFDocument;
 
     const pdfDoc =
-    await PDFDocument.create();
-
-    /*
-     * CRITICAL:
-     *
-     * NEVER pass currentPDFBytes directly to PDF.js.
-     *
-     * PDF.js may transfer the underlying ArrayBuffer
-     * to its worker. After that the original buffer
-     * can become detached.
-     *
-     * Every attempt gets a fresh clone.
-     */
-
-    const safePDFBytes =
-    clonePDFBytes(
-        currentPDFBytes
-    );
+        await PDFDocument.create();
 
     const loadingTask =
-    pdfjs.getDocument({
-
-        data:
-        safePDFBytes,
-
-        /*
-         * Keep worker processing isolated.
-         */
-
-        useWorkerFetch:
-        false,
-
-        isEvalSupported:
-        true
-
-    });
+        pdfjs.getDocument({
+            data:
+                currentPDFBytes
+        });
 
     const sourcePDF =
-    await loadingTask.promise;
+        await loadingTask.promise;
 
     const total =
-    options.pages.length;
+        options.pages.length;
 
-    try{
+    for(
+        let index = 0;
+        index < total;
+        index++
+    ){
 
-        for(
-            let index = 0;
-            index < total;
-            index++
-        ){
-
-            const pageNumber =
+        const pageNumber =
             options.pages[index];
 
-            const percent =
+        const percent =
             10 +
             Math.round(
-                (
-                    index /
-                    total
-                ) *
+                (index /
+                total) *
                 80
             );
 
-            setProgress(
-                percent,
-                "Rendering page " +
-                pageNumber +
-                " of " +
-                currentPageCount
-            );
+        setProgress(
+            percent,
+            "Rendering page " +
+            pageNumber +
+            " of " +
+            currentPageCount
+        );
 
-            setProgressDetail(
-                "Quality: " +
-                Math.round(
-                    options.jpegQuality *
-                    100
-                ) +
-                "% • DPI: " +
-                options.dpi
-            );
+        setProgressDetail(
+            "Quality: " +
+            Math.round(
+                options.jpegQuality * 100
+            ) +
+            "% • DPI: " +
+            options.dpi +
+            " • " +
+            (
+                options.grayscale ?
+                "Grayscale" :
+                "Color"
+            )
+        );
 
-            const pdfPage =
+        const sourcePage =
             await sourcePDF.getPage(
                 pageNumber
             );
 
-            const viewport =
+        const viewport =
             createViewport(
-                pdfPage,
+                sourcePage,
                 options.dpi
             );
 
-            const canvas =
+        const canvas =
             document.createElement(
                 "canvas"
             );
 
-            const context =
-            canvas.getContext(
-                "2d",
-                {
-                    alpha:
-                    false,
-                    willReadFrequently:
-                    false
-                }
-            );
-
-            canvas.width =
+        canvas.width =
             Math.max(
                 1,
-                Math.ceil(
+                Math.floor(
                     viewport.width
                 )
             );
 
-            canvas.height =
+        canvas.height =
             Math.max(
                 1,
-                Math.ceil(
+                Math.floor(
                     viewport.height
                 )
             );
 
-            if(!context){
-
-                throw new Error(
-                    "Browser could not create a canvas."
-                );
-
-            }
-
-            context.fillStyle =
-            options.grayscale
-            ? "#ffffff"
-            : "#ffffff";
-
-            context.fillRect(
-                0,
-                0,
-                canvas.width,
-                canvas.height
+        const context =
+            canvas.getContext(
+                "2d",
+                {
+                    alpha:false
+                }
             );
 
-            await pdfPage.render({
+        if(!context){
 
-                canvasContext:
+            throw new Error(
+                "Canvas is not supported by this browser."
+            );
+
+        }
+
+        context.fillStyle =
+            "#ffffff";
+
+        context.fillRect(
+            0,
+            0,
+            canvas.width,
+            canvas.height
+        );
+
+        if(options.grayscale){
+
+            context.filter =
+                "grayscale(100%)";
+
+        }else{
+
+            context.filter =
+                "none";
+
+        }
+
+        await sourcePage.render({
+            canvasContext:
                 context,
-
-                viewport:
+            viewport:
                 viewport
+        }).promise;
 
-            }).promise;
+        context.filter =
+            "none";
 
-            /*
-             * Convert rendered page to JPEG.
-             */
+        setProgress(
+            percent + 4,
+            "Encoding page " +
+            pageNumber
+        );
 
-            const jpegBlob =
+        const jpegBlob =
             await canvasToJPEG(
                 canvas,
                 options.jpegQuality
             );
 
-            const jpegBytes =
+        const jpegBytes =
             new Uint8Array(
                 await jpegBlob.arrayBuffer()
             );
 
-            const image =
+        const image =
             await pdfDoc.embedJpg(
                 jpegBytes
             );
 
-            const page =
+        const page =
             pdfDoc.addPage([
                 viewport.width,
                 viewport.height
             ]);
 
-            page.drawImage(
-                image,
-                {
-
-                    x:
-                    0,
-
-                    y:
-                    0,
-
-                    width:
+        page.drawImage(
+            image,
+            {
+                x:0,
+                y:0,
+                width:
                     viewport.width,
-
-                    height:
+                height:
                     viewport.height
-
-                }
-            );
-
-            /*
-             * Release references immediately.
-             */
-
-            canvas.width =
-            1;
-
-            canvas.height =
-            1;
-
-            await yieldToBrowser();
-
-        }
-
-    }finally{
-
-        /*
-         * Always destroy PDF.js document,
-         * even when rendering fails.
-         */
-
-        try{
-
-            if(
-                sourcePDF &&
-                typeof sourcePDF.destroy ===
-                "function"
-            ){
-
-                await sourcePDF.destroy();
-
             }
+        );
 
-        }catch(cleanupError){
+        canvas.width = 1;
+        canvas.height = 1;
 
-            console.warn(
-                "PDF.js destroy warning:",
-                cleanupError
-            );
-
-        }
+        await yieldToBrowser();
 
     }
 
@@ -1653,103 +2738,73 @@ async function buildCompressedPDF(
         "Creating final PDF..."
     );
 
-    setProgressDetail(
-        "Writing compressed PDF..."
-    );
-
     const outputBytes =
-    await pdfDoc.save({
-
-        useObjectStreams:
-        true,
-
-        addDefaultPage:
-        false,
-
-        objectsPerTick:
-        50
-
-    });
+        await pdfDoc.save({
+            useObjectStreams:true,
+            addDefaultPage:false,
+            objectsPerTick:50
+        });
 
     const blob =
-    new Blob(
-        [
-            outputBytes
-        ],
-        {
-            type:
-            "application/pdf"
-        }
-    );
+        new Blob(
+            [
+                outputBytes
+            ],
+            {
+                type:
+                    "application/pdf"
+            }
+        );
 
     setProgress(
         100,
         "Compression finished"
     );
 
-    setProgressDetail(
-        formatBytes(
-            blob.size
-        )
-    );
-
     return {
-
-        blob:
-        blob,
-
+        blob:blob,
         quality:
-        Math.round(
-            options.jpegQuality *
-            100
-        ),
-
+            Math.round(
+                options.jpegQuality * 100
+            ),
         dpi:
-        options.dpi,
-
+            options.dpi,
         pages:
-        options.pages.length
-
+            options.pages.length
     };
 
 }
 
-/* =========================================================
-   CREATE VIEWPORT
-========================================================= */
+/*
+============================================================
+ CREATE VIEWPORT
+============================================================
+*/
 
 function createViewport(
     pdfPage,
     dpiValue
 ){
 
-    const safeDPI =
-    Math.max(
-        36,
-        Math.min(
-            600,
-            Number(
-                dpiValue
-            ) || 120
-        )
-    );
+    const baseDPI =
+        72;
 
     const scale =
-    safeDPI /
-    72;
+        dpiValue /
+        baseDPI;
 
     return pdfPage.getViewport({
-
         scale:
-        scale
-
+            scale
     });
 
 }
 
-/* =========================================================
-   CANVAS JPEG
-========================================================= */
+/*
+============================================================
+ CANVAS TO JPEG
+============================================================
+*/
 
 function canvasToJPEG(
     canvas,
@@ -1780,13 +2835,7 @@ function canvasToJPEG(
 
                 },
                 "image/jpeg",
-                Math.max(
-                    0.20,
-                    Math.min(
-                        1,
-                        qualityValue
-                    )
-                )
+                qualityValue
             );
 
         }
@@ -1794,136 +2843,73 @@ function canvasToJPEG(
 
 }
 
-/* =========================================================
-   TARGET BYTES
-========================================================= */
-
-function targetToBytes(
-    value,
-    unit
-){
-
-    const number =
-    Number(
-        value
-    );
-
-    if(
-        !Number.isFinite(
-            number
-        ) ||
-        number <= 0
-    ){
-
-        return 0;
-
-    }
-
-    const normalized =
-    String(
-        unit ||
-        "MB"
-    ).toUpperCase();
-
-    if(
-        normalized ===
-        "KB"
-    ){
-
-        return (
-            number *
-            1024
-        );
-
-    }
-
-    if(
-        normalized ===
-        "GB"
-    ){
-
-        return (
-            number *
-            1024 *
-            1024 *
-            1024
-        );
-
-    }
-
-    return (
-        number *
-        1024 *
-        1024
-    );
-
-}
-
-/* =========================================================
-   RESULT
-========================================================= */
+/*
+============================================================
+ RESULT DISPLAY
+============================================================
+*/
 
 function displayResult(
     resultData
 ){
 
     const original =
-    currentFile.size;
+        currentFile.size;
 
     const output =
-    resultData.blob.size;
+        resultData.blob.size;
 
     const reduction =
-    original > 0
-    ? (
+        original > 0 ?
         (
-            original -
-            output
-        ) /
-        original
-    ) *
-    100
-    : 0;
+            (
+                original -
+                output
+            ) /
+            original
+        ) *
+        100 :
+        0;
 
     resultOriginal.textContent =
-    formatBytes(
-        original
-    );
+        formatBytes(
+            original
+        );
 
     resultOutput.textContent =
-    formatBytes(
-        output
-    );
+        formatBytes(
+            output
+        );
 
     if(reduction >= 0){
 
         resultReduction.textContent =
-        reduction.toFixed(
-            1
-        ) +
-        "%";
+            reduction.toFixed(1) +
+            "%";
 
     }else{
 
         resultReduction.textContent =
-        "Output larger";
+            "Output larger";
 
     }
 
     resultQuality.textContent =
-    resultData.quality +
-    "% / " +
-    resultData.dpi +
-    " DPI";
+        resultData.quality +
+        "% / " +
+        resultData.dpi +
+        " DPI";
 
     result.style.display =
-    "block";
+        "block";
 
 }
 
-/* =========================================================
-   DOWNLOAD
-========================================================= */
+/*
+============================================================
+ DOWNLOAD
+============================================================
+*/
 
 downloadBtn.addEventListener(
     "click",
@@ -1948,38 +2934,11 @@ downloadBtn.addEventListener(
     }
 );
 
-/* =========================================================
-   OUTPUT NAME
-========================================================= */
-
-function createOutputName(
-    originalName
-){
-
-    const clean =
-    String(
-        originalName ||
-        "document.pdf"
-    )
-    .replace(
-        /\.pdf$/i,
-        ""
-    )
-    .replace(
-        /[\\/:*?"<>|]/g,
-        "_"
-    );
-
-    return (
-        clean +
-        "-compressed.pdf"
-    );
-
-}
-
-/* =========================================================
-   DOWNLOAD BLOB
-========================================================= */
+/*
+============================================================
+ DOWNLOAD BLOB
+============================================================
+*/
 
 function downloadBlob(
     blob,
@@ -1987,23 +2946,23 @@ function downloadBlob(
 ){
 
     const url =
-    URL.createObjectURL(
-        blob
-    );
+        URL.createObjectURL(
+            blob
+        );
 
     const anchor =
-    document.createElement(
-        "a"
-    );
+        document.createElement(
+            "a"
+        );
 
     anchor.href =
-    url;
+        url;
 
     anchor.download =
-    filename;
+        filename;
 
     anchor.style.display =
-    "none";
+        "none";
 
     document.body.appendChild(
         anchor
@@ -2021,59 +2980,106 @@ function downloadBlob(
             );
 
         },
-        3000
+        4000
     );
 
 }
 
-/* =========================================================
-   BUSY STATE
-========================================================= */
+/*
+============================================================
+ OUTPUT NAME
+============================================================
+*/
 
-function setBusyState(
-    state
+function createOutputName(
+    originalName
 ){
 
-    compressBtn.disabled =
-    state;
+    const clean =
+        String(
+            originalName
+        )
+        .replace(
+            /\.pdf$/i,
+            ""
+        )
+        .replace(
+            /[\\/:*?"<>|]/g,
+            "_"
+        );
 
-    resetBtn.disabled =
-    state;
-
-    removeBtn.disabled =
-    state;
-
-    chooseBtn.disabled =
-    state;
-
-    document
-    .querySelectorAll(
-        ".quick-target"
-    )
-    .forEach(
-        function(button){
-
-            button.disabled =
-            state;
-
-        }
-    );
+    return (
+        clean ||
+        "document"
+    ) +
+    "-compressed.pdf";
 
 }
 
-/* =========================================================
-   STATUS
-========================================================= */
+/*
+============================================================
+ PROGRESS
+============================================================
+*/
+
+function setProgress(
+    percent,
+    message
+){
+
+    const safe =
+        Math.max(
+            0,
+            Math.min(
+                100,
+                Number(percent) || 0
+            )
+        );
+
+    progressBar.style.width =
+        safe + "%";
+
+    progressPercent.textContent =
+        Math.round(
+            safe
+        ) +
+        "%";
+
+    progressMessage.textContent =
+        message || "";
+
+}
+
+/*
+============================================================
+ PROGRESS DETAIL
+============================================================
+*/
+
+function setProgressDetail(
+    message
+){
+
+    progressDetail.textContent =
+        message || "";
+
+}
+
+/*
+============================================================
+ STATUS
+============================================================
+*/
 
 function showStatus(
     message
 ){
 
     statusBox.className =
-    "status";
+        "status";
 
     statusBox.textContent =
-    message;
+        message;
 
 }
 
@@ -2082,11 +3088,11 @@ function showSuccess(
 ){
 
     statusBox.className =
-    "status success";
+        "status success";
 
     statusBox.textContent =
-    "✅ " +
-    message;
+        "✅ " +
+        message;
 
 }
 
@@ -2095,11 +3101,11 @@ function showWarning(
 ){
 
     statusBox.className =
-    "status warning";
+        "status warning";
 
     statusBox.textContent =
-    "⚠️ " +
-    message;
+        "⚠️ " +
+        message;
 
 }
 
@@ -2108,67 +3114,56 @@ function showError(
 ){
 
     statusBox.className =
-    "status error";
+        "status error";
 
     statusBox.textContent =
-    "❌ " +
-    message;
+        "❌ " +
+        message;
 
 }
 
-/* =========================================================
-   PROGRESS
-========================================================= */
+/*
+============================================================
+ BUSY STATE
+============================================================
+*/
 
-function setProgress(
-    value,
-    message
+function setBusyState(
+    state
 ){
 
-    const safeValue =
-    Math.max(
-        0,
-        Math.min(
-            100,
-            Number(
-                value
-            ) || 0
+    compressBtn.disabled =
+        state;
+
+    resetBtn.disabled =
+        state;
+
+    removeBtn.disabled =
+        state;
+
+    chooseBtn.disabled =
+        state;
+
+    document
+        .querySelectorAll(
+            ".quick-target"
         )
-    );
+        .forEach(
+            function(button){
 
-    progressBar.style.width =
-    safeValue +
-    "%";
+                button.disabled =
+                    state;
 
-    progressPercent.textContent =
-    Math.round(
-        safeValue
-    ) +
-    "%";
-
-    progressMessage.textContent =
-    message ||
-    "Processing...";
+            }
+        );
 
 }
 
-/* =========================================================
-   PROGRESS DETAIL
-========================================================= */
-
-function setProgressDetail(
-    message
-){
-
-    progressDetail.textContent =
-    message ||
-    "";
-
-}
-
-/* =========================================================
-   FORMAT BYTES
-========================================================= */
+/*
+============================================================
+ FORMAT BYTES
+============================================================
+*/
 
 function formatBytes(
     bytes
@@ -2204,9 +3199,7 @@ function formatBytes(
             (
                 bytes /
                 1024
-            ).toFixed(
-                1
-            ) +
+            ).toFixed(1) +
             " KB"
         );
 
@@ -2224,9 +3217,7 @@ function formatBytes(
                 bytes /
                 1024 /
                 1024
-            ).toFixed(
-                2
-            ) +
+            ).toFixed(2) +
             " MB"
         );
 
@@ -2238,17 +3229,17 @@ function formatBytes(
             1024 /
             1024 /
             1024
-        ).toFixed(
-            2
-        ) +
+        ).toFixed(2) +
         " GB"
     );
 
 }
 
-/* =========================================================
-   ERROR MESSAGE
-========================================================= */
+/*
+============================================================
+ ERROR MESSAGE
+============================================================
+*/
 
 function getErrorMessage(
     error
@@ -2281,9 +3272,11 @@ function getErrorMessage(
 
 }
 
-/* =========================================================
-   YIELD
-========================================================= */
+/*
+============================================================
+ YIELD TO BROWSER
+============================================================
+*/
 
 function yieldToBrowser(){
 
@@ -2300,9 +3293,11 @@ function yieldToBrowser(){
 
 }
 
-/* =========================================================
-   GLOBAL DRAG PROTECTION
-========================================================= */
+/*
+============================================================
+ PREVENT DEFAULT DROP ON PAGE
+============================================================
+*/
 
 window.addEventListener(
     "dragover",
@@ -2330,9 +3325,11 @@ window.addEventListener(
     }
 );
 
-/* =========================================================
-   KEYBOARD ACCESS
-========================================================= */
+/*
+============================================================
+ KEYBOARD ACCESS
+============================================================
+*/
 
 dropZone.addEventListener(
     "keydown",
@@ -2363,9 +3360,31 @@ dropZone.setAttribute(
     "0"
 );
 
-/* =========================================================
-   GLOBAL ERROR HANDLING
-========================================================= */
+/*
+============================================================
+ INITIAL UI
+============================================================
+*/
+
+(function initialize(){
+
+    qualityValue.textContent =
+        quality.value +
+        "%";
+
+    updateTargetPreview();
+
+    showStatus(
+        "Select a PDF file to begin."
+    );
+
+})();
+
+/*
+============================================================
+ EXTRA SAFETY CHECKS
+============================================================
+*/
 
 window.addEventListener(
     "error",
@@ -2392,55 +3411,34 @@ window.addEventListener(
     }
 );
 
-/* =========================================================
-   MEMORY CLEANUP
-========================================================= */
+/*
+============================================================
+ BROWSER MEMORY CLEANUP
+============================================================
+*/
 
 window.addEventListener(
     "beforeunload",
     function(){
 
         currentFile =
-        null;
+            null;
 
         currentPDFBytes =
-        null;
+            null;
 
         currentOutputBlob =
-        null;
+            null;
 
     }
 );
 
-/* =========================================================
-   INITIALIZE
-========================================================= */
-
-(function initialize(){
-
-    if(quality){
-
-        qualityValue.textContent =
-        quality.value +
-        "%";
-
-    }
-
-    if(allPages){
-
-        startPage.disabled =
-        true;
-
-        endPage.disabled =
-        true;
-
-    }
-
-    updateTargetPreview();
-
-    showStatus(
-        "Select a PDF file to begin."
-    );
-
-})();
+/*
+============================================================
+ END OF CONVERTX PDF COMPRESSOR
+============================================================
+*/
 </script>
+
+</body>
+</html>
