@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>Image Converter — ConvertX</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+ margin:0;
+ font-family:Arial,sans-serif;
+ background:#070711;
+ color:#fff;
+}
+
+.container{
+ width:min(950px,92%);
+ margin:auto;
+}
+
+.nav{
+ margin:20px 0;
+ padding:14px 18px;
+ border:1px solid #ffffff1c;
+ border-radius:18px;
+ background:#ffffff08;
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+}
+
+.logo{
+ color:#fff;
+ text-decoration:none;
+ font-size:20px;
+ font-weight:800;
+}
+
+.back{
+ color:#9999aa;
+ text-decoration:none;
+ font-size:13px;
+}
+
+.hero{
+ text-align:center;
+ padding:50px 0 30px;
+}
+
+.badge{
+ display:inline-block;
+ padding:7px 12px;
+ border-radius:50px;
+ background:#7c5cff12;
+ border:1px solid #7c5cff35;
+ color:#c8bdff;
+ font-size:11px;
+ font-weight:bold;
+}
+
+h1{
+ font-size:clamp(40px,7vw,64px);
+ letter-spacing:-3px;
+ margin:20px 0 12px;
+}
+
+.gradient{
+ background:linear-gradient(90deg,#8d72ff,#35b9ff);
+ -webkit-background-clip:text;
+ color:transparent;
+}
+
+.subtitle{
+ color:#9999aa;
+ line-height:1.7;
+ max-width:620px;
+ margin:auto;
+}
+
+.tool{
+ padding:12px;
+ border:1px solid #ffffff1c;
+ border-radius:25px;
+ background:#ffffff08;
+}
+
+.upload{
+ min-height:260px;
+ border:2px dashed #ffffff25;
+ border-radius:18px;
+ display:flex;
+ flex-direction:column;
+ justify-content:center;
+ align-items:center;
+ text-align:center;
+ cursor:pointer;
+ padding:30px;
+}
+
+.upload:hover{
+ border-color:#7c5cff;
+ background:#7c5cff08;
+}
+
+.upload-icon{
+ font-size:45px;
+ margin-bottom:15px;
+}
+
+.upload h2{
+ margin:5px 0;
+}
+
+.upload p{
+ color:#9999aa;
+ font-size:13px;
+}
+
+.choose,
+.convert{
+ border:0;
+ border-radius:11px;
+ padding:13px 20px;
+ background:linear-gradient(135deg,#7c5cff,#35aaff);
+ color:#fff;
+ font-weight:bold;
+ cursor:pointer;
+}
+
+input[type=file]{
+ display:none;
+}
+
+.workspace{
+ display:none;
+ padding:22px;
+}
+
+.file{
+ display:flex;
+ align-items:center;
+ gap:14px;
+ padding:16px;
+ border:1px solid #ffffff1a;
+ border-radius:14px;
+ background:#ffffff06;
+}
+
+.file-icon{
+ width:45px;
+ height:45px;
+ display:grid;
+ place-items:center;
+ border-radius:12px;
+ background:#7c5cff12;
+ font-size:22px;
+}
+
+.file-info{
+ flex:1;
+ min-width:0;
+}
+
+.file-name{
+ font-size:14px;
+ font-weight:bold;
+ overflow:hidden;
+ white-space:nowrap;
+ text-overflow:ellipsis;
+}
+
+.file-size{
+ color:#9999aa;
+ font-size:11px;
+ margin-top:5px;
+}
+
+.settings{
+ margin-top:20px;
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:15px;
+}
+
+.box{
+ padding:18px;
+ border:1px solid #ffffff1a;
+ border-radius:15px;
+ background:#ffffff05;
+}
+
+.title{
+ font-size:12px;
+ color:#aaaabb;
+ margin-bottom:10px;
+ font-weight:bold;
+}
+
+select,
+input[type=range]{
+ width:100%;
+}
+
+select{
+ padding:12px;
+ border-radius:10px;
+ border:1px solid #ffffff1c;
+ background:#11111c;
+ color:#fff;
+ outline:none;
+}
+
+.quality-value{
+ margin-top:8px;
+ color:#9999aa;
+ font-size:11px;
+}
+
+.preview{
+ margin-top:20px;
+ padding:18px;
+ border:1px solid #ffffff1a;
+ border-radius:15px;
+ text-align:center;
+ background:#ffffff04;
+}
+
+.preview img{
+ max-width:100%;
+ max-height:350px;
+ border-radius:10px;
+}
+
+.actions{
+ display:flex;
+ gap:10px;
+ margin-top:20px;
+}
+
+.reset{
+ flex:1;
+ border:1px solid #ffffff1c;
+ border-radius:11px;
+ background:#ffffff08;
+ color:#fff;
+ cursor:pointer;
+}
+
+.convert{
+ flex:2;
+}
+
+.status{
+ display:none;
+ margin-top:20px;
+ padding:18px;
+ border-radius:15px;
+ text-align:center;
+ background:#55e6a508;
+ border:1px solid #55e6a533;
+}
+
+.success{
+ color:#9df3c8;
+ font-weight:bold;
+}
+
+.download{
+ display:inline-block;
+ margin-top:12px;
+ padding:11px 18px;
+ border-radius:10px;
+ background:#55e6a5;
+ color:#06130d;
+ text-decoration:none;
+ font-weight:bold;
+ font-size:13px;
+}
+
+@media(max-width:650px){
+ .settings{
+  grid-template-columns:1fr;
+ }
+ .actions{
+  flex-direction:column;
+ }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<header class="nav">
+
+<a href="index.html" class="logo">
+↻ ConvertX
+</a>
+
+<a href="index.html" class="back">
+← Home
+</a>
+
+</header>
+
+
+<section class="hero">
+
+<span class="badge">
+IMAGE CONVERTER
+</span>
+
+<h1>
+Image <span class="gradient">Converter</span>
+</h1>
+
+<p class="subtitle">
+Convert your images between JPG, PNG, WEBP and
+download the result instantly.
+</p>
+
+</section>
+
+
+<div class="tool">
+
+<div class="upload" id="upload">
+
+<div class="upload-icon">
+🖼️
+</div>
+
+<h2>
+Drop your image here
+</h2>
+
+<p>
+JPG, PNG, WEBP, GIF and browser-supported images
+</p>
+
+<button class="choose" id="choose">
+Choose Image
+</button>
+
+<input
+id="fileInput"
+type="file"
+accept="image/*">
+
+</div>
+
+
+<div class="workspace" id="workspace">
+
+
+<div class="file">
+
+<div class="file-icon">
+🖼️
+</div>
+
+<div class="file-info">
+
+<div class="file-name" id="fileName"></div>
+
+<div class="file-size" id="fileSize"></div>
+
+</div>
+
+</div>
+
+
+<div class="settings">
+
+<div class="box">
+
+<div class="title">
+OUTPUT FORMAT
+</div>
+
+<select id="format">
+
+<option value="image/png">
+PNG
+</option>
+
+<option value="image/jpeg">
+JPG
+</option>
+
+<option value="image/webp">
+WEBP
+</option>
+
+</select>
+
+</div>
+
+
+<div class="box">
+
+<div class="title">
+QUALITY
+</div>
+
+<input
+id="quality"
+type="range"
+min="10"
+max="100"
+value="90">
+
+<div class="quality-value">
+Quality:
+<strong id="qualityValue">
+90%
+</strong>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="preview">
+
+<div class="title">
+PREVIEW
+</div>
+
+<img id="previewImage">
+
+</div>
+
+
+<div class="actions">
+
+<button
+class="reset"
+id="reset">
+Clear
+</button>
+
+<button
+class="convert"
+id="convert">
+Convert & Download
+</button>
+
+</div>
+
+
+<div class="status" id="status">
+
+<div class="success">
+✓ Image converted successfully
+</div>
+
+<a
+class="download"
+id="download">
+⬇ Download Converted Image
+</a>
+
+</div>
+
+
+</div>
+
+</div>
+
+</div>
+
+
+<script>
+
+const upload =
+document.getElementById("upload");
+
+const choose =
+document.getElementById("choose");
+
+const fileInput =
+document.getElementById("fileInput");
+
+const workspace =
+document.getElementById("workspace");
+
+const fileName =
+document.getElementById("fileName");
+
+const fileSize =
+document.getElementById("fileSize");
+
+const format =
+document.getElementById("format");
+
+const quality =
+document.getElementById("quality");
+
+const qualityValue =
+document.getElementById("qualityValue");
+
+const previewImage =
+document.getElementById("previewImage");
+
+const convert =
+document.getElementById("convert");
+
+const reset =
+document.getElementById("reset");
+
+const status =
+document.getElementById("status");
+
+const download =
+document.getElementById("download");
+
+
+let selectedFile = null;
+
+let image = new Image();
+
+
+/* OPEN */
+
+choose.onclick =
+function(e){
+
+ e.stopPropagation();
+
+ fileInput.click();
+
+};
+
+upload.onclick =
+function(){
+
+ fileInput.click();
+
+};
+
+
+/* FILE */
+
+fileInput.onchange =
+function(){
+
+ if(this.files[0]){
+
+  loadImage(
+   this.files[0]
+  );
+
+ }
+
+};
+
+
+/* LOAD */
+
+function loadImage(file){
+
+ if(!file.type.startsWith("image/")){
+
+  alert(
+   "Please select an image."
+  );
+
+  return;
+
+ }
+
+ selectedFile =
+  file;
+
+ fileName.textContent =
+  file.name;
+
+ fileSize.textContent =
+  formatBytes(file.size);
+
+
+ const reader =
+  new FileReader();
+
+
+ reader.onload =
+ function(e){
+
+  image.onload =
+  function(){
+
+   previewImage.src =
+    image.src;
+
+   workspace.style.display =
+    "block";
+
+   upload.style.display =
+    "none";
+
+   status.style.display =
+    "none";
+
+  };
+
+  image.src =
+   e.target.result;
+
+ };
+
+
+ reader.readAsDataURL(file);
+
+}
+
+
+/* QUALITY */
+
+quality.oninput =
+function(){
+
+ qualityValue.textContent =
+  this.value + "%";
+
+};
+
+
+/* CONVERT */
+
+convert.onclick =
+function(){
+
+ if(!selectedFile){
+
+  alert(
+   "Please choose an image."
+  );
+
+  return;
+
+ }
+
+
+ convert.disabled =
+  true;
+
+ convert.textContent =
+  "Converting...";
+
+
+ const canvas =
+  document.createElement(
+   "canvas"
+  );
+
+
+ canvas.width =
+  image.naturalWidth;
+
+ canvas.height =
+  image.naturalHeight;
+
+
+ const ctx =
+  canvas.getContext("2d");
+
+
+ const selectedFormat =
+  format.value;
+
+
+ /*
+ JPEG does not support transparency.
+ We use a white background for JPG.
+ */
+
+ if(
+  selectedFormat ===
+  "image/jpeg"
+ ){
+
+  ctx.fillStyle =
+   "#ffffff";
+
+  ctx.fillRect(
+   0,
+   0,
+   canvas.width,
+   canvas.height
+  );
+
+ }
+
+
+ ctx.drawImage(
+  image,
+  0,
+  0
+ );
+
+
+ const qualityNumber =
+  Number(
+   quality.value
+  ) / 100;
+
+
+ canvas.toBlob(
+  function(blob){
+
+   if(!blob){
+
+    alert(
+     "Conversion failed."
+    );
+
+    convert.disabled =
+     false;
+
+    convert.textContent =
+     "Convert & Download";
+
+    return;
+
+   }
+
+
+   const url =
+    URL.createObjectURL(
+     blob
+    );
+
+
+   let extension =
+    "png";
+
+
+   if(
+    selectedFormat ===
+    "image/jpeg"
+   ){
+
+    extension =
+     "jpg";
+
+   }
+
+
+   if(
+    selectedFormat ===
+    "image/webp"
+   ){
+
+    extension =
+     "webp";
+
+   }
+
+
+   let baseName =
+    selectedFile.name
+    .replace(
+     /\.[^/.]+$/,
+     ""
+    );
+
+
+   download.href =
+    url;
+
+   download.download =
+    baseName +
+    "." +
+    extension;
+
+
+   status.style.display =
+    "block";
+
+
+   convert.disabled =
+    false;
+
+   convert.textContent =
+    "Convert & Download";
+
+
+  },
+  selectedFormat,
+  qualityNumber
+ );
+
+};
+
+
+/* RESET */
+
+reset.onclick =
+function(){
+
+ selectedFile =
+  null;
+
+ image =
+  new Image();
+
+ fileInput.value =
+  "";
+
+ previewImage.src =
+  "";
+
+ workspace.style.display =
+  "none";
+
+ upload.style.display =
+  "flex";
+
+ status.style.display =
+  "none";
+
+ quality.value =
+  90;
+
+ qualityValue.textContent =
+  "90%";
+
+};
+
+
+/* FORMAT BYTES */
+
+function formatBytes(bytes){
+
+ if(bytes === 0)
+  return "0 Bytes";
+
+
+ const units = [
+  "Bytes",
+  "KB",
+  "MB",
+  "GB"
+ ];
+
+
+ const i =
+  Math.floor(
+   Math.log(bytes) /
+   Math.log(1024)
+  );
+
+
+ return (
+  bytes /
+  Math.pow(1024,i)
+ ).toFixed(2)
+ +
+ " "
+ +
+ units[i];
+
+}
+
+</script>
+
+</body>
+</html>

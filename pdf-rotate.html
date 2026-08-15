@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Rotate PDF — ConvertX</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#070711;
+    color:#fff;
+}
+
+.container{
+    width:min(900px,92%);
+    margin:auto;
+}
+
+.nav{
+    margin:20px 0;
+    padding:14px 18px;
+    border:1px solid #ffffff1c;
+    border-radius:18px;
+    background:#ffffff08;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    color:#fff;
+    text-decoration:none;
+    font-size:20px;
+    font-weight:800;
+}
+
+.back{
+    color:#9999aa;
+    text-decoration:none;
+    font-size:13px;
+}
+
+.hero{
+    text-align:center;
+    padding:55px 0 30px;
+}
+
+.badge{
+    display:inline-block;
+    padding:7px 12px;
+    border-radius:50px;
+    background:#7c5cff18;
+    border:1px solid #7c5cff44;
+    color:#c6bcff;
+    font-size:11px;
+    font-weight:bold;
+}
+
+h1{
+    font-size:clamp(40px,7vw,64px);
+    letter-spacing:-3px;
+    margin:20px 0 12px;
+}
+
+.gradient{
+    background:linear-gradient(90deg,#8d72ff,#42b8ff);
+    -webkit-background-clip:text;
+    color:transparent;
+}
+
+.subtitle{
+    color:#9999aa;
+    line-height:1.7;
+    max-width:620px;
+    margin:auto;
+}
+
+.tool{
+    padding:12px;
+    border:1px solid #ffffff1c;
+    border-radius:25px;
+    background:#ffffff08;
+}
+
+.upload{
+    min-height:260px;
+    border:2px dashed #ffffff25;
+    border-radius:18px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    cursor:pointer;
+    padding:30px;
+}
+
+.upload:hover{
+    border-color:#7c5cff;
+    background:#7c5cff09;
+}
+
+.upload-icon{
+    font-size:45px;
+    margin-bottom:15px;
+}
+
+.upload h2{
+    margin:5px 0;
+}
+
+.upload p{
+    color:#9999aa;
+    font-size:13px;
+}
+
+.choose,
+.rotate-btn{
+    border:0;
+    border-radius:11px;
+    padding:13px 20px;
+    background:linear-gradient(135deg,#7c5cff,#28a7ff);
+    color:#fff;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+input[type=file]{
+    display:none;
+}
+
+.workspace{
+    display:none;
+    padding:22px;
+}
+
+.file{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:16px;
+    border:1px solid #ffffff1a;
+    border-radius:14px;
+    background:#ffffff06;
+}
+
+.file-icon{
+    width:45px;
+    height:45px;
+    display:grid;
+    place-items:center;
+    border-radius:12px;
+    background:#7c5cff18;
+    font-size:22px;
+}
+
+.file-info{
+    flex:1;
+    min-width:0;
+}
+
+.file-name{
+    font-size:14px;
+    font-weight:bold;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+}
+
+.file-size{
+    color:#9999aa;
+    font-size:11px;
+    margin-top:5px;
+}
+
+.control{
+    margin-top:20px;
+    padding:18px;
+    border:1px solid #ffffff1a;
+    border-radius:15px;
+}
+
+.control-title{
+    font-size:13px;
+    font-weight:bold;
+    margin-bottom:14px;
+}
+
+.rotation{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+}
+
+.rotation button{
+    padding:14px 8px;
+    border:1px solid #ffffff1c;
+    border-radius:12px;
+    background:#ffffff06;
+    color:#fff;
+    cursor:pointer;
+}
+
+.rotation button.active{
+    background:#7c5cff18;
+    border-color:#7c5cff;
+}
+
+.preview{
+    margin-top:20px;
+    display:none;
+    text-align:center;
+}
+
+.preview canvas{
+    max-width:100%;
+    max-height:380px;
+    background:#fff;
+    border-radius:10px;
+}
+
+.actions{
+    display:flex;
+    gap:10px;
+    margin-top:20px;
+}
+
+.reset{
+    flex:1;
+    border:1px solid #ffffff1c;
+    border-radius:11px;
+    background:#ffffff08;
+    color:#fff;
+    cursor:pointer;
+}
+
+.rotate-btn{
+    flex:2;
+}
+
+.status{
+    display:none;
+    margin-top:20px;
+    padding:18px;
+    border-radius:15px;
+    text-align:center;
+    background:#55e6a508;
+    border:1px solid #55e6a533;
+}
+
+.status-title{
+    color:#9df3c8;
+    font-weight:bold;
+}
+
+.download{
+    display:inline-block;
+    margin-top:12px;
+    padding:11px 18px;
+    border-radius:10px;
+    background:#55e6a5;
+    color:#06130d;
+    text-decoration:none;
+    font-weight:bold;
+    font-size:13px;
+}
+
+@media(max-width:600px){
+
+    .rotation{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .actions{
+        flex-direction:column;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<header class="nav">
+
+<a href="index.html" class="logo">
+↻ ConvertX
+</a>
+
+<a href="index.html" class="back">
+← Home
+</a>
+
+</header>
+
+
+<section class="hero">
+
+<span class="badge">
+PDF TOOL
+</span>
+
+<h1>
+Rotate <span class="gradient">PDF</span>
+</h1>
+
+<p class="subtitle">
+Rotate every page of your PDF by 90°, 180° or 270°
+degrees and download the updated document.
+</p>
+
+</section>
+
+
+<div class="tool">
+
+<div class="upload" id="upload">
+
+<div class="upload-icon">
+🔄
+</div>
+
+<h2>
+Drop your PDF here
+</h2>
+
+<p>
+Choose a PDF file to rotate
+</p>
+
+<button class="choose" id="choose">
+Choose PDF
+</button>
+
+<input
+id="fileInput"
+type="file"
+accept="application/pdf">
+
+</div>
+
+
+<div class="workspace" id="workspace">
+
+
+<div class="file">
+
+<div class="file-icon">
+📄
+</div>
+
+<div class="file-info">
+
+<div class="file-name" id="fileName"></div>
+
+<div class="file-size" id="fileSize"></div>
+
+</div>
+
+</div>
+
+
+<div class="control">
+
+<div class="control-title">
+Rotation
+</div>
+
+<div class="rotation">
+
+<button data-angle="90">
+↻ 90°
+</button>
+
+<button data-angle="180">
+↻ 180°
+</button>
+
+<button data-angle="270">
+↺ 90°
+</button>
+
+<button data-angle="0" class="active">
+0° Reset
+</button>
+
+</div>
+
+</div>
+
+
+<div class="preview" id="preview">
+
+<p style="color:#9999aa;font-size:12px">
+First page preview
+</p>
+
+<canvas id="canvas"></canvas>
+
+</div>
+
+
+<div class="actions">
+
+<button class="reset" id="reset">
+Clear
+</button>
+
+<button class="rotate-btn" id="rotate">
+Rotate & Download
+</button>
+
+</div>
+
+
+<div class="status" id="status">
+
+<div class="status-title">
+✓ PDF created successfully
+</div>
+
+<a class="download" id="download">
+⬇ Download Rotated PDF
+</a>
+
+</div>
+
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+
+<script>
+
+pdfjsLib.GlobalWorkerOptions.workerSrc =
+"https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+
+
+const upload =
+document.getElementById("upload");
+
+const choose =
+document.getElementById("choose");
+
+const fileInput =
+document.getElementById("fileInput");
+
+const workspace =
+document.getElementById("workspace");
+
+const fileName =
+document.getElementById("fileName");
+
+const fileSize =
+document.getElementById("fileSize");
+
+const preview =
+document.getElementById("preview");
+
+const canvas =
+document.getElementById("canvas");
+
+const rotate =
+document.getElementById("rotate");
+
+const reset =
+document.getElementById("reset");
+
+const status =
+document.getElementById("status");
+
+const download =
+document.getElementById("download");
+
+const rotationButtons =
+document.querySelectorAll(".rotation button");
+
+
+let selectedFile = null;
+
+let selectedAngle = 0;
+
+
+/* FILE */
+
+choose.onclick = function(e){
+
+    e.stopPropagation();
+
+    fileInput.click();
+
+};
+
+upload.onclick = function(){
+
+    fileInput.click();
+
+};
+
+fileInput.onchange = function(){
+
+    if(this.files[0]){
+
+        loadPDF(this.files[0]);
+
+    }
+
+};
+
+
+/* LOAD */
+
+async function loadPDF(file){
+
+    if(file.type !== "application/pdf"){
+
+        alert("Please select a PDF file.");
+
+        return;
+
+    }
+
+    selectedFile = file;
+
+    fileName.textContent =
+        file.name;
+
+    fileSize.textContent =
+        formatBytes(file.size);
+
+    upload.style.display =
+        "none";
+
+    workspace.style.display =
+        "block";
+
+    status.style.display =
+        "none";
+
+    await showPreview(file);
+
+}
+
+
+/* ROTATION */
+
+rotationButtons.forEach(button => {
+
+    button.onclick = function(){
+
+        rotationButtons.forEach(
+            b => b.classList.remove("active")
+        );
+
+        this.classList.add("active");
+
+        selectedAngle =
+            Number(this.dataset.angle);
+
+    };
+
+});
+
+
+/* PREVIEW */
+
+async function showPreview(file){
+
+    try{
+
+        const data =
+            await file.arrayBuffer();
+
+        const pdf =
+            await pdfjsLib.getDocument({
+                data:data
+            }).promise;
+
+        const page =
+            await pdf.getPage(1);
+
+        const viewport =
+            page.getViewport({
+                scale:1
+            });
+
+        const scale =
+            Math.min(
+                350 / viewport.width,
+                350 / viewport.height
+            );
+
+        const view =
+            page.getViewport({
+                scale:scale
+            });
+
+        canvas.width =
+            view.width;
+
+        canvas.height =
+            view.height;
+
+        await page.render({
+            canvasContext:
+                canvas.getContext("2d"),
+
+            viewport:
+                view
+        }).promise;
+
+        preview.style.display =
+            "block";
+
+    }catch(error){
+
+        console.error(error);
+
+    }
+
+}
+
+
+/* ROTATE */
+
+rotate.onclick = async function(){
+
+    if(!selectedFile){
+
+        alert("Please select a PDF.");
+
+        return;
+
+    }
+
+    rotate.disabled =
+        true;
+
+    rotate.textContent =
+        "Processing...";
+
+
+    try{
+
+        const bytes =
+            await selectedFile.arrayBuffer();
+
+        const pdf =
+            await PDFLib.PDFDocument.load(bytes);
+
+        const pages =
+            pdf.getPages();
+
+
+        pages.forEach(page => {
+
+            const current =
+                page.getRotation().angle;
+
+            page.setRotation(
+                PDFLib.degrees(
+                    current +
+                    selectedAngle
+                )
+            );
+
+        });
+
+
+        const result =
+            await pdf.save({
+                useObjectStreams:true
+            });
+
+
+        const blob =
+            new Blob(
+                [result],
+                {
+                    type:
+                    "application/pdf"
+                }
+            );
+
+
+        const url =
+            URL.createObjectURL(blob);
+
+
+        download.href =
+            url;
+
+        download.download =
+            "rotated-" +
+            selectedFile.name;
+
+
+        status.style.display =
+            "block";
+
+
+    }catch(error){
+
+        console.error(error);
+
+        alert(
+            "Unable to rotate this PDF."
+        );
+
+    }
+
+
+    rotate.disabled =
+        false;
+
+    rotate.textContent =
+        "Rotate & Download";
+
+};
+
+
+/* RESET */
+
+reset.onclick = function(){
+
+    selectedFile = null;
+
+    selectedAngle = 0;
+
+    fileInput.value = "";
+
+    workspace.style.display =
+        "none";
+
+    upload.style.display =
+        "flex";
+
+    preview.style.display =
+        "none";
+
+    status.style.display =
+        "none";
+
+    rotationButtons.forEach(
+        b => b.classList.remove("active")
+    );
+
+    document
+        .querySelector('[data-angle="0"]')
+        .classList.add("active");
+
+};
+
+
+/* FORMAT */
+
+function formatBytes(bytes){
+
+    if(bytes === 0)
+        return "0 Bytes";
+
+    const units =
+        [
+            "Bytes",
+            "KB",
+            "MB",
+            "GB"
+        ];
+
+    const i =
+        Math.floor(
+            Math.log(bytes) /
+            Math.log(1024)
+        );
+
+    return (
+        bytes /
+        Math.pow(1024,i)
+    ).toFixed(2)
+    +
+    " "
+    +
+    units[i];
+
+}
+
+</script>
+
+</body>
+</html>

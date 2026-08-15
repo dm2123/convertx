@@ -1,0 +1,4237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+name="description"
+content="ConvertX by Dinesh Maurya — Multiple professional PDF and image tools in one platform."
+>
+
+<meta name="author" content="Dinesh Maurya">
+
+<meta name="theme-color" content="#070911">
+
+<title>ConvertX — Multiple Tools | Dinesh Maurya</title>
+
+
+<style>
+
+/* =========================================================
+   CONVERTX
+   DINESH MAURYA
+   COMPLETE INDEX DESIGN
+   ========================================================= */
+
+
+/* =========================================================
+   01 — RESET
+   ========================================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    min-height:100vh;
+    overflow-x:hidden;
+
+    font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    color:#f7f8fc;
+
+    background:#05060a;
+}
+
+button,
+input{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+a{
+    color:inherit;
+}
+
+
+/* =========================================================
+   02 — VARIABLES
+   ========================================================= */
+
+:root{
+
+    --bg:#05060a;
+    --bg-soft:#090b12;
+
+    --panel:#0b0e16;
+    --panel-2:#10131c;
+
+    --text:#f7f8fc;
+
+    --muted:#9097a8;
+
+    --muted-2:#666d7e;
+
+    --line:rgba(255,255,255,.08);
+
+    --line-strong:rgba(255,255,255,.15);
+
+    --purple:#8b6cff;
+
+    --blue:#36a9ff;
+
+    --green:#35d6a0;
+
+    --orange:#ffad3d;
+
+    --red:#ff6b7a;
+
+    --radius:20px;
+}
+
+
+/* =========================================================
+   03 — LIGHT MODE
+   ========================================================= */
+
+body.light{
+
+    --bg:#f4f6fa;
+
+    --bg-soft:#eef1f6;
+
+    --panel:#ffffff;
+
+    --panel-2:#f8f9fc;
+
+    --text:#11131a;
+
+    --muted:#5e6575;
+
+    --muted-2:#7c8391;
+
+    --line:rgba(20,25,40,.09);
+
+    --line-strong:rgba(20,25,40,.16);
+
+    background:#f4f6fa;
+}
+
+
+/* =========================================================
+   04 — BACKGROUND
+   ========================================================= */
+
+.background{
+    position:fixed;
+
+    inset:0;
+
+    z-index:-10;
+
+    overflow:hidden;
+
+    pointer-events:none;
+}
+
+.grid{
+    position:absolute;
+
+    inset:0;
+
+    opacity:.22;
+
+    background-image:
+        linear-gradient(
+            rgba(255,255,255,.025) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.025) 1px,
+            transparent 1px
+        );
+
+    background-size:55px 55px;
+}
+
+.light .grid{
+
+    opacity:.35;
+
+    background-image:
+        linear-gradient(
+            rgba(20,30,50,.035) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(20,30,50,.035) 1px,
+            transparent 1px
+        );
+}
+
+
+.orb{
+    position:absolute;
+
+    width:460px;
+
+    height:460px;
+
+    border-radius:50%;
+
+    filter:blur(120px);
+
+    opacity:.10;
+}
+
+.orb-one{
+    left:-230px;
+
+    top:150px;
+
+    background:#8b6cff;
+}
+
+.orb-two{
+    right:-250px;
+
+    top:450px;
+
+    background:#36a9ff;
+}
+
+.orb-three{
+    left:35%;
+
+    bottom:-300px;
+
+    background:#35d6a0;
+}
+
+
+/* =========================================================
+   05 — PAGE
+   ========================================================= */
+
+.page{
+
+    width:min(
+        1220px,
+        94%
+    );
+
+    margin:auto;
+}
+
+
+/* =========================================================
+   06 — NAVBAR
+   ========================================================= */
+
+.navbar{
+
+    position:sticky;
+
+    top:14px;
+
+    z-index:100;
+
+    height:70px;
+
+    margin-top:18px;
+
+    padding:
+        0 17px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    border:1px solid var(--line);
+
+    border-radius:22px;
+
+    background:
+        rgba(7,9,15,.74);
+
+    backdrop-filter:blur(25px);
+
+    -webkit-backdrop-filter:blur(25px);
+
+    box-shadow:
+        0 18px 60px rgba(0,0,0,.25);
+}
+
+.light .navbar{
+
+    background:
+        rgba(255,255,255,.82);
+}
+
+
+/* =========================================================
+   07 — BRAND
+   ========================================================= */
+
+.brand{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:11px;
+
+    text-decoration:none;
+}
+
+.brand-logo{
+
+    width:42px;
+
+    height:42px;
+
+    display:grid;
+
+    place-items:center;
+
+    border-radius:13px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #8b6cff,
+            #36a9ff
+        );
+
+    color:white;
+
+    font-size:18px;
+
+    font-weight:950;
+
+    box-shadow:
+        0 10px 35px rgba(139,108,255,.27);
+}
+
+.brand-info{
+
+    display:flex;
+
+    flex-direction:column;
+}
+
+.brand-name{
+
+    font-size:18px;
+
+    font-weight:950;
+
+    letter-spacing:-.5px;
+}
+
+.brand-tagline{
+
+    margin-top:3px;
+
+    color:var(--muted-2);
+
+    font-size:7px;
+
+    font-weight:900;
+
+    text-transform:uppercase;
+
+    letter-spacing:1px;
+}
+
+
+/* =========================================================
+   08 — NAV BUTTONS
+   ========================================================= */
+
+.nav-actions{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+}
+
+.nav-btn{
+
+    height:39px;
+
+    padding:
+        0 12px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:7px;
+
+    border:1px solid var(--line);
+
+    border-radius:11px;
+
+    background:#ffffff05;
+
+    color:var(--muted);
+
+    font-size:9px;
+
+    font-weight:850;
+
+    transition:.2s;
+}
+
+.nav-btn:hover{
+
+    color:var(--text);
+
+    background:#ffffff0b;
+
+    border-color:var(--line-strong);
+}
+
+.nav-icon{
+
+    font-size:15px;
+}
+
+
+/* =========================================================
+   09 — HERO
+   ========================================================= */
+
+.hero{
+
+    padding:
+        100px
+        0
+        45px;
+
+    text-align:center;
+}
+
+.hero-badge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:7px;
+
+    padding:
+        8px 13px;
+
+    border:
+        1px solid #8b6cff35;
+
+    border-radius:999px;
+
+    background:#8b6cff0c;
+
+    color:#b8adff;
+
+    font-size:8px;
+
+    font-weight:950;
+
+    text-transform:uppercase;
+
+    letter-spacing:.8px;
+}
+
+.live-dot{
+
+    width:6px;
+
+    height:6px;
+
+    border-radius:50%;
+
+    background:#35d6a0;
+
+    box-shadow:
+        0 0 14px #35d6a0;
+}
+
+
+.hero h1{
+
+    margin-top:24px;
+
+    font-size:
+        clamp(
+            50px,
+            8vw,
+            91px
+        );
+
+    line-height:.94;
+
+    letter-spacing:-6px;
+
+    font-weight:950;
+}
+
+.gradient-text{
+
+    background:
+        linear-gradient(
+            100deg,
+            #aa8cff,
+            #58baff 50%,
+            #53dfb2
+        );
+
+    -webkit-background-clip:text;
+
+    background-clip:text;
+
+    color:transparent;
+}
+
+.hero-description{
+
+    max-width:720px;
+
+    margin:
+        24px auto 0;
+
+    color:var(--muted);
+
+    font-size:13px;
+
+    line-height:1.8;
+}
+
+
+/* =========================================================
+   10 — SEARCH
+   ========================================================= */
+
+.search-area{
+
+    position:relative;
+
+    max-width:850px;
+
+    margin:
+        35px auto 0;
+}
+
+.search-box{
+
+    height:68px;
+
+    display:flex;
+
+    align-items:center;
+
+    border:
+        1px solid var(--line-strong);
+
+    border-radius:21px;
+
+    background:
+        rgba(255,255,255,.045);
+
+    backdrop-filter:blur(22px);
+
+    box-shadow:
+        0 25px 70px rgba(0,0,0,.3);
+
+    transition:.25s;
+}
+
+.light .search-box{
+
+    background:
+        rgba(255,255,255,.85);
+}
+
+.search-box:focus-within{
+
+    border-color:
+        #8b6cff65;
+
+    box-shadow:
+        0 25px 70px rgba(0,0,0,.25),
+        0 0 0 4px #8b6cff0c;
+}
+
+.search-icon{
+
+    width:60px;
+
+    display:grid;
+
+    place-items:center;
+
+    color:var(--muted-2);
+
+    font-size:24px;
+}
+
+#searchInput{
+
+    flex:1;
+
+    min-width:0;
+
+    height:100%;
+
+    border:0;
+
+    outline:0;
+
+    background:transparent;
+
+    color:var(--text);
+
+    font-size:14px;
+}
+
+#searchInput::placeholder{
+
+    color:var(--muted-2);
+}
+
+.clear-btn{
+
+    width:36px;
+
+    height:36px;
+
+    margin-right:8px;
+
+    display:none;
+
+    place-items:center;
+
+    border:0;
+
+    border-radius:10px;
+
+    background:#ffffff08;
+
+    color:var(--muted);
+
+    font-size:18px;
+}
+
+
+/* =========================================================
+   11 — SUGGESTIONS
+   ========================================================= */
+
+.suggestions{
+
+    position:absolute;
+
+    top:76px;
+
+    left:0;
+
+    right:0;
+
+    z-index:20;
+
+    display:none;
+
+    padding:8px;
+
+    border:
+        1px solid var(--line);
+
+    border-radius:17px;
+
+    background:
+        rgba(10,12,19,.96);
+
+    backdrop-filter:blur(25px);
+
+    box-shadow:
+        0 25px 70px rgba(0,0,0,.4);
+
+    text-align:left;
+}
+
+.light .suggestions{
+
+    background:
+        rgba(255,255,255,.98);
+}
+
+.suggestion{
+
+    width:100%;
+
+    padding:11px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    border:0;
+
+    border-radius:10px;
+
+    background:transparent;
+
+    color:var(--muted);
+
+    text-align:left;
+}
+
+.suggestion:hover{
+
+    color:var(--text);
+
+    background:#ffffff08;
+}
+
+.suggestion-icon{
+
+    width:31px;
+
+    height:31px;
+
+    display:grid;
+
+    place-items:center;
+
+    border-radius:8px;
+
+    background:#ffffff08;
+}
+
+
+/* =========================================================
+   12 — SEARCH HINT
+   ========================================================= */
+
+.search-hint{
+
+    margin-top:9px;
+
+    color:var(--muted-2);
+
+    font-size:8px;
+}
+
+kbd{
+
+    padding:
+        2px 5px;
+
+    border:
+        1px solid var(--line);
+
+    border-radius:4px;
+
+    background:#ffffff05;
+
+    font-size:8px;
+}
+
+
+/* =========================================================
+   13 — CATEGORIES
+   ========================================================= */
+
+.categories{
+
+    margin-top:24px;
+
+    display:flex;
+
+    justify-content:center;
+
+    flex-wrap:wrap;
+
+    gap:8px;
+}
+
+.category{
+
+    padding:
+        9px 14px;
+
+    border:
+        1px solid var(--line);
+
+    border-radius:999px;
+
+    background:#ffffff04;
+
+    color:var(--muted);
+
+    font-size:8px;
+
+    font-weight:900;
+
+    transition:.2s;
+}
+
+.category:hover{
+
+    color:var(--text);
+
+    border-color:#8b6cff40;
+}
+
+.category.active{
+
+    color:white;
+
+    background:#8b6cff14;
+
+    border-color:#8b6cff50;
+}
+
+
+/* =========================================================
+   14 — CREATOR SECTION
+   ========================================================= */
+
+.creator-section{
+
+    padding:
+        15px 0 55px;
+}
+
+.creator-card{
+
+    position:relative;
+
+    padding:30px;
+
+    overflow:hidden;
+
+    border:
+        1px solid var(--line);
+
+    border-radius:26px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(139,108,255,.08),
+            rgba(54,169,255,.035),
+            rgba(53,214,160,.025)
+        );
+
+    box-shadow:
+        0 25px 80px rgba(0,0,0,.22);
+}
+
+.creator-glow{
+
+    position:absolute;
+
+    width:260px;
+
+    height:260px;
+
+    top:-170px;
+
+    right:-80px;
+
+    border-radius:50%;
+
+    background:#8b6cff;
+
+    filter:blur(90px);
+
+    opacity:.12;
+
+    pointer-events:none;
+}
+
+.creator-profile{
+
+    position:relative;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:17px;
+}
+
+.creator-avatar{
+
+    width:70px;
+
+    height:70px;
+
+    flex:0 0 auto;
+
+    display:grid;
+
+    place-items:center;
+
+    border-radius:20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #8b6cff,
+            #36a9ff
+        );
+
+    color:white;
+
+    font-size:21px;
+
+    font-weight:950;
+
+    box-shadow:
+        0 15px 40px rgba(139,108,255,.28);
+}
+
+.creator-badge{
+
+    display:inline-flex;
+
+    padding:
+        5px 9px;
+
+    border:
+        1px solid #8b6cff35;
+
+    border-radius:999px;
+
+    background:#8b6cff0d;
+
+    color:#a99bff;
+
+    font-size:7px;
+
+    font-weight:950;
+
+    letter-spacing:1px;
+}
+
+.creator-info h2{
+
+    margin-top:7px;
+
+    font-size:23px;
+
+    font-weight:950;
+
+    letter-spacing:-1px;
+}
+
+.creator-info p{
+
+    margin-top:3px;
+
+    color:var(--muted);
+
+    font-size:10px;
+
+    font-weight:700;
+}
+
+.creator-location{
+
+    margin-top:6px;
+
+    color:var(--muted-2);
+
+    font-size:9px;
+}
+
+.creator-about{
+
+    position:relative;
+
+    max-width:760px;
+
+    margin-top:27px;
+
+    padding-top:20px;
+
+    border-top:
+        1px solid var(--line);
+}
+
+.about-label{
+
+    color:#8b6cff;
+
+    font-size:8px;
+
+    font-weight:950;
+
+    letter-spacing:1px;
+}
+
+.creator-about p{
+
+    margin-top:8px;
+
+    color:var(--muted);
+
+    font-size:10px;
+
+    line-height:1.8;
+}
+
+.creator-contact{
+
+    position:relative;
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:10px;
+
+    margin-top:23px;
+}
+
+.contact-item{
+
+    min-height:58px;
+
+    padding:
+        10px 12px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    border:
+        1px solid var(--line);
+
+    border-radius:13px;
+
+    background:#ffffff04;
+
+    color:var(--text);
+
+    text-decoration:none;
+
+    transition:.2s;
+}
+
+.contact-item:hover{
+
+    transform:
+        translateY(-2px);
+
+    border-color:#8b6cff40;
+
+    background:#8b6cff08;
+}
+
+.contact-icon{
+
+    width:34px;
+
+    height:34px;
+
+    flex:0 0 auto;
+
+    display:grid;
+
+    place-items:center;
+
+    border-radius:9px;
+
+    background:#ffffff07;
+
+    color:#a99bff;
+
+    font-size:14px;
+}
+
+.contact-text{
+
+    min-width:0;
+
+    display:flex;
+
+    flex-direction:column;
+}
+
+.contact-text small{
+
+    margin-bottom:2px;
+
+    color:var(--muted-2);
+
+    font-size:7px;
+
+    font-weight:900;
+
+    letter-spacing:.6px;
+
+    text-transform:uppercase;
+}
+
+.contact-text span{
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+
+    white-space:nowrap;
+
+    font-size:9px;
+
+    font-weight:750;
+}
+
+
+/* =========================================================
+   15 — STATS
+   ========================================================= */
+
+.stats{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:12px;
+
+    margin-bottom:35px;
+}
+
+.stat{
+
+    min-height:90px;
+
+    padding:16px;
+
+    border:
+        1px solid var(--line);
+
+    border-radius:17px;
+
+    background:#ffffff03;
+}
+
+.stat-icon{
+
+    width:31px;
+
+    height:31px;
+
+    display:grid;
+
+    place-items:center;
+
+    border-radius:9px;
+
+    background:#ffffff07;
+}
+
+.stat-number{
+
+    margin-top:12px;
+
+    font-size:22px;
+
+    font-weight:950;
+
+    letter-spacing:-1px;
+}
+
+.stat-label{
+
+    margin-top:2px;
+
+    color:var(--muted-2);
+
+    font-size:8px;
+
+    font-weight:800;
+
+    letter-spacing:.4px;
+
+    text-transform:uppercase;
+}
+
+
+/* =========================================================
+   16 — SECTIONS
+   ========================================================= */
+
+.section{
+
+    padding:
+        25px 0 70px;
+}
+
+.section-heading{
+
+    display:flex;
+
+    align-items:flex-end;
+
+    justify-content:space-between;
+
+    margin-bottom:20px;
+}
+
+.heading-title{
+
+    font-size:23px;
+
+    font-weight:950;
+
+    letter-spacing:-1px;
+}
+
+.heading-description{
+
+    margin-top:6px;
+
+    color:var(--muted-2);
+
+    font-size:10px;
+}
+
+.heading-right{
+
+    color:var(--muted-2);
+
+    font-size:9px;
+
+    font-weight:800;
+}
+
+
+/* =========================================================
+   17 — RECENT
+   ========================================================= */
+
+.recent-list{
+
+    display:flex;
+
+    gap:10px;
+
+    overflow-x:auto;
+
+    padding-bottom:7px;
+}
+
+.recent-item{
+
+    min-width:190px;
+
+    padding:13px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    border:
+        1px solid var(--line);
+
+    border-radius:15px;
+
+    background:#ffffff03;
+
+    text-decoration:none;
+
+    transition:.2s;
+}
+
+.recent-item:hover{
+
+    border-color:
+        var(--line-strong);
+
+    background:#ffffff07;
+}
+
+.recent-icon{
+
+    width:37px;
+
+    height:37px;
+
+    display:grid;
+
+    place-items:center;
+
+    flex:0 0 auto;
+
+    border-radius:10px;
+
+    background:#ffffff07;
+}
+
+.recent-name{
+
+    font-size:10px;
+
+    font-weight:850;
+}
+
+.recent-time{
+
+    margin-top:3px;
+
+    color:var(--muted-2);
+
+    font-size:8px;
+}
+
+.empty-recent{
+
+    width:100%;
+
+    padding:20px;
+
+    border:
+        1px dashed var(--line);
+
+    border-radius:15px;
+
+    color:var(--muted-2);
+
+    font-size:10px;
+
+    text-align:center;
+}
+
+
+/* =========================================================
+   18 — TOOLS GRID
+   ========================================================= */
+
+.tools-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,minmax(0,1fr));
+
+    gap:14px;
+}
+
+
+/* =========================================================
+   19 — TOOL CARD
+   ========================================================= */
+
+.tool-card{
+
+    position:relative;
+
+    min-height:205px;
+
+    padding:19px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    overflow:hidden;
+
+    border:
+        1px solid var(--line);
+
+    border-radius:21px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.045),
+            rgba(255,255,255,.012)
+        );
+
+    text-decoration:none;
+
+    transition:
+        transform .22s,
+        border-color .22s,
+        box-shadow .22s;
+
+    animation:
+        cardIn .4s ease both;
+}
+
+.tool-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:180px;
+
+    height:180px;
+
+    top:-100px;
+
+    right:-100px;
+
+    border-radius:50%;
+
+    background:
+        var(--tool-color);
+
+    filter:blur(35px);
+
+    opacity:.11;
+
+    transition:.25s;
+}
+
+.tool-card:hover{
+
+    transform:
+        translateY(-6px);
+
+    border-color:
+        rgba(255,255,255,.18);
+
+    box-shadow:
+        0 22px 60px rgba(0,0,0,.28);
+}
+
+.tool-card:hover::before{
+
+    opacity:.28;
+}
+
+.card-top{
+
+    display:flex;
+
+    align-items:flex-start;
+
+    justify-content:space-between;
+}
+
+.tool-icon{
+
+    width:49px;
+
+    height:49px;
+
+    display:grid;
+
+    place-items:center;
+
+    border-radius:15px;
+
+    background:
+        var(--icon-bg);
+
+    color:
+        var(--tool-color);
+
+    border:
+        1px solid rgba(255,255,255,.06);
+
+    font-size:21px;
+}
+
+.favorite{
+
+    width:32px;
+
+    height:32px;
+
+    display:grid;
+
+    place-items:center;
+
+    z-index:5;
+
+    border:
+        1px solid var(--line);
+
+    border-radius:9px;
+
+    background:#ffffff05;
+
+    color:#6e7586;
+
+    font-size:14px;
+}
+
+.favorite:hover{
+
+    color:#ffcb55;
+
+    border-color:#ffcb5540;
+}
+
+.favorite.active{
+
+    color:#ffcb55;
+
+    background:#ffcb550c;
+
+    border-color:#ffcb5540;
+}
+
+.tool-name{
+
+    margin-top:17px;
+
+    font-size:14px;
+
+    font-weight:900;
+
+    letter-spacing:-.25px;
+}
+
+.tool-description{
+
+    min-height:37px;
+
+    margin-top:7px;
+
+    color:var(--muted-2);
+
+    font-size:10px;
+
+    line-height:1.6;
+}
+
+.card-bottom{
+
+    margin-top:auto;
+
+    padding-top:17px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+}
+
+.tool-type{
+
+    color:#62697a;
+
+    font-size:7px;
+
+    font-weight:950;
+
+    letter-spacing:1px;
+}
+
+.open-arrow{
+
+    color:#6f7688;
+
+    font-size:17px;
+
+    transition:.2s;
+}
+
+.tool-card:hover .open-arrow{
+
+    color:#fff;
+
+    transform:
+        translateX(4px);
+}
+
+
+/* =========================================================
+   20 — NO RESULTS
+   ========================================================= */
+
+.no-results{
+
+    display:none;
+
+    padding:80px 20px;
+
+    border:
+        1px dashed var(--line-strong);
+
+    border-radius:22px;
+
+    background:#ffffff02;
+
+    text-align:center;
+}
+
+.no-results-icon{
+
+    font-size:40px;
+
+    margin-bottom:13px;
+}
+
+.no-results-title{
+
+    font-size:17px;
+
+    font-weight:900;
+}
+
+.no-results-text{
+
+    margin-top:7px;
+
+    color:var(--muted-2);
+
+    font-size:10px;
+}
+
+
+/* =========================================================
+   21 — FEATURE
+   ========================================================= */
+
+.feature-banner{
+
+    position:relative;
+
+    margin-top:25px;
+
+    padding:30px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:25px;
+
+    overflow:hidden;
+
+    border:
+        1px solid var(--line);
+
+    border-radius:24px;
+
+    background:
+
+        radial-gradient(
+            circle at 100% 0%,
+            #8b6cff18,
+            transparent 40%
+        ),
+
+        radial-gradient(
+            circle at 0% 100%,
+            #36a9ff0c,
+            transparent 35%
+        ),
+
+        #ffffff03;
+}
+
+.feature-title{
+
+    font-size:19px;
+
+    font-weight:950;
+
+    letter-spacing:-.5px;
+}
+
+.feature-text{
+
+    max-width:650px;
+
+    margin-top:7px;
+
+    color:var(--muted-2);
+
+    font-size:10px;
+
+    line-height:1.7;
+}
+
+.feature-btn{
+
+    flex:0 0 auto;
+
+    padding:
+        12px 18px;
+
+    border:
+        1px solid #8b6cff45;
+
+    border-radius:11px;
+
+    background:#8b6cff12;
+
+    color:#bdb3ff;
+
+    font-size:9px;
+
+    font-weight:900;
+}
+
+
+/* =========================================================
+   22 — FOOTER
+   ========================================================= */
+
+.footer{
+
+    padding:
+        35px 0 50px;
+
+    border-top:
+        1px solid var(--line);
+}
+
+.footer-main{
+
+    display:flex;
+
+    align-items:flex-start;
+
+    justify-content:space-between;
+
+    gap:30px;
+}
+
+.footer-brand{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:9px;
+}
+
+.footer-mark{
+
+    width:31px;
+
+    height:31px;
+
+    display:grid;
+
+    place-items:center;
+
+    border-radius:9px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #8b6cff,
+            #36a9ff
+        );
+
+    font-size:13px;
+
+    font-weight:950;
+}
+
+.footer-name{
+
+    font-size:14px;
+
+    font-weight:900;
+}
+
+.footer-description{
+
+    max-width:340px;
+
+    margin-top:10px;
+
+    color:var(--muted-2);
+
+    font-size:9px;
+
+    line-height:1.7;
+}
+
+.footer-columns{
+
+    display:flex;
+
+    gap:60px;
+}
+
+.footer-column h4{
+
+    margin-bottom:10px;
+
+    font-size:9px;
+
+    font-weight:900;
+}
+
+.footer-column a{
+
+    display:block;
+
+    margin-top:8px;
+
+    color:var(--muted-2);
+
+    text-decoration:none;
+
+    font-size:9px;
+}
+
+.footer-column a:hover{
+
+    color:var(--text);
+}
+
+.footer-bottom{
+
+    margin-top:30px;
+
+    padding-top:20px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    border-top:
+        1px solid var(--line);
+
+    color:var(--muted-2);
+
+    font-size:8px;
+}
+
+
+/* =========================================================
+   23 — MOBILE NAV
+   ========================================================= */
+
+.mobile-nav{
+
+    display:none;
+}
+
+
+/* =========================================================
+   24 — ANIMATION
+   ========================================================= */
+
+@keyframes cardIn{
+
+    from{
+
+        opacity:0;
+
+        transform:
+            translateY(12px);
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+            translateY(0);
+    }
+}
+
+
+/* =========================================================
+   25 — TABLET
+   ========================================================= */
+
+@media(max-width:1050px){
+
+    .tools-grid{
+
+        grid-template-columns:
+            repeat(3,minmax(0,1fr));
+    }
+
+    .stats{
+
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+}
+
+
+/* =========================================================
+   26 — MOBILE
+   ========================================================= */
+
+@media(max-width:760px){
+
+    .page{
+
+        width:94%;
+    }
+
+    .navbar{
+
+        height:62px;
+
+        padding:
+            0 13px;
+    }
+
+    .brand-tagline{
+
+        display:none;
+    }
+
+    .nav-btn{
+
+        width:38px;
+
+        padding:0;
+    }
+
+    .nav-btn span:not(.nav-icon){
+
+        display:none;
+    }
+
+    .hero{
+
+        padding-top:75px;
+    }
+
+    .hero h1{
+
+        letter-spacing:-4px;
+    }
+
+    .tools-grid{
+
+        grid-template-columns:
+            repeat(2,minmax(0,1fr));
+    }
+
+    .creator-contact{
+
+        grid-template-columns:1fr;
+    }
+
+    .feature-banner{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+    }
+
+    .footer-main{
+
+        flex-direction:column;
+    }
+
+    .footer-columns{
+
+        width:100%;
+
+        justify-content:space-between;
+
+        gap:20px;
+    }
+
+    .mobile-nav{
+
+        position:fixed;
+
+        left:10px;
+
+        right:10px;
+
+        bottom:10px;
+
+        z-index:200;
+
+        height:60px;
+
+        display:flex;
+
+        align-items:center;
+
+        justify-content:space-around;
+
+        border:
+            1px solid var(--line);
+
+        border-radius:19px;
+
+        background:
+            rgba(8,10,16,.88);
+
+        backdrop-filter:blur(22px);
+
+        box-shadow:
+            0 15px 50px rgba(0,0,0,.4);
+    }
+
+    .mobile-nav button{
+
+        border:0;
+
+        background:transparent;
+
+        color:var(--muted);
+
+        font-size:8px;
+
+        font-weight:800;
+    }
+
+    .mobile-nav button.active{
+
+        color:#a99bff;
+    }
+}
+
+
+/* =========================================================
+   27 — SMALL MOBILE
+   ========================================================= */
+
+@media(max-width:500px){
+
+    .hero h1{
+
+        font-size:48px;
+
+        letter-spacing:-3px;
+    }
+
+    .hero-description{
+
+        font-size:12px;
+    }
+
+    .search-box{
+
+        height:62px;
+    }
+
+    .search-icon{
+
+        width:47px;
+    }
+
+    .categories{
+
+        justify-content:flex-start;
+
+        overflow-x:auto;
+
+        flex-wrap:nowrap;
+
+        padding-bottom:4px;
+    }
+
+    .category{
+
+        white-space:nowrap;
+    }
+
+    .tools-grid{
+
+        grid-template-columns:1fr;
+    }
+
+    .tool-card{
+
+        min-height:175px;
+    }
+
+    .section-heading{
+
+        align-items:flex-start;
+
+        flex-direction:column;
+
+        gap:7px;
+    }
+
+    .creator-card{
+
+        padding:22px;
+    }
+
+    .creator-profile{
+
+        align-items:flex-start;
+    }
+
+    .creator-avatar{
+
+        width:58px;
+
+        height:58px;
+
+        border-radius:16px;
+
+        font-size:17px;
+    }
+
+    .creator-info h2{
+
+        font-size:19px;
+    }
+
+    .footer-columns{
+
+        display:grid;
+
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .footer-bottom{
+
+        align-items:flex-start;
+
+        flex-direction:column;
+
+        gap:7px;
+    }
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     BACKGROUND
+========================================================= -->
+
+<div class="background">
+
+    <div class="grid"></div>
+
+    <div class="orb orb-one"></div>
+
+    <div class="orb orb-two"></div>
+
+    <div class="orb orb-three"></div>
+
+</div>
+
+
+
+<div class="page">
+
+
+<!-- =========================================================
+     NAVBAR
+========================================================= -->
+
+<header class="navbar">
+
+
+<a
+href="index.html"
+class="brand"
+>
+
+    <div class="brand-logo">
+        C
+    </div>
+
+    <div class="brand-info">
+
+        <div class="brand-name">
+            ConvertX
+        </div>
+
+        <div class="brand-tagline">
+            On Platform — Multiple Tools
+        </div>
+
+    </div>
+
+</a>
+
+
+<div class="nav-actions">
+
+
+<button
+class="nav-btn"
+onclick="scrollToTools()"
+>
+
+    <span class="nav-icon">
+        ⚡
+    </span>
+
+    <span>
+        Tools
+    </span>
+
+</button>
+
+
+<button
+class="nav-btn"
+onclick="showFavorites()"
+>
+
+    <span class="nav-icon">
+        ☆
+    </span>
+
+    <span>
+        Favorites
+    </span>
+
+</button>
+
+
+<button
+class="nav-btn"
+onclick="toggleTheme()"
+>
+
+    <span
+    class="nav-icon"
+    id="themeIcon"
+    >
+        ☾
+    </span>
+
+    <span>
+        Theme
+    </span>
+
+</button>
+
+
+</div>
+
+</header>
+
+
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<section class="hero">
+
+
+<div class="hero-badge">
+
+    <span class="live-dot"></span>
+
+    Dinesh Maurya • Multiple Tools Platform
+
+</div>
+
+
+<h1>
+
+    Everything
+    <br>
+
+    <span class="gradient-text">
+        you need for files.
+    </span>
+
+</h1>
+
+
+<p class="hero-description">
+
+    Convert, compress, resize, crop, merge, protect,
+    extract and edit your PDF and image files from
+    one clean and professional platform.
+
+</p>
+
+
+
+<!-- SEARCH -->
+
+<div class="search-area">
+
+
+<div class="search-box">
+
+
+<div class="search-icon">
+    ⌕
+</div>
+
+
+<input
+id="searchInput"
+type="search"
+autocomplete="off"
+placeholder="Search a tool... PDF to JPG, Image Compressor..."
+>
+
+
+<button
+id="clearSearch"
+class="clear-btn"
+type="button"
+>
+    ×
+</button>
+
+
+</div>
+
+
+<div
+id="suggestions"
+class="suggestions"
+></div>
+
+
+<div class="search-hint">
+
+    Press
+    <kbd>/</kbd>
+    to search
+    &nbsp; • &nbsp;
+    Press
+    <kbd>Esc</kbd>
+    to clear
+
+</div>
+
+</div>
+
+
+
+<!-- CATEGORIES -->
+
+<div class="categories">
+
+
+<button
+class="category active"
+data-category="all"
+>
+    All
+</button>
+
+
+<button
+class="category"
+data-category="pdf"
+>
+    PDF
+</button>
+
+
+<button
+class="category"
+data-category="image"
+>
+    Images
+</button>
+
+
+<button
+class="category"
+data-category="convert"
+>
+    Convert
+</button>
+
+
+<button
+class="category"
+data-category="compress"
+>
+    Compress
+</button>
+
+
+<button
+class="category"
+data-category="edit"
+>
+    Edit
+</button>
+
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     CREATOR PROFILE
+========================================================= -->
+
+<section class="creator-section">
+
+
+<div class="creator-card">
+
+
+<div class="creator-glow"></div>
+
+
+<div class="creator-profile">
+
+
+<div class="creator-avatar">
+    DM
+</div>
+
+
+<div class="creator-info">
+
+
+<div class="creator-badge">
+    ✦ CREATOR
+</div>
+
+
+<h2>
+    Dinesh Maurya
+</h2>
+
+
+<p>
+    On Platform — Multiple Tools
+</p>
+
+
+<div class="creator-location">
+    📍 Gurugram, India
+</div>
+
+
+</div>
+
+</div>
+
+
+
+<div class="creator-about">
+
+
+<div class="about-label">
+    ABOUT THE PLATFORM
+</div>
+
+
+<p>
+
+    Welcome to ConvertX — a growing collection of
+    simple and useful tools for everyday PDF and
+    image tasks. The platform is designed to provide
+    a clean, fast and easy experience for everyone.
+
+</p>
+
+</div>
+
+
+
+<div class="creator-contact">
+
+
+<a
+href="mailto:dm7178072@gmail.com"
+class="contact-item"
+>
+
+    <span class="contact-icon">
+        ✉
+    </span>
+
+    <span class="contact-text">
+
+        <small>
+            Email
+        </small>
+
+        <span>
+            dm7178072@gmail.com
+        </span>
+
+    </span>
+
+</a>
+
+
+
+<a
+href="https://wa.me/917808658872"
+target="_blank"
+rel="noopener"
+class="contact-item"
+>
+
+    <span class="contact-icon">
+        ☎
+    </span>
+
+    <span class="contact-text">
+
+        <small>
+            WhatsApp
+        </small>
+
+        <span>
+            7808658872
+        </span>
+
+    </span>
+
+</a>
+
+
+
+<a
+href="https://www.instagram.com/mr_dinesh_hacker/"
+target="_blank"
+rel="noopener"
+class="contact-item"
+>
+
+    <span class="contact-icon">
+        ◎
+    </span>
+
+    <span class="contact-text">
+
+        <small>
+            Instagram
+        </small>
+
+        <span>
+            @mr_dinesh_hacker
+        </span>
+
+    </span>
+
+</a>
+
+
+</div>
+
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     STATS
+========================================================= -->
+
+<div class="stats">
+
+
+<div class="stat">
+
+    <div class="stat-icon">
+        🧰
+    </div>
+
+    <div
+    class="stat-number"
+    id="totalTools"
+    >
+        0
+    </div>
+
+    <div class="stat-label">
+        Total Tools
+    </div>
+
+</div>
+
+
+<div class="stat">
+
+    <div class="stat-icon">
+        📄
+    </div>
+
+    <div
+    class="stat-number"
+    id="pdfTools"
+    >
+        0
+    </div>
+
+    <div class="stat-label">
+        PDF Tools
+    </div>
+
+</div>
+
+
+<div class="stat">
+
+    <div class="stat-icon">
+        🖼️
+    </div>
+
+    <div
+    class="stat-number"
+    id="imageTools"
+    >
+        0
+    </div>
+
+    <div class="stat-label">
+        Image Tools
+    </div>
+
+</div>
+
+
+<div class="stat">
+
+    <div class="stat-icon">
+        ⭐
+    </div>
+
+    <div
+    class="stat-number"
+    id="favoriteCount"
+    >
+        0
+    </div>
+
+    <div class="stat-label">
+        Favorites
+    </div>
+
+</div>
+
+
+</div>
+
+
+
+<!-- =========================================================
+     RECENT
+========================================================= -->
+
+<section
+class="section"
+id="recentSection"
+>
+
+
+<div class="section-heading">
+
+
+<div>
+
+<h2 class="heading-title">
+    Recently Used
+</h2>
+
+<p class="heading-description">
+    Your recently opened tools.
+</p>
+
+</div>
+
+
+</div>
+
+
+<div
+id="recentList"
+class="recent-list"
+></div>
+
+
+</section>
+
+
+
+<!-- =========================================================
+     TOOLS
+========================================================= -->
+
+<section
+class="section"
+id="toolsSection"
+>
+
+
+<div class="section-heading">
+
+
+<div>
+
+<h2 class="heading-title">
+    Explore Tools
+</h2>
+
+<p class="heading-description">
+    Professional tools for PDF and image workflows.
+</p>
+
+</div>
+
+
+<div
+class="heading-right"
+id="resultCount"
+>
+    0 tools
+</div>
+
+
+</div>
+
+
+<div
+id="toolsGrid"
+class="tools-grid"
+></div>
+
+
+<div
+id="noResults"
+class="no-results"
+>
+
+    <div class="no-results-icon">
+        🔎
+    </div>
+
+    <div class="no-results-title">
+        No matching tool
+    </div>
+
+    <div class="no-results-text">
+        Try PDF, JPG, PNG, image, convert,
+        compress or extract.
+    </div>
+
+</div>
+
+
+
+<!-- FEATURE -->
+
+<div class="feature-banner">
+
+
+<div>
+
+<div class="feature-title">
+    ⚡ Find your tool instantly
+</div>
+
+
+<div class="feature-text">
+
+    Search by tool name or keyword. Your favorite
+    and recently used tools are saved on this device
+    so you can access them faster next time.
+
+</div>
+
+</div>
+
+
+<button
+class="feature-btn"
+onclick="focusSearch()"
+>
+    Find a Tool →
+</button>
+
+
+</div>
+
+
+</section>
+
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer class="footer">
+
+
+<div class="footer-main">
+
+
+<div>
+
+
+<div class="footer-brand">
+
+
+<div class="footer-mark">
+    C
+</div>
+
+
+<div class="footer-name">
+    ConvertX
+</div>
+
+
+</div>
+
+
+<div class="footer-description">
+
+    Multiple useful PDF and image tools,
+    created and developed by Dinesh Maurya.
+
+</div>
+
+
+</div>
+
+
+
+<div class="footer-columns">
+
+
+<div class="footer-column">
+
+<h4>
+    Platform
+</h4>
+
+<a href="#toolsSection">
+    All Tools
+</a>
+
+<a href="#recentSection">
+    Recent Tools
+</a>
+
+<a href="#toolsSection">
+    Categories
+</a>
+
+</div>
+
+
+<div class="footer-column">
+
+<h4>
+    Connect
+</h4>
+
+<a href="mailto:dm7178072@gmail.com">
+    Email
+</a>
+
+<a
+href="https://wa.me/917808658872"
+target="_blank"
+rel="noopener"
+>
+    WhatsApp
+</a>
+
+<a
+href="https://www.instagram.com/mr_dinesh_hacker/"
+target="_blank"
+rel="noopener"
+>
+    Instagram
+</a>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+<div class="footer-bottom">
+
+<div>
+    © 2026 ConvertX • Created by Dinesh Maurya
+</div>
+
+<div>
+    Gurugram, India
+</div>
+
+</div>
+
+
+</footer>
+
+
+</div>
+
+
+
+<!-- =========================================================
+     MOBILE NAV
+========================================================= -->
+
+<nav class="mobile-nav">
+
+
+<button
+class="active"
+onclick="scrollToTools()"
+>
+    🧰
+    <br>
+    Tools
+</button>
+
+
+<button
+onclick="focusSearch()"
+>
+    🔎
+    <br>
+    Search
+</button>
+
+
+<button
+onclick="showFavorites()"
+>
+    ☆
+    <br>
+    Favorites
+</button>
+
+
+<button
+onclick="toggleTheme()"
+>
+    ☾
+    <br>
+    Theme
+</button>
+
+
+</nav>
+
+
+
+<script>
+
+/* =========================================================
+   TOOL DATABASE
+========================================================= */
+
+const tools = [
+
+    {
+        name:"Image Compressor",
+        file:"image-compressor.html",
+        category:["image","compress"],
+        icon:"🗜️",
+        color:"#8b6cff",
+        description:"Compress images and reduce file size.",
+        tags:["image","photo","compress","jpg","png","size"]
+    },
+
+    {
+        name:"Image Converter",
+        file:"image-converter.html",
+        category:["image","convert"],
+        icon:"🔄",
+        color:"#36a9ff",
+        description:"Convert images between different formats.",
+        tags:["image","photo","convert","format"]
+    },
+
+    {
+        name:"Image Crop",
+        file:"image-crop.html",
+        category:["image","edit"],
+        icon:"✂️",
+        color:"#35d6a0",
+        description:"Crop images to the exact area you need.",
+        tags:["image","photo","crop","edit"]
+    },
+
+    {
+        name:"Image Resizer",
+        file:"image-resizer.html",
+        category:["image","edit"],
+        icon:"↔️",
+        color:"#ffad3d",
+        description:"Resize images with custom dimensions.",
+        tags:["image","photo","resize","size","dimensions"]
+    },
+
+    {
+        name:"Image Background Remover",
+        file:"image-background-remover.html",
+        category:["image","edit"],
+        icon:"🪄",
+        color:"#ff6b7a",
+        description:"Remove backgrounds from images.",
+        tags:["image","photo","background","remove","transparent"]
+    },
+
+    {
+        name:"Image to PDF",
+        file:"image-to-pdf.html",
+        category:["image","convert"],
+        icon:"📄",
+        color:"#9c7cff",
+        description:"Convert images into PDF documents.",
+        tags:["image","jpg","png","pdf","convert"]
+    },
+
+    {
+        name:"JPG to PNG",
+        file:"jpg-to-png.html",
+        category:["image","convert"],
+        icon:"🖼️",
+        color:"#4db8ff",
+        description:"Convert JPG images into PNG format.",
+        tags:["jpg","png","image","convert"]
+    },
+
+    {
+        name:"PNG to JPG",
+        file:"png-to-jpg.html",
+        category:["image","convert"],
+        icon:"🌄",
+        color:"#35d6a0",
+        description:"Convert PNG images into JPG format.",
+        tags:["png","jpg","image","convert"]
+    },
+
+    {
+        name:"PDF Compressor",
+        file:"pdf-compress.htm",
+        category:["pdf","compress"],
+        icon:"🗜️",
+        color:"#ff7b72",
+        description:"Reduce PDF file size for easier sharing.",
+        tags:["pdf","compress","reduce","size"]
+    },
+
+    {
+        name:"PDF Merge",
+        file:"pdf-merge.html",
+        category:["pdf","edit"],
+        icon:"🔗",
+        color:"#8b6cff",
+        description:"Merge multiple PDF documents into one.",
+        tags:["pdf","merge","combine","join"]
+    },
+
+    {
+        name:"PDF Split",
+        file:"pdf-split.html",
+        category:["pdf","edit"],
+        icon:"✂️",
+        color:"#36a9ff",
+        description:"Split PDF documents into separate files.",
+        tags:["pdf","split","divide","pages"]
+    },
+
+    {
+        name:"PDF Delete Pages",
+        file:"pdf-delete-pages.html",
+        category:["pdf","edit"],
+        icon:"🗑️",
+        color:"#ff6b7a",
+        description:"Delete unwanted pages from a PDF.",
+        tags:["pdf","delete","remove","pages"]
+    },
+
+    {
+        name:"PDF Extract Pages",
+        file:"pdf-extract-pages.html",
+        category:["pdf","edit"],
+        icon:"📑",
+        color:"#35d6a0",
+        description:"Extract selected pages from a PDF.",
+        tags:["pdf","extract","pages","split"]
+    },
+
+    {
+        name:"PDF Rotate",
+        file:"pdf-rotate.html",
+        category:["pdf","edit"],
+        icon:"🔃",
+        color:"#ffad3d",
+        description:"Rotate PDF pages to the correct orientation.",
+        tags:["pdf","rotate","pages","orientation"]
+    },
+
+    {
+        name:"PDF Protect",
+        file:"pdf-protect.html",
+        category:["pdf","security"],
+        icon:"🔐",
+        color:"#8b6cff",
+        description:"Protect PDF documents with security.",
+        tags:["pdf","protect","security","password"]
+    },
+
+    {
+        name:"PDF Watermark",
+        file:"pdf-watermark.html",
+        category:["pdf","edit"],
+        icon:"💧",
+        color:"#35d6a0",
+        description:"Add custom watermark text to PDF pages.",
+        tags:["pdf","watermark","text","edit"]
+    },
+
+    {
+        name:"PDF Page Number",
+        file:"pdf-page-number.html",
+        category:["pdf","edit"],
+        icon:"🔢",
+        color:"#36a9ff",
+        description:"Add professional page numbers to PDF.",
+        tags:["pdf","page","number","pages"]
+    },
+
+    {
+        name:"PDF to JPG",
+        file:"pdf-to-jpg.html",
+        category:["pdf","image","convert"],
+        icon:"🖼️",
+        color:"#ffad3d",
+        description:"Convert PDF pages into JPG images.",
+        tags:["pdf","jpg","image","convert"]
+    },
+
+    {
+        name:"PDF to PNG",
+        file:"pdf-to-png.html",
+        category:["pdf","image","convert"],
+        icon:"🌄",
+        color:"#35d6a0",
+        description:"Convert PDF pages into PNG images.",
+        tags:["pdf","png","image","convert"]
+    },
+
+    {
+        name:"PDF to Text",
+        file:"pdf-to-text.html",
+        category:["pdf","convert"],
+        icon:"📝",
+        color:"#8b6cff",
+        description:"Extract readable text from PDF documents.",
+        tags:["pdf","text","extract","convert"]
+    },
+
+    {
+        name:"PDF Images Extractor",
+        file:"pdf-images-extract.htm",
+        category:["pdf","image","convert"],
+        icon:"🖼️",
+        color:"#ffad3d",
+        description:"Extract embedded images from PDF documents.",
+        tags:["pdf","image","extract","photos"]
+    }
+
+];
+
+
+/* =========================================================
+   STATE
+========================================================= */
+
+let activeCategory = "all";
+
+
+let favorites =
+JSON.parse(
+    localStorage.getItem(
+        "convertx_favorites"
+    ) || "[]"
+);
+
+
+let recent =
+JSON.parse(
+    localStorage.getItem(
+        "convertx_recent"
+    ) || "[]"
+);
+
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const searchInput =
+document.getElementById(
+    "searchInput"
+);
+
+
+const clearSearch =
+document.getElementById(
+    "clearSearch"
+);
+
+
+const suggestions =
+document.getElementById(
+    "suggestions"
+);
+
+
+const toolsGrid =
+document.getElementById(
+    "toolsGrid"
+);
+
+
+const resultCount =
+document.getElementById(
+    "resultCount"
+);
+
+
+const noResults =
+document.getElementById(
+    "noResults"
+);
+
+
+const recentList =
+document.getElementById(
+    "recentList"
+);
+
+
+const totalTools =
+document.getElementById(
+    "totalTools"
+);
+
+
+const pdfTools =
+document.getElementById(
+    "pdfTools"
+);
+
+
+const imageTools =
+document.getElementById(
+    "imageTools"
+);
+
+
+const favoriteCount =
+document.getElementById(
+    "favoriteCount"
+);
+
+
+const themeIcon =
+document.getElementById(
+    "themeIcon"
+);
+
+
+const categoryButtons =
+document.querySelectorAll(
+    ".category"
+);
+
+
+/* =========================================================
+   STATS
+========================================================= */
+
+function updateStats(){
+
+    totalTools.textContent =
+        tools.length;
+
+
+    pdfTools.textContent =
+        tools.filter(
+            tool =>
+            tool.category.includes(
+                "pdf"
+            )
+        ).length;
+
+
+    imageTools.textContent =
+        tools.filter(
+            tool =>
+            tool.category.includes(
+                "image"
+            )
+        ).length;
+
+
+    favoriteCount.textContent =
+        favorites.length;
+}
+
+
+/* =========================================================
+   TOOL TYPE
+========================================================= */
+
+function getToolType(tool){
+
+    if(
+        tool.category.includes(
+            "compress"
+        )
+    ){
+        return "COMPRESSOR";
+    }
+
+
+    if(
+        tool.category.includes(
+            "security"
+        )
+    ){
+        return "SECURITY";
+    }
+
+
+    if(
+        tool.category.includes(
+            "convert"
+        )
+    ){
+        return "CONVERTER";
+    }
+
+
+    if(
+        tool.category.includes(
+            "edit"
+        )
+    ){
+        return "EDITOR";
+    }
+
+
+    return "FILE TOOL";
+}
+
+
+/* =========================================================
+   CREATE CARD
+========================================================= */
+
+function createToolCard(
+    tool,
+    index
+){
+
+    const card =
+    document.createElement(
+        "a"
+    );
+
+
+    card.href =
+        tool.file;
+
+
+    card.className =
+        "tool-card";
+
+
+    card.style.setProperty(
+        "--tool-color",
+        tool.color
+    );
+
+
+    card.style.setProperty(
+        "--icon-bg",
+        tool.color + "18"
+    );
+
+
+    card.style.animationDelay =
+        Math.min(
+            index * .025,
+            .35
+        ) + "s";
+
+
+    const isFavorite =
+        favorites.includes(
+            tool.file
+        );
+
+
+    card.innerHTML = `
+
+        <div class="card-top">
+
+            <div class="tool-icon">
+                ${tool.icon}
+            </div>
+
+            <button
+                class="favorite ${isFavorite ? "active" : ""}"
+                type="button"
+                aria-label="Favorite"
+            >
+                ${isFavorite ? "★" : "☆"}
+            </button>
+
+        </div>
+
+
+        <div class="tool-name">
+            ${tool.name}
+        </div>
+
+
+        <div class="tool-description">
+            ${tool.description}
+        </div>
+
+
+        <div class="card-bottom">
+
+            <span class="tool-type">
+                ${getToolType(tool)}
+            </span>
+
+            <span class="open-arrow">
+                →
+            </span>
+
+        </div>
+
+    `;
+
+
+    const favoriteButton =
+        card.querySelector(
+            ".favorite"
+        );
+
+
+    favoriteButton.addEventListener(
+        "click",
+        function(event){
+
+            event.preventDefault();
+
+            event.stopPropagation();
+
+            toggleFavorite(
+                tool.file
+            );
+
+            renderTools();
+
+        }
+    );
+
+
+    card.addEventListener(
+        "click",
+        function(){
+
+            addRecent(tool);
+
+        }
+    );
+
+
+    return card;
+}
+
+
+/* =========================================================
+   FILTER
+========================================================= */
+
+function getFilteredTools(){
+
+    const query =
+        searchInput.value
+        .trim()
+        .toLowerCase();
+
+
+    return tools.filter(
+        tool => {
+
+            const searchable = [
+
+                tool.name,
+
+                tool.description,
+
+                ...tool.category,
+
+                ...tool.tags
+
+            ]
+            .join(" ")
+            .toLowerCase();
+
+
+            const matchesSearch =
+                !query ||
+                searchable.includes(
+                    query
+                );
+
+
+            const matchesCategory =
+                activeCategory === "all" ||
+                tool.category.includes(
+                    activeCategory
+                );
+
+
+            return (
+                matchesSearch &&
+                matchesCategory
+            );
+
+        }
+    );
+}
+
+
+/* =========================================================
+   RENDER
+========================================================= */
+
+function renderTools(){
+
+    const filtered =
+        getFilteredTools();
+
+
+    toolsGrid.innerHTML = "";
+
+
+    filtered.forEach(
+        (
+            tool,
+            index
+        ) => {
+
+            toolsGrid.appendChild(
+                createToolCard(
+                    tool,
+                    index
+                )
+            );
+
+        }
+    );
+
+
+    resultCount.textContent =
+        filtered.length +
+        (
+            filtered.length === 1
+            ? " tool"
+            : " tools"
+        );
+
+
+    noResults.style.display =
+        filtered.length === 0
+        ? "block"
+        : "none";
+
+
+    clearSearch.style.display =
+        searchInput.value
+        ? "grid"
+        : "none";
+
+
+    renderSuggestions();
+
+}
+
+
+/* =========================================================
+   SUGGESTIONS
+========================================================= */
+
+function renderSuggestions(){
+
+    const query =
+        searchInput.value
+        .trim()
+        .toLowerCase();
+
+
+    if(!query){
+
+        suggestions.style.display =
+            "none";
+
+        return;
+    }
+
+
+    const matches =
+        tools
+        .filter(
+            tool => {
+
+                const text = (
+                    tool.name +
+                    " " +
+                    tool.tags.join(" ")
+                ).toLowerCase();
+
+
+                return text.includes(
+                    query
+                );
+
+            }
+        )
+        .slice(0,5);
+
+
+    if(!matches.length){
+
+        suggestions.style.display =
+            "none";
+
+        return;
+    }
+
+
+    suggestions.innerHTML = "";
+
+
+    matches.forEach(
+        tool => {
+
+            const button =
+            document.createElement(
+                "button"
+            );
+
+
+            button.className =
+                "suggestion";
+
+
+            button.innerHTML = `
+
+                <span class="suggestion-icon">
+                    ${tool.icon}
+                </span>
+
+                <span>
+                    ${tool.name}
+                </span>
+
+            `;
+
+
+            button.addEventListener(
+                "click",
+                function(){
+
+                    searchInput.value =
+                        tool.name;
+
+                    suggestions.style.display =
+                        "none";
+
+                    renderTools();
+
+                }
+            );
+
+
+            suggestions.appendChild(
+                button
+            );
+
+        }
+    );
+
+
+    suggestions.style.display =
+        "block";
+}
+
+
+/* =========================================================
+   FAVORITES
+========================================================= */
+
+function toggleFavorite(file){
+
+    if(
+        favorites.includes(file)
+    ){
+
+        favorites =
+            favorites.filter(
+                item =>
+                item !== file
+            );
+
+    }
+    else{
+
+        favorites.push(file);
+
+    }
+
+
+    localStorage.setItem(
+        "convertx_favorites",
+        JSON.stringify(
+            favorites
+        )
+    );
+
+
+    updateStats();
+
+}
+
+
+/* =========================================================
+   SHOW FAVORITES
+========================================================= */
+
+function showFavorites(){
+
+    if(
+        favorites.length === 0
+    ){
+
+        alert(
+            "No favorite tools yet. Click ☆ on any tool to add it."
+        );
+
+        return;
+    }
+
+
+    searchInput.value = "";
+
+    activeCategory =
+        "favorites";
+
+
+    categoryButtons.forEach(
+        button =>
+        button.classList.remove(
+            "active"
+        )
+    );
+
+
+    const favoriteTools =
+        tools.filter(
+            tool =>
+            favorites.includes(
+                tool.file
+            )
+        );
+
+
+    toolsGrid.innerHTML = "";
+
+
+    favoriteTools.forEach(
+        (
+            tool,
+            index
+        ) => {
+
+            toolsGrid.appendChild(
+                createToolCard(
+                    tool,
+                    index
+                )
+            );
+
+        }
+    );
+
+
+    resultCount.textContent =
+        favoriteTools.length +
+        " favorites";
+
+
+    noResults.style.display =
+        "none";
+
+
+    scrollToTools();
+}
+
+
+/* =========================================================
+   RECENT
+========================================================= */
+
+function addRecent(tool){
+
+    recent =
+        recent.filter(
+            item =>
+            item.file !==
+            tool.file
+        );
+
+
+    recent.unshift({
+
+        name:tool.name,
+
+        file:tool.file,
+
+        icon:tool.icon,
+
+        time:Date.now()
+
+    });
+
+
+    recent =
+        recent.slice(
+            0,
+            6
+        );
+
+
+    localStorage.setItem(
+        "convertx_recent",
+        JSON.stringify(
+            recent
+        )
+    );
+
+
+    renderRecent();
+}
+
+
+/* =========================================================
+   RENDER RECENT
+========================================================= */
+
+function renderRecent(){
+
+    recentList.innerHTML = "";
+
+
+    if(
+        recent.length === 0
+    ){
+
+        const empty =
+        document.createElement(
+            "div"
+        );
+
+
+        empty.className =
+            "empty-recent";
+
+
+        empty.textContent =
+            "Your recently used tools will appear here.";
+
+
+        recentList.appendChild(
+            empty
+        );
+
+
+        return;
+    }
+
+
+    recent.forEach(
+        item => {
+
+            const link =
+            document.createElement(
+                "a"
+            );
+
+
+            link.className =
+                "recent-item";
+
+
+            link.href =
+                item.file;
+
+
+            link.innerHTML = `
+
+                <div class="recent-icon">
+                    ${item.icon}
+                </div>
+
+                <div>
+
+                    <div class="recent-name">
+                        ${item.name}
+                    </div>
+
+                    <div class="recent-time">
+                        Recently used
+                    </div>
+
+                </div>
+
+            `;
+
+
+            recentList.appendChild(
+                link
+            );
+
+        }
+    );
+}
+
+
+/* =========================================================
+   CATEGORY
+========================================================= */
+
+categoryButtons.forEach(
+    button => {
+
+        button.addEventListener(
+            "click",
+            function(){
+
+                categoryButtons.forEach(
+                    item =>
+                    item.classList.remove(
+                        "active"
+                    )
+                );
+
+
+                this.classList.add(
+                    "active"
+                );
+
+
+                activeCategory =
+                    this.dataset.category;
+
+
+                renderTools();
+
+
+                scrollToTools();
+
+            }
+        );
+
+    }
+);
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+searchInput.addEventListener(
+    "input",
+    function(){
+
+        activeCategory =
+            "all";
+
+
+        categoryButtons.forEach(
+            button => {
+
+                button.classList.toggle(
+                    "active",
+                    button.dataset.category ===
+                    "all"
+                );
+
+            }
+        );
+
+
+        renderTools();
+
+    }
+);
+
+
+/* =========================================================
+   CLEAR
+========================================================= */
+
+clearSearch.addEventListener(
+    "click",
+    function(){
+
+        searchInput.value = "";
+
+        suggestions.style.display =
+            "none";
+
+        renderTools();
+
+        searchInput.focus();
+
+    }
+);
+
+
+/* =========================================================
+   FOCUS SEARCH
+========================================================= */
+
+function focusSearch(){
+
+    searchInput.focus();
+
+    window.scrollTo({
+
+        top:0,
+
+        behavior:"smooth"
+
+    });
+}
+
+
+/* =========================================================
+   SCROLL TO TOOLS
+========================================================= */
+
+function scrollToTools(){
+
+    document
+    .getElementById(
+        "toolsSection"
+    )
+    .scrollIntoView({
+
+        behavior:"smooth"
+
+    });
+}
+
+
+/* =========================================================
+   THEME
+========================================================= */
+
+function toggleTheme(){
+
+    document.body.classList.toggle(
+        "light"
+    );
+
+
+    const light =
+        document.body.classList.contains(
+            "light"
+        );
+
+
+    localStorage.setItem(
+        "convertx_theme",
+        light
+        ? "light"
+        : "dark"
+    );
+
+
+    themeIcon.textContent =
+        light
+        ? "☀"
+        : "☾";
+}
+
+
+/* =========================================================
+   LOAD THEME
+========================================================= */
+
+function loadTheme(){
+
+    const saved =
+        localStorage.getItem(
+            "convertx_theme"
+        );
+
+
+    if(
+        saved === "light"
+    ){
+
+        document.body.classList.add(
+            "light"
+        );
+
+        themeIcon.textContent =
+            "☀";
+
+    }
+    else{
+
+        themeIcon.textContent =
+            "☾";
+
+    }
+}
+
+
+/* =========================================================
+   KEYBOARD SHORTCUTS
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(
+            event.key === "/" &&
+            document.activeElement.tagName
+            !== "INPUT"
+        ){
+
+            event.preventDefault();
+
+            focusSearch();
+
+        }
+
+
+        if(
+            event.key === "Escape"
+        ){
+
+            searchInput.value = "";
+
+            suggestions.style.display =
+                "none";
+
+            renderTools();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   CLOSE SUGGESTIONS
+========================================================= */
+
+document.addEventListener(
+    "click",
+    function(event){
+
+        if(
+            !event.target.closest(
+                ".search-area"
+            )
+        ){
+
+            suggestions.style.display =
+                "none";
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   START
+========================================================= */
+
+loadTheme();
+
+updateStats();
+
+renderRecent();
+
+renderTools();
+
+
+</script>
+
+</body>
+</html>

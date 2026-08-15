@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="description" content="Remove image backgrounds online and download transparent PNG images.">
+<title>Background Remover - ConvertX</title>
+
+<style>
+*{box-sizing:border-box}
+
+:root{
+ --bg:#06070d;
+ --panel:#0d0f18;
+ --panel2:#11131e;
+ --border:#ffffff14;
+ --text:#f5f7ff;
+ --muted:#8d91a3;
+ --accent:#35d6a0;
+ --accent2:#35a9ff;
+}
+
+body{
+ margin:0;
+ background:
+ radial-gradient(circle at 20% 0%,#15372d55,transparent 35%),
+ radial-gradient(circle at 90% 10%,#162f5555,transparent 35%),
+ var(--bg);
+ color:var(--text);
+ font-family:Inter,Arial,sans-serif;
+}
+
+.container{
+ width:min(1180px,92%);
+ margin:auto;
+}
+
+.nav{
+ margin:20px 0;
+ padding:15px 18px;
+ border:1px solid var(--border);
+ border-radius:20px;
+ background:#ffffff06;
+ backdrop-filter:blur(20px);
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+}
+
+.logo{
+ color:white;
+ text-decoration:none;
+ font-size:21px;
+ font-weight:900;
+}
+
+.back{
+ color:var(--muted);
+ text-decoration:none;
+ font-size:13px;
+}
+
+.hero{
+ text-align:center;
+ padding:60px 0 40px;
+}
+
+.badge{
+ display:inline-flex;
+ padding:8px 13px;
+ border-radius:999px;
+ color:#8ff4d0;
+ background:#35d6a012;
+ border:1px solid #35d6a033;
+ font-size:11px;
+ font-weight:800;
+ letter-spacing:.5px;
+}
+
+h1{
+ margin:20px 0 12px;
+ font-size:clamp(42px,7vw,72px);
+ letter-spacing:-4px;
+ line-height:1;
+}
+
+.gradient{
+ background:linear-gradient(90deg,var(--accent),var(--accent2));
+ -webkit-background-clip:text;
+ color:transparent;
+}
+
+.subtitle{
+ max-width:700px;
+ margin:auto;
+ color:var(--muted);
+ line-height:1.7;
+}
+
+.tool{
+ padding:14px;
+ border:1px solid var(--border);
+ border-radius:28px;
+ background:#ffffff05;
+ box-shadow:0 30px 80px #00000040;
+}
+
+.dropzone{
+ min-height:330px;
+ border:2px dashed #ffffff22;
+ border-radius:22px;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ text-align:center;
+ cursor:pointer;
+ transition:.25s;
+}
+
+.dropzone:hover,
+.dropzone.drag{
+ border-color:var(--accent);
+ background:#35d6a008;
+ transform:translateY(-2px);
+}
+
+.drop-inner{
+ padding:30px;
+}
+
+.icon{
+ width:78px;
+ height:78px;
+ margin:0 auto 18px;
+ border-radius:24px;
+ display:grid;
+ place-items:center;
+ font-size:38px;
+ background:#35d6a010;
+ border:1px solid #35d6a033;
+}
+
+.dropzone h2{
+ margin:0 0 8px;
+}
+
+.dropzone p{
+ color:var(--muted);
+ font-size:13px;
+}
+
+.primary,
+.secondary{
+ border:0;
+ border-radius:12px;
+ padding:13px 20px;
+ font-weight:800;
+ cursor:pointer;
+ color:white;
+}
+
+.primary{
+ background:linear-gradient(135deg,var(--accent),var(--accent2));
+}
+
+.secondary{
+ background:#ffffff0b;
+ border:1px solid var(--border);
+}
+
+input[type=file]{
+ display:none;
+}
+
+.workspace{
+ display:none;
+}
+
+.topbar{
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ gap:15px;
+ margin-bottom:15px;
+ padding:15px;
+ border:1px solid var(--border);
+ border-radius:16px;
+ background:#ffffff05;
+}
+
+.filename{
+ font-weight:700;
+ font-size:13px;
+ overflow:hidden;
+ text-overflow:ellipsis;
+ white-space:nowrap;
+}
+
+.filesize{
+ color:var(--muted);
+ font-size:11px;
+ margin-top:4px;
+}
+
+.editor{
+ display:grid;
+ grid-template-columns:minmax(0,1fr) 320px;
+ gap:18px;
+}
+
+.preview{
+ min-height:560px;
+ border:1px solid var(--border);
+ border-radius:20px;
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ overflow:hidden;
+
+ background-color:#ddd;
+ background-image:
+ linear-gradient(45deg,#bbb 25%,transparent 25%),
+ linear-gradient(-45deg,#bbb 25%,transparent 25%),
+ linear-gradient(45deg,transparent 75%,#bbb 75%),
+ linear-gradient(-45deg,transparent 75%,#bbb 75%);
+
+ background-size:32px 32px;
+ background-position:
+ 0 0,0 16px,16px -16px,-16px 0;
+}
+
+canvas{
+ max-width:94%;
+ max-height:520px;
+ object-fit:contain;
+}
+
+.controls{
+ padding:20px;
+ border:1px solid var(--border);
+ border-radius:20px;
+ background:#ffffff05;
+}
+
+.control-title{
+ font-size:11px;
+ font-weight:900;
+ letter-spacing:.8px;
+ color:#aaaebe;
+ margin:0 0 12px;
+}
+
+.option{
+ margin-bottom:20px;
+}
+
+.option label{
+ display:flex;
+ justify-content:space-between;
+ color:#b8bccb;
+ font-size:12px;
+ margin-bottom:9px;
+}
+
+.value{
+ color:var(--accent);
+ font-weight:800;
+}
+
+input[type=range]{
+ width:100%;
+ accent-color:var(--accent);
+}
+
+.hint{
+ color:#777b8c;
+ font-size:11px;
+ line-height:1.6;
+ padding:12px;
+ border:1px solid var(--border);
+ border-radius:12px;
+ background:#ffffff04;
+}
+
+.actions{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:9px;
+ margin-top:18px;
+}
+
+.download{
+ grid-column:1/-1;
+ text-decoration:none;
+ text-align:center;
+}
+
+.status{
+ display:none;
+ margin-top:15px;
+ padding:14px;
+ border-radius:13px;
+ border:1px solid #35d6a033;
+ background:#35d6a008;
+ color:#8ff4d0;
+ font-size:13px;
+ text-align:center;
+}
+
+@media(max-width:800px){
+ .editor{
+  grid-template-columns:1fr;
+ }
+
+ .preview{
+  min-height:380px;
+ }
+
+ .topbar{
+  flex-direction:column;
+  align-items:flex-start;
+ }
+
+ h1{
+  letter-spacing:-3px;
+ }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<header class="nav">
+
+<a href="index.html" class="logo">
+↻ ConvertX
+</a>
+
+<a href="index.html" class="back">
+← All Tools
+</a>
+
+</header>
+
+
+<section class="hero">
+
+<span class="badge">
+IMAGE BACKGROUND TOOL
+</span>
+
+<h1>
+Remove <span class="gradient">Background</span>
+</h1>
+
+<p class="subtitle">
+Upload an image and make a simple background transparent
+directly inside your browser.
+</p>
+
+</section>
+
+
+<div class="tool">
+
+<div class="dropzone" id="dropzone">
+
+<div class="drop-inner">
+
+<div class="icon">✂️</div>
+
+<h2>Drop your image here</h2>
+
+<p>
+JPG, PNG, WEBP • Maximum browser-supported image size
+</p>
+
+<button class="primary" id="chooseBtn">
+Choose Image
+</button>
+
+</div>
+
+</div>
+
+<input
+type="file"
+id="fileInput"
+accept="image/*"
+>
+
+
+<div class="workspace" id="workspace">
+
+<div class="topbar">
+
+<div>
+<div class="filename" id="fileName">
+No file
+</div>
+
+<div class="filesize" id="fileSize">
+-
+</div>
+</div>
+
+<button
+class="secondary"
+id="changeBtn">
+Change Image
+</button>
+
+</div>
+
+
+<div class="editor">
+
+<div class="preview">
+
+<canvas id="canvas"></canvas>
+
+</div>
+
+
+<div class="controls">
+
+<p class="control-title">
+BACKGROUND SETTINGS
+</p>
+
+
+<div class="option">
+
+<label>
+<span>Tolerance</span>
+
+<span
+class="value"
+id="toleranceValue">
+35
+</span>
+
+</label>
+
+<input
+type="range"
+id="tolerance"
+min="5"
+max="120"
+value="35"
+>
+
+</div>
+
+
+<div class="option">
+
+<label>
+<span>Edge Softness</span>
+
+<span
+class="value"
+id="softnessValue">
+0
+</span>
+
+</label>
+
+<input
+type="range"
+id="softness"
+min="0"
+max="60"
+value="0"
+>
+
+</div>
+
+
+<div class="hint">
+
+<b>How it works</b><br><br>
+
+The tool samples the four corners of the image
+and removes pixels that are sufficiently similar
+to the detected background.
+
+<br><br>
+
+Best results are obtained with simple,
+solid-color backgrounds.
+
+</div>
+
+
+<div class="actions">
+
+<button
+class="secondary"
+id="resetBtn">
+Reset
+</button>
+
+<button
+class="primary"
+id="processBtn">
+Process
+</button>
+
+<a
+class="primary download"
+id="downloadBtn"
+style="display:none">
+Download Transparent PNG
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div
+class="status"
+id="status">
+Background processed successfully.
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<script>
+
+const dropzone =
+document.getElementById("dropzone");
+
+const fileInput =
+document.getElementById("fileInput");
+
+const chooseBtn =
+document.getElementById("chooseBtn");
+
+const changeBtn =
+document.getElementById("changeBtn");
+
+const workspace =
+document.getElementById("workspace");
+
+const canvas =
+document.getElementById("canvas");
+
+const ctx =
+canvas.getContext("2d");
+
+const tolerance =
+document.getElementById("tolerance");
+
+const softness =
+document.getElementById("softness");
+
+const toleranceValue =
+document.getElementById("toleranceValue");
+
+const softnessValue =
+document.getElementById("softnessValue");
+
+const processBtn =
+document.getElementById("processBtn");
+
+const resetBtn =
+document.getElementById("resetBtn");
+
+const downloadBtn =
+document.getElementById("downloadBtn");
+
+const status =
+document.getElementById("status");
+
+const fileName =
+document.getElementById("fileName");
+
+const fileSize =
+document.getElementById("fileSize");
+
+
+let originalImage =
+new Image();
+
+let selectedFile = null;
+
+
+/* OPEN FILE */
+
+chooseBtn.onclick =
+function(e){
+
+ e.stopPropagation();
+
+ fileInput.click();
+
+};
+
+
+changeBtn.onclick =
+function(){
+
+ fileInput.click();
+
+};
+
+
+dropzone.onclick =
+function(){
+
+ fileInput.click();
+
+};
+
+
+/* DRAG */
+
+dropzone.addEventListener(
+"dragover",
+function(e){
+
+ e.preventDefault();
+
+ dropzone.classList.add("drag");
+
+});
+
+
+dropzone.addEventListener(
+"dragleave",
+function(){
+
+ dropzone.classList.remove("drag");
+
+});
+
+
+dropzone.addEventListener(
+"drop",
+function(e){
+
+ e.preventDefault();
+
+ dropzone.classList.remove("drag");
+
+ const file =
+ e.dataTransfer.files[0];
+
+ if(file){
+
+  loadFile(file);
+
+ }
+
+});
+
+
+/* FILE INPUT */
+
+fileInput.onchange =
+function(){
+
+ if(this.files[0]){
+
+  loadFile(this.files[0]);
+
+ }
+
+};
+
+
+/* LOAD */
+
+function loadFile(file){
+
+ if(!file.type.startsWith("image/")){
+
+  alert("Please select an image.");
+
+  return;
+
+ }
+
+ selectedFile = file;
+
+ fileName.textContent =
+ file.name;
+
+ fileSize.textContent =
+ formatBytes(file.size);
+
+
+ const reader =
+ new FileReader();
+
+
+ reader.onload =
+ function(e){
+
+  originalImage.onload =
+  function(){
+
+   canvas.width =
+   originalImage.naturalWidth;
+
+   canvas.height =
+   originalImage.naturalHeight;
+
+   workspace.style.display =
+   "block";
+
+   dropzone.style.display =
+   "none";
+
+   reset();
+
+  };
+
+  originalImage.src =
+  e.target.result;
+
+ };
+
+
+ reader.readAsDataURL(file);
+
+}
+
+
+/* SLIDERS */
+
+tolerance.oninput =
+function(){
+
+ toleranceValue.textContent =
+ this.value;
+
+};
+
+softness.oninput =
+function(){
+
+ softnessValue.textContent =
+ this.value;
+
+};
+
+
+/* PROCESS */
+
+processBtn.onclick =
+function(){
+
+ processImage();
+
+};
+
+
+function processImage(){
+
+ if(!originalImage.src){
+
+  return;
+
+ }
+
+
+ ctx.clearRect(
+  0,
+  0,
+  canvas.width,
+  canvas.height
+ );
+
+
+ ctx.drawImage(
+  originalImage,
+  0,
+  0
+ );
+
+
+ const imageData =
+ ctx.getImageData(
+  0,
+  0,
+  canvas.width,
+  canvas.height
+ );
+
+
+ const data =
+ imageData.data;
+
+
+ /*
+  Detect background from
+  four corners.
+ */
+
+ const corners = [
+
+  [0,0],
+
+  [canvas.width-1,0],
+
+  [0,canvas.height-1],
+
+  [canvas.width-1,canvas.height-1]
+
+ ];
+
+
+ let br=0;
+ let bg=0;
+ let bb=0;
+
+
+ corners.forEach(
+ function(point){
+
+  const x=point[0];
+  const y=point[1];
+
+  const index =
+  (y*canvas.width+x)*4;
+
+  br += data[index];
+  bg += data[index+1];
+  bb += data[index+2];
+
+ });
+
+
+ br/=4;
+ bg/=4;
+ bb/=4;
+
+
+ const limit =
+ Number(tolerance.value)*2.5;
+
+ const soft =
+ Number(softness.value)*2;
+
+
+ for(
+  let i=0;
+  i<data.length;
+  i+=4
+ ){
+
+  const dr =
+  data[i]-br;
+
+  const dg =
+  data[i+1]-bg;
+
+  const db =
+  data[i+2]-bb;
+
+
+  const distance =
+  Math.sqrt(
+   dr*dr+
+   dg*dg+
+   db*db
+  );
+
+
+  if(distance<=limit){
+
+   data[i+3]=0;
+
+  }
+
+  else if(
+   soft>0 &&
+   distance<limit+soft
+  ){
+
+   data[i+3]=
+   Math.round(
+    255*
+    ((distance-limit)/soft)
+   );
+
+  }
+
+ }
+
+
+ ctx.putImageData(
+  imageData,
+  0,
+  0
+ );
+
+
+ createDownload();
+
+ status.style.display =
+ "block";
+
+}
+
+
+/* DOWNLOAD */
+
+function createDownload(){
+
+ canvas.toBlob(
+ function(blob){
+
+  if(!blob)return;
+
+  const url =
+  URL.createObjectURL(blob);
+
+  downloadBtn.href =
+  url;
+
+  const base =
+  selectedFile.name
+  .replace(
+   /\.[^/.]+$/,
+   ""
+  );
+
+  downloadBtn.download =
+  base+
+  "-transparent.png";
+
+  downloadBtn.style.display =
+  "block";
+
+ },
+ "image/png"
+ );
+
+}
+
+
+/* RESET */
+
+resetBtn.onclick =
+function(){
+
+ reset();
+
+};
+
+
+function reset(){
+
+ if(!originalImage.src)
+ return;
+
+
+ ctx.clearRect(
+  0,
+  0,
+  canvas.width,
+  canvas.height
+ );
+
+
+ ctx.drawImage(
+  originalImage,
+  0,
+  0
+ );
+
+
+ tolerance.value=35;
+ softness.value=0;
+
+ toleranceValue.textContent="35";
+ softnessValue.textContent="0";
+
+ downloadBtn.style.display="none";
+
+ status.style.display="none";
+
+}
+
+
+/* FORMAT */
+
+function formatBytes(bytes){
+
+ if(bytes===0)
+ return "0 Bytes";
+
+
+ const units=[
+  "Bytes",
+  "KB",
+  "MB",
+  "GB"
+ ];
+
+
+ const index =
+ Math.floor(
+  Math.log(bytes)/
+  Math.log(1024)
+ );
+
+
+ return (
+  bytes/
+  Math.pow(1024,index)
+ ).toFixed(2)
+ +" "+
+ units[index];
+
+}
+
+</script>
+
+</body>
+</html>

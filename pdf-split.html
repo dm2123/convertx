@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>Split PDF — ConvertX</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#070711;
+    color:#fff;
+}
+
+.container{
+    width:min(850px,92%);
+    margin:auto;
+}
+
+.nav{
+    margin:20px 0;
+    padding:14px 18px;
+    border:1px solid #ffffff1c;
+    border-radius:18px;
+    background:#ffffff08;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    color:white;
+    text-decoration:none;
+    font-size:20px;
+    font-weight:800;
+}
+
+.back{
+    color:#9999aa;
+    text-decoration:none;
+    font-size:13px;
+}
+
+.hero{
+    text-align:center;
+    padding:55px 0 30px;
+}
+
+.badge{
+    display:inline-block;
+    padding:7px 12px;
+    border-radius:50px;
+    background:#7c5cff18;
+    border:1px solid #7c5cff44;
+    color:#c6bcff;
+    font-size:11px;
+    font-weight:bold;
+}
+
+h1{
+    font-size:clamp(40px,7vw,64px);
+    letter-spacing:-3px;
+    margin:20px 0 12px;
+}
+
+.gradient{
+    background:linear-gradient(
+        90deg,
+        #8d72ff,
+        #42b8ff
+    );
+    -webkit-background-clip:text;
+    color:transparent;
+}
+
+.subtitle{
+    color:#9999aa;
+    line-height:1.7;
+    max-width:600px;
+    margin:auto;
+}
+
+.tool{
+    padding:12px;
+    border:1px solid #ffffff1c;
+    border-radius:25px;
+    background:#ffffff08;
+}
+
+.upload{
+    min-height:260px;
+    border:2px dashed #ffffff25;
+    border-radius:18px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    cursor:pointer;
+    padding:30px;
+}
+
+.upload:hover{
+    border-color:#7c5cff;
+    background:#7c5cff09;
+}
+
+.upload-icon{
+    font-size:45px;
+    margin-bottom:15px;
+}
+
+.upload h2{
+    margin:5px 0;
+}
+
+.upload p{
+    color:#9999aa;
+    font-size:13px;
+}
+
+.choose,
+.action{
+    border:0;
+    border-radius:11px;
+    padding:13px 20px;
+    background:linear-gradient(
+        135deg,
+        #7c5cff,
+        #28a7ff
+    );
+    color:#fff;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+input[type=file]{
+    display:none;
+}
+
+.workspace{
+    display:none;
+    padding:20px;
+}
+
+.file-info{
+    padding:15px;
+    border:1px solid #ffffff1a;
+    border-radius:14px;
+    background:#ffffff06;
+    margin-bottom:18px;
+}
+
+.file-name{
+    font-weight:bold;
+    font-size:14px;
+}
+
+.file-meta{
+    color:#9999aa;
+    font-size:11px;
+    margin-top:5px;
+}
+
+label{
+    display:block;
+    color:#aaaabb;
+    font-size:12px;
+    margin-bottom:8px;
+}
+
+textarea{
+    width:100%;
+    min-height:100px;
+    resize:vertical;
+    padding:14px;
+    border-radius:12px;
+    border:1px solid #ffffff1c;
+    outline:none;
+    background:#ffffff08;
+    color:#fff;
+    font-family:Arial;
+}
+
+.help{
+    margin-top:8px;
+    color:#777788;
+    font-size:11px;
+    line-height:1.6;
+}
+
+.pages{
+    margin-top:20px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+}
+
+.page{
+    padding:14px;
+    border:1px solid #ffffff1c;
+    border-radius:12px;
+    background:#ffffff06;
+    text-align:center;
+}
+
+.page-number{
+    font-size:13px;
+    font-weight:bold;
+}
+
+.page-check{
+    margin-top:8px;
+}
+
+.actions{
+    display:flex;
+    gap:10px;
+    margin-top:20px;
+}
+
+.reset{
+    flex:1;
+    border:1px solid #ffffff1c;
+    border-radius:11px;
+    background:#ffffff08;
+    color:white;
+    cursor:pointer;
+}
+
+.action{
+    flex:2;
+}
+
+.status{
+    display:none;
+    margin-top:20px;
+    padding:18px;
+    border-radius:15px;
+    text-align:center;
+    background:#55e6a508;
+    border:1px solid #55e6a533;
+}
+
+.download{
+    display:inline-block;
+    margin-top:10px;
+    padding:11px 18px;
+    border-radius:10px;
+    background:#55e6a5;
+    color:#06130d;
+    text-decoration:none;
+    font-weight:bold;
+    font-size:13px;
+}
+
+@media(max-width:600px){
+
+    .pages{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+    .actions{
+        flex-direction:column;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="nav">
+
+<a href="index.html" class="logo">
+↻ ConvertX
+</a>
+
+<a href="index.html" class="back">
+← Home
+</a>
+
+</div>
+
+
+<section class="hero">
+
+<span class="badge">
+PDF TOOL
+</span>
+
+<h1>
+Split <span class="gradient">PDF</span>
+</h1>
+
+<p class="subtitle">
+Extract selected pages from a PDF and create
+a new PDF instantly in your browser.
+</p>
+
+</section>
+
+
+<div class="tool">
+
+
+<div class="upload" id="upload">
+
+<div class="upload-icon">
+✂️
+</div>
+
+<h2>
+Drop your PDF here
+</h2>
+
+<p>
+Choose a PDF file to split
+</p>
+
+<button
+class="choose"
+id="choose">
+Choose PDF
+</button>
+
+<input
+id="file"
+type="file"
+accept="application/pdf">
+
+</div>
+
+
+<div class="workspace" id="workspace">
+
+<div class="file-info">
+
+<div
+class="file-name"
+id="fileName">
+</div>
+
+<div
+class="file-meta"
+id="fileMeta">
+</div>
+
+</div>
+
+
+<label>
+Pages to extract
+</label>
+
+<textarea
+id="ranges"
+placeholder="Example: 1, 3, 5-8, 10"></textarea>
+
+<div class="help">
+
+Use commas for individual pages and hyphens
+for page ranges.
+
+<br>
+
+Example:
+<strong>1, 3-5, 8</strong>
+
+</div>
+
+
+<div
+class="pages"
+id="pages">
+</div>
+
+
+<div class="actions">
+
+<button
+class="reset"
+id="reset">
+Clear
+</button>
+
+<button
+class="action"
+id="split">
+Split PDF
+</button>
+
+</div>
+
+
+<div
+class="status"
+id="status">
+
+<strong>
+✓ PDF created successfully
+</strong>
+
+<br>
+
+<a
+class="download"
+id="download">
+⬇ Download PDF
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+
+<script>
+
+const upload =
+document.getElementById("upload");
+
+const choose =
+document.getElementById("choose");
+
+const fileInput =
+document.getElementById("file");
+
+const workspace =
+document.getElementById("workspace");
+
+const fileName =
+document.getElementById("fileName");
+
+const fileMeta =
+document.getElementById("fileMeta");
+
+const ranges =
+document.getElementById("ranges");
+
+const pages =
+document.getElementById("pages");
+
+const split =
+document.getElementById("split");
+
+const reset =
+document.getElementById("reset");
+
+const status =
+document.getElementById("status");
+
+const download =
+document.getElementById("download");
+
+
+let selectedFile = null;
+
+let totalPages = 0;
+
+
+/* OPEN FILE */
+
+choose.onclick = function(e){
+
+    e.stopPropagation();
+
+    fileInput.click();
+
+};
+
+
+upload.onclick = function(){
+
+    fileInput.click();
+
+};
+
+
+/* FILE */
+
+fileInput.onchange = function(){
+
+    if(this.files[0]){
+
+        loadPDF(
+            this.files[0]
+        );
+
+    }
+
+};
+
+
+/* LOAD PDF */
+
+async function loadPDF(file){
+
+    if(
+        file.type !==
+        "application/pdf"
+    ){
+
+        alert(
+            "Please select a PDF file."
+        );
+
+        return;
+
+    }
+
+
+    selectedFile = file;
+
+
+    fileName.textContent =
+        file.name;
+
+
+    fileMeta.textContent =
+        formatBytes(file.size);
+
+
+    try{
+
+        const bytes =
+            await file.arrayBuffer();
+
+
+        const pdf =
+            await PDFLib.PDFDocument.load(
+                bytes
+            );
+
+
+        totalPages =
+            pdf.getPageCount();
+
+
+        createPageSelector();
+
+
+        upload.style.display =
+            "none";
+
+        workspace.style.display =
+            "block";
+
+        status.style.display =
+            "none";
+
+
+    }catch(error){
+
+        alert(
+            "Could not read this PDF."
+        );
+
+    }
+
+}
+
+
+/* PAGE SELECTOR */
+
+function createPageSelector(){
+
+    pages.innerHTML =
+        "";
+
+
+    for(
+        let i = 1;
+        i <= totalPages;
+        i++
+    ){
+
+        const box =
+            document.createElement(
+                "div"
+            );
+
+
+        box.className =
+            "page";
+
+
+        box.innerHTML = `
+
+            <div class="page-number">
+                Page ${i}
+            </div>
+
+            <input
+                class="page-check"
+                type="checkbox"
+                value="${i}">
+        `;
+
+
+        pages.appendChild(
+            box
+        );
+
+    }
+
+}
+
+
+/* CHECKBOXES → TEXT */
+
+pages.addEventListener(
+    "change",
+    function(){
+
+        const checked =
+            [
+                ...document.querySelectorAll(
+                    ".page-check:checked"
+                )
+            ]
+            .map(
+                x => x.value
+            );
+
+
+        ranges.value =
+            checked.join(", ");
+
+    }
+);
+
+
+/* SPLIT */
+
+split.onclick =
+async function(){
+
+    if(!selectedFile){
+
+        alert(
+            "Please choose a PDF."
+        );
+
+        return;
+
+    }
+
+
+    let pageNumbers =
+        parsePages(
+            ranges.value
+        );
+
+
+    if(!pageNumbers.length){
+
+        alert(
+            "Enter the pages you want."
+        );
+
+        return;
+
+    }
+
+
+    pageNumbers =
+        pageNumbers.filter(
+            p =>
+            p >= 1 &&
+            p <= totalPages
+        );
+
+
+    pageNumbers =
+        [...new Set(
+            pageNumbers
+        )];
+
+
+    if(!pageNumbers.length){
+
+        alert(
+            "No valid pages selected."
+        );
+
+        return;
+
+    }
+
+
+    split.disabled =
+        true;
+
+    split.textContent =
+        "Creating PDF...";
+
+
+    try{
+
+        const bytes =
+            await selectedFile.arrayBuffer();
+
+
+        const source =
+            await PDFLib.PDFDocument.load(
+                bytes
+            );
+
+
+        const output =
+            await PDFLib.PDFDocument.create();
+
+
+        const indices =
+            pageNumbers.map(
+                p => p - 1
+            );
+
+
+        const copied =
+            await output.copyPages(
+                source,
+                indices
+            );
+
+
+        copied.forEach(
+            page => {
+
+                output.addPage(
+                    page
+                );
+
+            }
+        );
+
+
+        const result =
+            await output.save();
+
+
+        const blob =
+            new Blob(
+                [result],
+                {
+                    type:
+                    "application/pdf"
+                }
+            );
+
+
+        const url =
+            URL.createObjectURL(
+                blob
+            );
+
+
+        download.href =
+            url;
+
+
+        download.download =
+            "split-pages.pdf";
+
+
+        status.style.display =
+            "block";
+
+
+    }catch(error){
+
+        console.error(error);
+
+        alert(
+            "Unable to create PDF."
+        );
+
+    }
+
+
+    split.disabled =
+        false;
+
+    split.textContent =
+        "Split PDF";
+
+};
+
+
+/* PARSE PAGES */
+
+function parsePages(text){
+
+    const result = [];
+
+
+    text
+    .split(",")
+    .forEach(
+        part => {
+
+            part =
+                part.trim();
+
+
+            if(
+                part.includes("-")
+            ){
+
+                const values =
+                    part.split("-");
+
+
+                const start =
+                    parseInt(
+                        values[0]
+                    );
+
+
+                const end =
+                    parseInt(
+                        values[1]
+                    );
+
+
+                if(
+                    Number.isInteger(start) &&
+                    Number.isInteger(end)
+                ){
+
+                    const from =
+                        Math.min(
+                            start,
+                            end
+                        );
+
+
+                    const to =
+                        Math.max(
+                            start,
+                            end
+                        );
+
+
+                    for(
+                        let i = from;
+                        i <= to;
+                        i++
+                    ){
+
+                        result.push(i);
+
+                    }
+
+                }
+
+            }else{
+
+                const page =
+                    parseInt(part);
+
+
+                if(
+                    Number.isInteger(page)
+                ){
+
+                    result.push(page);
+
+                }
+
+            }
+
+        }
+    );
+
+
+    return result;
+
+}
+
+
+/* RESET */
+
+reset.onclick =
+function(){
+
+    selectedFile =
+        null;
+
+    totalPages =
+        0;
+
+    fileInput.value =
+        "";
+
+    ranges.value =
+        "";
+
+    pages.innerHTML =
+        "";
+
+    status.style.display =
+        "none";
+
+    workspace.style.display =
+        "none";
+
+    upload.style.display =
+        "flex";
+
+};
+
+
+/* SIZE */
+
+function formatBytes(bytes){
+
+    if(!bytes)
+        return "0 Bytes";
+
+
+    const units =
+        [
+            "Bytes",
+            "KB",
+            "MB",
+            "GB"
+        ];
+
+
+    const i =
+        Math.floor(
+            Math.log(bytes) /
+            Math.log(1024)
+        );
+
+
+    return (
+        bytes /
+        Math.pow(1024,i)
+    ).toFixed(2)
+    +
+    " "
+    +
+    units[i];
+
+}
+
+</script>
+
+</body>
+</html>

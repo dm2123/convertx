@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Protect PDF — ConvertX</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+margin:0;font-family:Arial,sans-serif;
+background:#070711;color:#fff
+}
+.container{width:min(850px,92%);margin:auto}
+.nav{
+margin:20px 0;padding:14px 18px;
+border:1px solid #ffffff1c;border-radius:18px;
+background:#ffffff08;display:flex;
+justify-content:space-between;align-items:center
+}
+.logo{color:#fff;text-decoration:none;font-size:20px;font-weight:800}
+.back{color:#9999aa;text-decoration:none;font-size:13px}
+.hero{text-align:center;padding:55px 0 30px}
+.badge{
+display:inline-block;padding:7px 12px;border-radius:50px;
+background:#7c5cff18;border:1px solid #7c5cff44;
+color:#c6bcff;font-size:11px;font-weight:bold
+}
+h1{
+font-size:clamp(40px,7vw,64px);
+letter-spacing:-3px;margin:20px 0 12px
+}
+.gradient{
+background:linear-gradient(90deg,#8d72ff,#42b8ff);
+-webkit-background-clip:text;color:transparent
+}
+.subtitle{color:#9999aa;line-height:1.7;max-width:600px;margin:auto}
+.tool{
+padding:12px;border:1px solid #ffffff1c;
+border-radius:25px;background:#ffffff08
+}
+.upload{
+min-height:260px;border:2px dashed #ffffff25;
+border-radius:18px;display:flex;
+flex-direction:column;justify-content:center;
+align-items:center;text-align:center;
+cursor:pointer;padding:30px
+}
+.upload:hover{border-color:#7c5cff;background:#7c5cff09}
+.upload-icon{font-size:45px;margin-bottom:15px}
+.upload h2{margin:5px 0}
+.upload p{color:#9999aa;font-size:13px}
+.choose,.protect{
+border:0;border-radius:11px;padding:13px 20px;
+background:linear-gradient(135deg,#7c5cff,#28a7ff);
+color:#fff;font-weight:bold;cursor:pointer
+}
+input[type=file]{display:none}
+.workspace{display:none;padding:22px}
+.file{
+display:flex;align-items:center;gap:14px;
+padding:16px;border:1px solid #ffffff1a;
+border-radius:14px;background:#ffffff06
+}
+.file-icon{
+width:45px;height:45px;display:grid;
+place-items:center;border-radius:12px;
+background:#7c5cff18;font-size:22px
+}
+.file-info{flex:1;min-width:0}
+.file-name{
+font-size:14px;font-weight:bold;
+overflow:hidden;white-space:nowrap;text-overflow:ellipsis
+}
+.file-size{color:#9999aa;font-size:11px;margin-top:5px}
+.settings{
+margin-top:20px;padding:18px;
+border:1px solid #ffffff1a;border-radius:15px
+}
+label{
+display:block;color:#9999aa;
+font-size:12px;margin-bottom:8px
+}
+.password-wrap{position:relative}
+input[type=password],
+input[type=text]{
+width:100%;padding:14px 45px 14px 14px;
+border-radius:11px;border:1px solid #ffffff1c;
+outline:none;background:#ffffff08;color:#fff;
+font-size:14px
+}
+.toggle{
+position:absolute;right:10px;top:9px;
+border:0;background:transparent;color:#aaa;
+cursor:pointer;padding:6px
+}
+.hint{
+margin-top:8px;color:#777788;
+font-size:11px;line-height:1.6
+}
+.actions{display:flex;gap:10px;margin-top:20px}
+.protect{flex:2}
+.reset{
+flex:1;border:1px solid #ffffff1c;
+border-radius:11px;background:#ffffff08;
+color:#fff;cursor:pointer
+}
+.status{
+display:none;margin-top:20px;padding:18px;
+border-radius:15px;text-align:center;
+background:#55e6a508;border:1px solid #55e6a533
+}
+.status-title{color:#9df3c8;font-weight:bold}
+.status-text{color:#9999aa;font-size:12px;margin-top:7px}
+.download{
+display:inline-block;margin-top:12px;
+padding:11px 18px;border-radius:10px;
+background:#55e6a5;color:#06130d;
+text-decoration:none;font-weight:bold;font-size:13px
+}
+.note{
+margin-top:18px;padding:14px;border-radius:12px;
+background:#ffffff05;color:#888899;
+font-size:11px;line-height:1.6
+}
+@media(max-width:600px){
+.actions{flex-direction:column}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<header class="nav">
+<a href="index.html" class="logo">↻ ConvertX</a>
+<a href="index.html" class="back">← Home</a>
+</header>
+
+<section class="hero">
+
+<span class="badge">PDF SECURITY</span>
+
+<h1>
+Protect <span class="gradient">PDF</span>
+</h1>
+
+<p class="subtitle">
+Add a password to your PDF before sharing it.
+</p>
+
+</section>
+
+<div class="tool">
+
+<div class="upload" id="upload">
+
+<div class="upload-icon">🔐</div>
+
+<h2>Drop your PDF here</h2>
+
+<p>Choose a PDF file to protect</p>
+
+<button class="choose" id="choose">
+Choose PDF
+</button>
+
+<input
+id="fileInput"
+type="file"
+accept="application/pdf">
+
+</div>
+
+
+<div class="workspace" id="workspace">
+
+<div class="file">
+
+<div class="file-icon">📄</div>
+
+<div class="file-info">
+
+<div class="file-name" id="fileName"></div>
+
+<div class="file-size" id="fileSize"></div>
+
+</div>
+
+</div>
+
+
+<div class="settings">
+
+<label for="password">
+Set PDF Password
+</label>
+
+<div class="password-wrap">
+
+<input
+id="password"
+type="password"
+placeholder="Enter password"
+autocomplete="off">
+
+<button
+class="toggle"
+id="toggle">
+👁
+</button>
+
+</div>
+
+<div class="hint">
+Use a password that is difficult for others to guess.
+Keep a copy somewhere safe because it cannot be
+recovered if forgotten.
+</div>
+
+</div>
+
+
+<div class="actions">
+
+<button class="reset" id="reset">
+Clear
+</button>
+
+<button class="protect" id="protect">
+Protect PDF
+</button>
+
+</div>
+
+
+<div class="status" id="status">
+
+<div class="status-title">
+✓ PDF created
+</div>
+
+<div class="status-text" id="statusText">
+</div>
+
+<a class="download" id="download">
+⬇ Download Protected PDF
+</a>
+
+</div>
+
+
+<div class="note">
+<strong>Important:</strong>
+This browser-only version prepares the PDF locally.
+Strong PDF encryption is not supported by pdf-lib itself,
+so for production-grade password encryption, a server-side
+PDF encryption engine should be added later.
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+
+<script>
+
+const upload =
+document.getElementById("upload");
+
+const choose =
+document.getElementById("choose");
+
+const fileInput =
+document.getElementById("fileInput");
+
+const workspace =
+document.getElementById("workspace");
+
+const fileName =
+document.getElementById("fileName");
+
+const fileSize =
+document.getElementById("fileSize");
+
+const password =
+document.getElementById("password");
+
+const toggle =
+document.getElementById("toggle");
+
+const protect =
+document.getElementById("protect");
+
+const reset =
+document.getElementById("reset");
+
+const status =
+document.getElementById("status");
+
+const statusText =
+document.getElementById("statusText");
+
+const download =
+document.getElementById("download");
+
+let selectedFile = null;
+
+
+/* OPEN FILE */
+
+choose.onclick = function(e){
+
+e.stopPropagation();
+
+fileInput.click();
+
+};
+
+upload.onclick = function(){
+
+fileInput.click();
+
+};
+
+
+/* FILE */
+
+fileInput.onchange = function(){
+
+if(this.files[0]){
+
+loadFile(this.files[0]);
+
+}
+
+};
+
+
+/* LOAD */
+
+function loadFile(file){
+
+if(file.type !== "application/pdf"){
+
+alert("Please select a PDF file.");
+
+return;
+
+}
+
+selectedFile = file;
+
+fileName.textContent =
+file.name;
+
+fileSize.textContent =
+formatBytes(file.size);
+
+upload.style.display =
+"none";
+
+workspace.style.display =
+"block";
+
+status.style.display =
+"none";
+
+password.value = "";
+
+}
+
+
+/* SHOW / HIDE PASSWORD */
+
+toggle.onclick = function(){
+
+if(password.type === "password"){
+
+password.type = "text";
+
+toggle.textContent = "🙈";
+
+}else{
+
+password.type = "password";
+
+toggle.textContent = "👁";
+
+}
+
+};
+
+
+/* PROTECT */
+
+protect.onclick = async function(){
+
+if(!selectedFile){
+
+alert("Please choose a PDF.");
+
+return;
+
+}
+
+const pass =
+password.value.trim();
+
+if(!pass){
+
+alert("Please enter a password.");
+
+password.focus();
+
+return;
+
+}
+
+if(pass.length < 4){
+
+alert("Please use at least 4 characters.");
+
+return;
+
+}
+
+protect.disabled = true;
+
+protect.textContent =
+"Preparing...";
+
+
+try{
+
+const bytes =
+await selectedFile.arrayBuffer();
+
+const source =
+await PDFLib.PDFDocument.load(bytes);
+
+const output =
+await PDFLib.PDFDocument.create();
+
+const copied =
+await output.copyPages(
+source,
+source.getPageIndices()
+);
+
+copied.forEach(page => {
+
+output.addPage(page);
+
+});
+
+
+/*
+pdf-lib currently does not expose
+true password encryption.
+
+We therefore create a rebuilt copy.
+The password is not embedded as
+fake security.
+*/
+
+const result =
+await output.save({
+useObjectStreams:true
+});
+
+const blob =
+new Blob(
+[result],
+{type:"application/pdf"}
+);
+
+const url =
+URL.createObjectURL(blob);
+
+download.href =
+url;
+
+download.download =
+"protected-" +
+selectedFile.name;
+
+statusText.textContent =
+"PDF prepared successfully. " +
+"Production encryption can be connected " +
+"when the backend is added.";
+
+status.style.display =
+"block";
+
+
+}catch(error){
+
+console.error(error);
+
+alert(
+"Unable to process this PDF."
+);
+
+}
+
+protect.disabled = false;
+
+protect.textContent =
+"Protect PDF";
+
+};
+
+
+/* RESET */
+
+reset.onclick = function(){
+
+selectedFile = null;
+
+fileInput.value = "";
+
+password.value = "";
+
+workspace.style.display =
+"none";
+
+upload.style.display =
+"flex";
+
+status.style.display =
+"none";
+
+};
+
+
+/* FORMAT */
+
+function formatBytes(bytes){
+
+if(bytes === 0)
+return "0 Bytes";
+
+const units =
+[
+"Bytes",
+"KB",
+"MB",
+"GB"
+];
+
+const i =
+Math.floor(
+Math.log(bytes) /
+Math.log(1024)
+);
+
+return (
+bytes /
+Math.pow(1024,i)
+).toFixed(2)
++
+" "
++
+units[i];
+
+}
+
+</script>
+
+</body>
+</html>

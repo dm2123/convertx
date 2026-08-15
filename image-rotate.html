@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>Rotate Image Online — ConvertX</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#070711;
+    color:#fff;
+}
+
+.container{
+    width:min(1000px,92%);
+    margin:auto;
+}
+
+.nav{
+    margin:20px 0;
+    padding:14px 18px;
+    border:1px solid #ffffff1c;
+    border-radius:18px;
+    background:#ffffff08;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    color:#fff;
+    text-decoration:none;
+    font-size:20px;
+    font-weight:800;
+}
+
+.back{
+    color:#9999aa;
+    text-decoration:none;
+    font-size:13px;
+}
+
+.hero{
+    text-align:center;
+    padding:45px 0 30px;
+}
+
+.badge{
+    display:inline-block;
+    padding:7px 12px;
+    border-radius:50px;
+    background:#ff6b3512;
+    border:1px solid #ff6b3535;
+    color:#ffb59b;
+    font-size:11px;
+    font-weight:bold;
+}
+
+h1{
+    font-size:clamp(40px,7vw,64px);
+    letter-spacing:-3px;
+    margin:20px 0 12px;
+}
+
+.gradient{
+    background:linear-gradient(90deg,#ff7b4d,#ff3d81);
+    -webkit-background-clip:text;
+    color:transparent;
+}
+
+.subtitle{
+    color:#9999aa;
+    line-height:1.7;
+    max-width:650px;
+    margin:auto;
+}
+
+.tool{
+    padding:12px;
+    border:1px solid #ffffff1c;
+    border-radius:25px;
+    background:#ffffff08;
+}
+
+.upload{
+    min-height:270px;
+    border:2px dashed #ffffff25;
+    border-radius:18px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    cursor:pointer;
+    padding:30px;
+}
+
+.upload:hover{
+    border-color:#ff6b35;
+    background:#ff6b3508;
+}
+
+.upload-icon{
+    font-size:48px;
+    margin-bottom:14px;
+}
+
+.upload h2{
+    margin:5px 0;
+}
+
+.upload p{
+    color:#9999aa;
+    font-size:13px;
+}
+
+.choose,
+.download-btn{
+    border:0;
+    border-radius:11px;
+    padding:13px 20px;
+    background:linear-gradient(135deg,#ff7b4d,#ff3d81);
+    color:#fff;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+input[type=file]{
+    display:none;
+}
+
+.workspace{
+    display:none;
+    padding:22px;
+}
+
+.editor{
+    display:grid;
+    grid-template-columns:1fr 280px;
+    gap:20px;
+}
+
+.preview-area{
+    min-height:450px;
+    padding:20px;
+    border:1px solid #ffffff18;
+    border-radius:18px;
+    background:
+        linear-gradient(45deg,#11111b 25%,transparent 25%),
+        linear-gradient(-45deg,#11111b 25%,transparent 25%),
+        linear-gradient(45deg,transparent 75%,#11111b 75%),
+        linear-gradient(-45deg,transparent 75%,#11111b 75%);
+    background-size:30px 30px;
+    background-position:0 0,0 15px,15px -15px,-15px 0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+}
+
+.preview-area img{
+    max-width:100%;
+    max-height:400px;
+    object-fit:contain;
+    transition:transform .25s ease;
+    border-radius:8px;
+}
+
+.controls{
+    padding:18px;
+    border:1px solid #ffffff18;
+    border-radius:18px;
+    background:#ffffff05;
+}
+
+.title{
+    color:#aaaabb;
+    font-size:11px;
+    font-weight:bold;
+    margin-bottom:12px;
+}
+
+.angle-display{
+    text-align:center;
+    font-size:34px;
+    font-weight:bold;
+    margin:15px 0 20px;
+}
+
+.angle-display span{
+    color:#ff7b4d;
+}
+
+.rotate-buttons{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:9px;
+}
+
+.rotate-buttons button,
+.action-btn{
+    border:1px solid #ffffff1c;
+    border-radius:10px;
+    padding:11px 8px;
+    background:#ffffff08;
+    color:#fff;
+    cursor:pointer;
+}
+
+.rotate-buttons button:hover,
+.action-btn:hover{
+    border-color:#ff7b4d;
+    background:#ff7b4d10;
+}
+
+.slider{
+    margin-top:22px;
+}
+
+input[type=range]{
+    width:100%;
+    accent-color:#ff6b35;
+}
+
+.file-info{
+    margin-bottom:20px;
+    padding:14px;
+    border:1px solid #ffffff15;
+    border-radius:12px;
+    background:#ffffff06;
+}
+
+.file-name{
+    font-size:13px;
+    font-weight:bold;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+
+.file-size{
+    color:#888899;
+    font-size:10px;
+    margin-top:5px;
+}
+
+.info{
+    margin-top:18px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+}
+
+.info-box{
+    padding:10px;
+    background:#ffffff06;
+    border-radius:9px;
+}
+
+.info-box span{
+    display:block;
+    color:#777788;
+    font-size:9px;
+    margin-bottom:4px;
+}
+
+.info-box strong{
+    font-size:12px;
+}
+
+.actions{
+    display:flex;
+    gap:10px;
+    margin-top:20px;
+}
+
+.reset{
+    flex:1;
+}
+
+.download-btn{
+    flex:2;
+}
+
+.status{
+    display:none;
+    margin-top:20px;
+    padding:18px;
+    border-radius:15px;
+    text-align:center;
+    background:#55e6a508;
+    border:1px solid #55e6a533;
+}
+
+.success{
+    color:#9df3c8;
+    font-weight:bold;
+}
+
+.download{
+    display:inline-block;
+    margin-top:12px;
+    padding:11px 18px;
+    border-radius:10px;
+    background:#55e6a5;
+    color:#06130d;
+    text-decoration:none;
+    font-weight:bold;
+    font-size:13px;
+}
+
+@media(max-width:750px){
+
+    .editor{
+        grid-template-columns:1fr;
+    }
+
+    .preview-area{
+        min-height:320px;
+    }
+
+    .preview-area img{
+        max-height:280px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<header class="nav">
+
+<a href="index.html" class="logo">
+↻ ConvertX
+</a>
+
+<a href="index.html" class="back">
+← Home
+</a>
+
+</header>
+
+
+<section class="hero">
+
+<span class="badge">
+IMAGE TOOL
+</span>
+
+<h1>
+Rotate <span class="gradient">Image</span>
+</h1>
+
+<p class="subtitle">
+Rotate your image by 90°, 180°, 270° or any custom angle
+and download the result instantly.
+</p>
+
+</section>
+
+
+<div class="tool">
+
+
+<div class="upload" id="upload">
+
+<div class="upload-icon">
+🔄
+</div>
+
+<h2>
+Drop your image here
+</h2>
+
+<p>
+JPG, PNG, WEBP and other browser-supported images
+</p>
+
+<button class="choose" id="choose">
+Choose Image
+</button>
+
+<input
+type="file"
+id="fileInput"
+accept="image/*">
+
+</div>
+
+
+<div class="workspace" id="workspace">
+
+
+<div class="editor">
+
+
+<div class="preview-area">
+
+<img
+id="preview"
+alt="Image Preview">
+
+</div>
+
+
+<div class="controls">
+
+
+<div class="file-info">
+
+<div
+class="file-name"
+id="fileName">
+</div>
+
+<div
+class="file-size"
+id="fileSize">
+</div>
+
+</div>
+
+
+<div class="title">
+ROTATION
+</div>
+
+
+<div
+class="angle-display">
+
+<span id="angle">
+0
+</span>°
+
+</div>
+
+
+<div class="rotate-buttons">
+
+<button id="left">
+↶ 90° Left
+</button>
+
+<button id="right">
+↷ 90° Right
+</button>
+
+<button id="flip180">
+↕ 180°
+</button>
+
+<button id="resetAngle">
+Reset
+</button>
+
+</div>
+
+
+<div class="slider">
+
+<div class="title">
+CUSTOM ANGLE
+</div>
+
+<input
+type="range"
+id="slider"
+min="0"
+max="359"
+value="0">
+
+</div>
+
+
+<div class="info">
+
+<div class="info-box">
+
+<span>ORIGINAL</span>
+
+<strong id="originalSize">
+—
+</strong>
+
+</div>
+
+<div class="info-box">
+
+<span>ANGLE</span>
+
+<strong id="angleInfo">
+0°
+</strong>
+
+</div>
+
+</div>
+
+
+<div class="actions">
+
+<button
+class="action-btn reset"
+id="clear">
+Clear
+</button>
+
+<button
+class="download-btn"
+id="downloadBtn">
+Rotate & Download
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div
+class="status"
+id="status">
+
+<div class="success">
+✓ Image rotated successfully
+</div>
+
+<a
+id="download"
+class="download">
+⬇ Download Rotated Image
+</a>
+
+</div>
+
+
+</div>
+
+</div>
+
+</div>
+
+
+<script>
+
+const upload =
+document.getElementById("upload");
+
+const choose =
+document.getElementById("choose");
+
+const fileInput =
+document.getElementById("fileInput");
+
+const workspace =
+document.getElementById("workspace");
+
+const preview =
+document.getElementById("preview");
+
+const fileName =
+document.getElementById("fileName");
+
+const fileSize =
+document.getElementById("fileSize");
+
+const originalSize =
+document.getElementById("originalSize");
+
+const angle =
+document.getElementById("angle");
+
+const angleInfo =
+document.getElementById("angleInfo");
+
+const slider =
+document.getElementById("slider");
+
+const left =
+document.getElementById("left");
+
+const right =
+document.getElementById("right");
+
+const flip180 =
+document.getElementById("flip180");
+
+const resetAngle =
+document.getElementById("resetAngle");
+
+const clear =
+document.getElementById("clear");
+
+const downloadBtn =
+document.getElementById("downloadBtn");
+
+const status =
+document.getElementById("status");
+
+const download =
+document.getElementById("download");
+
+
+let selectedFile = null;
+
+let image = new Image();
+
+let currentAngle = 0;
+
+
+/* OPEN FILE */
+
+choose.onclick =
+function(e){
+
+    e.stopPropagation();
+
+    fileInput.click();
+
+};
+
+upload.onclick =
+function(){
+
+    fileInput.click();
+
+};
+
+
+/* FILE SELECTED */
+
+fileInput.onchange =
+function(){
+
+    if(this.files[0]){
+
+        loadImage(
+            this.files[0]
+        );
+
+    }
+
+};
+
+
+/* LOAD IMAGE */
+
+function loadImage(file){
+
+    if(
+        !file.type.startsWith("image/")
+    ){
+
+        alert(
+            "Please select an image."
+        );
+
+        return;
+
+    }
+
+
+    selectedFile = file;
+
+
+    fileName.textContent =
+        file.name;
+
+
+    fileSize.textContent =
+        formatBytes(file.size);
+
+
+    const reader =
+        new FileReader();
+
+
+    reader.onload =
+    function(e){
+
+        image.onload =
+        function(){
+
+            preview.src =
+                image.src;
+
+
+            originalSize.textContent =
+                image.naturalWidth +
+                " × " +
+                image.naturalHeight;
+
+
+            currentAngle = 0;
+
+            updateAngle();
+
+
+            workspace.style.display =
+                "block";
+
+
+            upload.style.display =
+                "none";
+
+
+            status.style.display =
+                "none";
+
+        };
+
+
+        image.src =
+            e.target.result;
+
+    };
+
+
+    reader.readAsDataURL(file);
+
+}
+
+
+/* UPDATE ANGLE */
+
+function updateAngle(){
+
+    currentAngle =
+        ((currentAngle % 360) + 360) % 360;
+
+
+    angle.textContent =
+        currentAngle;
+
+
+    angleInfo.textContent =
+        currentAngle + "°";
+
+
+    slider.value =
+        currentAngle;
+
+
+    preview.style.transform =
+        "rotate(" +
+        currentAngle +
+        "deg)";
+
+}
+
+
+/* LEFT */
+
+left.onclick =
+function(){
+
+    currentAngle -= 90;
+
+    updateAngle();
+
+};
+
+
+/* RIGHT */
+
+right.onclick =
+function(){
+
+    currentAngle += 90;
+
+    updateAngle();
+
+};
+
+
+/* 180 */
+
+flip180.onclick =
+function(){
+
+    currentAngle += 180;
+
+    updateAngle();
+
+};
+
+
+/* RESET ANGLE */
+
+resetAngle.onclick =
+function(){
+
+    currentAngle = 0;
+
+    updateAngle();
+
+};
+
+
+/* CUSTOM ANGLE */
+
+slider.oninput =
+function(){
+
+    currentAngle =
+        Number(this.value);
+
+    updateAngle();
+
+};
+
+
+/* DOWNLOAD */
+
+downloadBtn.onclick =
+function(){
+
+    if(!selectedFile){
+
+        alert(
+            "Please choose an image."
+        );
+
+        return;
+
+    }
+
+
+    downloadBtn.disabled =
+        true;
+
+    downloadBtn.textContent =
+        "Processing...";
+
+
+    const radians =
+        currentAngle *
+        Math.PI /
+        180;
+
+
+    const sin =
+        Math.abs(
+            Math.sin(radians)
+        );
+
+    const cos =
+        Math.abs(
+            Math.cos(radians)
+        );
+
+
+    const width =
+        image.naturalWidth;
+
+    const height =
+        image.naturalHeight;
+
+
+    const outputWidth =
+        Math.ceil(
+            width * cos +
+            height * sin
+        );
+
+
+    const outputHeight =
+        Math.ceil(
+            width * sin +
+            height * cos
+        );
+
+
+    const canvas =
+        document.createElement(
+            "canvas"
+        );
+
+
+    canvas.width =
+        outputWidth;
+
+    canvas.height =
+        outputHeight;
+
+
+    const ctx =
+        canvas.getContext("2d");
+
+
+    ctx.translate(
+        outputWidth / 2,
+        outputHeight / 2
+    );
+
+
+    ctx.rotate(
+        radians
+    );
+
+
+    ctx.drawImage(
+        image,
+        -width / 2,
+        -height / 2
+    );
+
+
+    const type =
+        selectedFile.type ===
+        "image/png"
+        ? "image/png"
+        : "image/jpeg";
+
+
+    canvas.toBlob(
+        function(blob){
+
+            if(!blob){
+
+                alert(
+                    "Could not create image."
+                );
+
+                downloadBtn.disabled =
+                    false;
+
+                downloadBtn.textContent =
+                    "Rotate & Download";
+
+                return;
+
+            }
+
+
+            const url =
+                URL.createObjectURL(
+                    blob
+                );
+
+
+            const baseName =
+                selectedFile.name
+                .replace(
+                    /\.[^/.]+$/,
+                    ""
+                );
+
+
+            const extension =
+                type ===
+                "image/png"
+                ? "png"
+                : "jpg";
+
+
+            download.href =
+                url;
+
+
+            download.download =
+                baseName +
+                "-rotated-" +
+                currentAngle +
+                "." +
+                extension;
+
+
+            status.style.display =
+                "block";
+
+
+            downloadBtn.disabled =
+                false;
+
+            downloadBtn.textContent =
+                "Rotate & Download";
+
+        },
+        type,
+        0.92
+    );
+
+};
+
+
+/* CLEAR */
+
+clear.onclick =
+function(){
+
+    selectedFile = null;
+
+    image = new Image();
+
+    currentAngle = 0;
+
+    fileInput.value = "";
+
+    preview.src = "";
+
+    workspace.style.display =
+        "none";
+
+    upload.style.display =
+        "flex";
+
+    status.style.display =
+        "none";
+
+    updateAngle();
+
+};
+
+
+/* FILE SIZE */
+
+function formatBytes(bytes){
+
+    if(bytes === 0)
+        return "0 Bytes";
+
+
+    const units = [
+        "Bytes",
+        "KB",
+        "MB",
+        "GB"
+    ];
+
+
+    const i =
+        Math.floor(
+            Math.log(bytes) /
+            Math.log(1024)
+        );
+
+
+    return (
+        bytes /
+        Math.pow(1024,i)
+    ).toFixed(2)
+    +
+    " "
+    +
+    units[i];
+
+}
+
+</script>
+
+</body>
+</html>

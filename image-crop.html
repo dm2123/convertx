@@ -1,0 +1,1314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Image Crop — ConvertX</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+ margin:0;
+ font-family:Arial,sans-serif;
+ background:#070711;
+ color:#fff;
+}
+
+.container{
+ width:min(950px,92%);
+ margin:auto;
+}
+
+.nav{
+ margin:20px 0;
+ padding:14px 18px;
+ border:1px solid #ffffff1c;
+ border-radius:18px;
+ background:#ffffff08;
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+}
+
+.logo{
+ color:#fff;
+ text-decoration:none;
+ font-size:20px;
+ font-weight:800;
+}
+
+.back{
+ color:#9999aa;
+ text-decoration:none;
+ font-size:13px;
+}
+
+.hero{
+ text-align:center;
+ padding:50px 0 30px;
+}
+
+.badge{
+ display:inline-block;
+ padding:7px 12px;
+ border-radius:50px;
+ background:#ffb52e12;
+ border:1px solid #ffb52e35;
+ color:#ffd77c;
+ font-size:11px;
+ font-weight:bold;
+}
+
+h1{
+ font-size:clamp(40px,7vw,64px);
+ letter-spacing:-3px;
+ margin:20px 0 12px;
+}
+
+.gradient{
+ background:linear-gradient(90deg,#ffbd42,#ff6f91);
+ -webkit-background-clip:text;
+ color:transparent;
+}
+
+.subtitle{
+ color:#9999aa;
+ line-height:1.7;
+ max-width:620px;
+ margin:auto;
+}
+
+.tool{
+ padding:12px;
+ border:1px solid #ffffff1c;
+ border-radius:25px;
+ background:#ffffff08;
+}
+
+.upload{
+ min-height:260px;
+ border:2px dashed #ffffff25;
+ border-radius:18px;
+ display:flex;
+ flex-direction:column;
+ justify-content:center;
+ align-items:center;
+ text-align:center;
+ cursor:pointer;
+ padding:30px;
+}
+
+.upload:hover{
+ border-color:#ffb52e;
+ background:#ffb52e08;
+}
+
+.upload-icon{
+ font-size:45px;
+ margin-bottom:15px;
+}
+
+.upload h2{
+ margin:5px 0;
+}
+
+.upload p{
+ color:#9999aa;
+ font-size:13px;
+}
+
+.choose,
+.download-btn{
+ border:0;
+ border-radius:11px;
+ padding:13px 20px;
+ background:linear-gradient(135deg,#ffbd42,#ff6f91);
+ color:#160c00;
+ font-weight:bold;
+ cursor:pointer;
+}
+
+input[type=file]{
+ display:none;
+}
+
+.workspace{
+ display:none;
+ padding:22px;
+}
+
+.editor{
+ margin-top:20px;
+ display:grid;
+ grid-template-columns:1fr 280px;
+ gap:20px;
+}
+
+.canvas-area{
+ min-height:420px;
+ padding:18px;
+ border:1px solid #ffffff1c;
+ border-radius:16px;
+ background:#05050c;
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ overflow:hidden;
+}
+
+.canvas-wrap{
+ position:relative;
+ max-width:100%;
+ max-height:550px;
+}
+
+#canvas{
+ display:block;
+ max-width:100%;
+ max-height:550px;
+}
+
+.crop-box{
+ position:absolute;
+ border:2px solid #fff;
+ box-shadow:0 0 0 9999px #0008;
+ cursor:move;
+ display:none;
+}
+
+.crop-handle{
+ position:absolute;
+ width:14px;
+ height:14px;
+ background:#fff;
+ border-radius:50%;
+}
+
+.tl{left:-7px;top:-7px;cursor:nwse-resize}
+.tr{right:-7px;top:-7px;cursor:nesw-resize}
+.bl{left:-7px;bottom:-7px;cursor:nesw-resize}
+.br{right:-7px;bottom:-7px;cursor:nwse-resize}
+
+.controls{
+ padding:18px;
+ border:1px solid #ffffff1c;
+ border-radius:16px;
+ background:#ffffff05;
+}
+
+.control-title{
+ font-size:13px;
+ font-weight:bold;
+ margin-bottom:15px;
+}
+
+.ratio{
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:8px;
+}
+
+.ratio button{
+ padding:10px;
+ border:1px solid #ffffff1c;
+ border-radius:9px;
+ background:#ffffff08;
+ color:#fff;
+ cursor:pointer;
+ font-size:11px;
+}
+
+.ratio button.active{
+ border-color:#ffbd42;
+ background:#ffbd4215;
+}
+
+.info{
+ margin-top:18px;
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:8px;
+}
+
+.info div{
+ padding:10px;
+ border-radius:9px;
+ background:#ffffff06;
+}
+
+.info span{
+ display:block;
+ color:#777788;
+ font-size:9px;
+ margin-bottom:4px;
+}
+
+.info strong{
+ font-size:12px;
+}
+
+.actions{
+ display:flex;
+ gap:10px;
+ margin-top:20px;
+}
+
+.reset{
+ flex:1;
+ border:1px solid #ffffff1c;
+ border-radius:11px;
+ background:#ffffff08;
+ color:#fff;
+ cursor:pointer;
+}
+
+.download-btn{
+ flex:2;
+}
+
+.status{
+ display:none;
+ margin-top:20px;
+ padding:18px;
+ border-radius:15px;
+ text-align:center;
+ background:#55e6a508;
+ border:1px solid #55e6a533;
+}
+
+.download-link{
+ display:inline-block;
+ margin-top:12px;
+ padding:11px 18px;
+ border-radius:10px;
+ background:#55e6a5;
+ color:#06130d;
+ text-decoration:none;
+ font-weight:bold;
+ font-size:13px;
+}
+
+@media(max-width:750px){
+ .editor{
+  grid-template-columns:1fr;
+ }
+ .canvas-area{
+  min-height:300px;
+ }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<header class="nav">
+
+<a href="index.html" class="logo">
+↻ ConvertX
+</a>
+
+<a href="index.html" class="back">
+← Home
+</a>
+
+</header>
+
+
+<section class="hero">
+
+<span class="badge">
+IMAGE TOOL
+</span>
+
+<h1>
+Crop <span class="gradient">Image</span>
+</h1>
+
+<p class="subtitle">
+Upload an image, select the area you want,
+and download your cropped image instantly.
+</p>
+
+</section>
+
+
+<div class="tool">
+
+<div class="upload" id="upload">
+
+<div class="upload-icon">
+✂️
+</div>
+
+<h2>
+Drop your image here
+</h2>
+
+<p>
+JPG, PNG, WEBP and other browser-supported images
+</p>
+
+<button class="choose" id="choose">
+Choose Image
+</button>
+
+<input
+id="fileInput"
+type="file"
+accept="image/*">
+
+</div>
+
+
+<div class="workspace" id="workspace">
+
+
+<div class="editor">
+
+
+<div class="canvas-area">
+
+<div class="canvas-wrap" id="canvasWrap">
+
+<canvas id="canvas"></canvas>
+
+<div
+class="crop-box"
+id="cropBox">
+
+<div class="crop-handle tl"></div>
+<div class="crop-handle tr"></div>
+<div class="crop-handle bl"></div>
+<div class="crop-handle br"></div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="controls">
+
+<div class="control-title">
+Aspect Ratio
+</div>
+
+<div class="ratio">
+
+<button data-ratio="free" class="active">
+Free
+</button>
+
+<button data-ratio="1">
+1 : 1
+</button>
+
+<button data-ratio="1.7778">
+16 : 9
+</button>
+
+<button data-ratio="1.3333">
+4 : 3
+</button>
+
+<button data-ratio="0.75">
+3 : 4
+</button>
+
+<button data-ratio="1.5">
+3 : 2
+</button>
+
+</div>
+
+
+<div class="info">
+
+<div>
+<span>Image</span>
+<strong id="imageSize">—</strong>
+</div>
+
+<div>
+<span>Crop</span>
+<strong id="cropSize">—</strong>
+</div>
+
+</div>
+
+
+<div class="actions">
+
+<button class="reset" id="reset">
+Clear
+</button>
+
+<button class="download-btn" id="crop">
+Crop Image
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="status" id="status">
+
+<strong>
+✓ Image cropped successfully
+</strong>
+
+<br>
+
+<a
+class="download-link"
+id="download">
+⬇ Download Image
+</a>
+
+</div>
+
+
+</div>
+
+</div>
+
+</div>
+
+
+<script>
+
+const upload =
+document.getElementById("upload");
+
+const choose =
+document.getElementById("choose");
+
+const fileInput =
+document.getElementById("fileInput");
+
+const workspace =
+document.getElementById("workspace");
+
+const canvas =
+document.getElementById("canvas");
+
+const ctx =
+canvas.getContext("2d");
+
+const canvasWrap =
+document.getElementById("canvasWrap");
+
+const cropBox =
+document.getElementById("cropBox");
+
+const cropBtn =
+document.getElementById("crop");
+
+const reset =
+document.getElementById("reset");
+
+const status =
+document.getElementById("status");
+
+const download =
+document.getElementById("download");
+
+const imageSize =
+document.getElementById("imageSize");
+
+const cropSize =
+document.getElementById("cropSize");
+
+const ratioButtons =
+document.querySelectorAll(".ratio button");
+
+
+let image = new Image();
+
+let originalWidth = 0;
+let originalHeight = 0;
+
+let crop = {
+ x:0,
+ y:0,
+ width:0,
+ height:0
+};
+
+let selectedRatio = "free";
+
+let dragging = false;
+let resizing = false;
+
+let startX = 0;
+let startY = 0;
+
+let startCrop = null;
+let resizeCorner = null;
+
+
+/* OPEN */
+
+choose.onclick = function(e){
+
+ e.stopPropagation();
+
+ fileInput.click();
+
+};
+
+upload.onclick = function(){
+
+ fileInput.click();
+
+};
+
+
+/* FILE */
+
+fileInput.onchange = function(){
+
+ if(this.files[0]){
+
+  loadImage(
+   this.files[0]
+  );
+
+ }
+
+};
+
+
+/* LOAD IMAGE */
+
+function loadImage(file){
+
+ if(!file.type.startsWith("image/")){
+
+  alert(
+   "Please choose an image."
+  );
+
+  return;
+
+ }
+
+ const reader =
+  new FileReader();
+
+ reader.onload =
+ function(e){
+
+  image.onload =
+  function(){
+
+   originalWidth =
+    image.naturalWidth;
+
+   originalHeight =
+    image.naturalHeight;
+
+   imageSize.textContent =
+    originalWidth +
+    " × " +
+    originalHeight;
+
+   drawImage();
+
+   createInitialCrop();
+
+   upload.style.display =
+    "none";
+
+   workspace.style.display =
+    "block";
+
+   status.style.display =
+    "none";
+
+  };
+
+  image.src =
+   e.target.result;
+
+ };
+
+ reader.readAsDataURL(file);
+
+}
+
+
+/* DRAW */
+
+function drawImage(){
+
+ const maxWidth =
+  650;
+
+ const maxHeight =
+  520;
+
+ const scale =
+  Math.min(
+   maxWidth / originalWidth,
+   maxHeight / originalHeight,
+   1
+  );
+
+ canvas.width =
+  originalWidth * scale;
+
+ canvas.height =
+  originalHeight * scale;
+
+ ctx.drawImage(
+  image,
+  0,
+  0,
+  canvas.width,
+  canvas.height
+ );
+
+}
+
+
+/* INITIAL CROP */
+
+function createInitialCrop(){
+
+ const margin =
+  Math.min(
+   canvas.width,
+   canvas.height
+  ) * .1;
+
+ crop = {
+
+  x:margin,
+
+  y:margin,
+
+  width:
+   canvas.width -
+   margin * 2,
+
+  height:
+   canvas.height -
+   margin * 2
+
+ };
+
+ updateCropBox();
+
+}
+
+
+/* UPDATE */
+
+function updateCropBox(){
+
+ crop.x =
+  Math.max(
+   0,
+   Math.min(
+    crop.x,
+    canvas.width -
+    crop.width
+   )
+  );
+
+ crop.y =
+  Math.max(
+   0,
+   Math.min(
+    crop.y,
+    canvas.height -
+    crop.height
+   )
+  );
+
+ crop.width =
+  Math.max(
+   30,
+   Math.min(
+    crop.width,
+    canvas.width -
+    crop.x
+   )
+  );
+
+ crop.height =
+  Math.max(
+   30,
+   Math.min(
+    crop.height,
+    canvas.height -
+    crop.y
+   )
+  );
+
+
+ cropBox.style.display =
+  "block";
+
+ cropBox.style.left =
+  crop.x + "px";
+
+ cropBox.style.top =
+  crop.y + "px";
+
+ cropBox.style.width =
+  crop.width + "px";
+
+ cropBox.style.height =
+  crop.height + "px";
+
+
+ const scaleX =
+  originalWidth /
+  canvas.width;
+
+ const scaleY =
+  originalHeight /
+  canvas.height;
+
+
+ cropSize.textContent =
+  Math.round(
+   crop.width * scaleX
+  )
+  +
+  " × "
+  +
+  Math.round(
+   crop.height * scaleY
+  );
+
+}
+
+
+/* RATIO */
+
+ratioButtons.forEach(
+ button => {
+
+  button.onclick =
+  function(){
+
+   ratioButtons.forEach(
+    b =>
+    b.classList.remove(
+     "active"
+    )
+   );
+
+   this.classList.add(
+    "active"
+   );
+
+   selectedRatio =
+    this.dataset.ratio;
+
+   if(
+    selectedRatio !== "free"
+   ){
+
+    applyRatio();
+
+   }
+
+  };
+
+ });
+
+
+function applyRatio(){
+
+ const ratio =
+  Number(selectedRatio);
+
+ let width =
+  crop.width;
+
+ let height =
+  width / ratio;
+
+
+ if(height > canvas.height){
+
+  height =
+   canvas.height;
+
+  width =
+   height * ratio;
+
+ }
+
+
+ crop.width =
+  width;
+
+ crop.height =
+  height;
+
+ updateCropBox();
+
+}
+
+
+/* CROP BOX DRAG */
+
+cropBox.addEventListener(
+ "mousedown",
+ function(e){
+
+  if(
+   e.target.classList.contains(
+    "crop-handle"
+   )
+  ){
+
+   resizing = true;
+
+   resizeCorner =
+    [...e.target.classList]
+     .find(
+      c =>
+       ["tl","tr","bl","br"]
+       .includes(c)
+     );
+
+  }else{
+
+   dragging = true;
+
+  }
+
+  startX =
+   e.clientX;
+
+  startY =
+   e.clientY;
+
+  startCrop =
+   {...crop};
+
+  e.preventDefault();
+
+ });
+
+
+document.addEventListener(
+ "mousemove",
+ function(e){
+
+  if(
+   !dragging &&
+   !resizing
+  )
+   return;
+
+
+  const dx =
+   e.clientX -
+   startX;
+
+  const dy =
+   e.clientY -
+   startY;
+
+
+  if(dragging){
+
+   crop.x =
+    startCrop.x +
+    dx;
+
+   crop.y =
+    startCrop.y +
+    dy;
+
+   updateCropBox();
+
+   return;
+
+  }
+
+
+  if(resizing){
+
+   resizeCrop(
+    dx,
+    dy
+   );
+
+  }
+
+ });
+
+
+document.addEventListener(
+ "mouseup",
+ function(){
+
+  dragging =
+   false;
+
+  resizing =
+   false;
+
+ });
+
+
+/* RESIZE */
+
+function resizeCrop(dx,dy){
+
+ let left =
+  startCrop.x;
+
+ let top =
+  startCrop.y;
+
+ let right =
+  startCrop.x +
+  startCrop.width;
+
+ let bottom =
+  startCrop.y +
+  startCrop.height;
+
+
+ if(resizeCorner === "br"){
+
+  right += dx;
+  bottom += dy;
+
+ }
+
+
+ if(resizeCorner === "bl"){
+
+  left += dx;
+  bottom += dy;
+
+ }
+
+
+ if(resizeCorner === "tr"){
+
+  right += dx;
+  top += dy;
+
+ }
+
+
+ if(resizeCorner === "tl"){
+
+  left += dx;
+  top += dy;
+
+ }
+
+
+ left =
+  Math.max(0,left);
+
+ top =
+  Math.max(0,top);
+
+ right =
+  Math.min(
+   canvas.width,
+   right
+  );
+
+ bottom =
+  Math.min(
+   canvas.height,
+   bottom
+  );
+
+
+ let width =
+  right-left;
+
+ let height =
+  bottom-top;
+
+
+ if(
+  selectedRatio !== "free"
+ ){
+
+  const ratio =
+   Number(selectedRatio);
+
+  if(
+   width / height >
+   ratio
+  ){
+
+   width =
+    height * ratio;
+
+  }else{
+
+   height =
+    width / ratio;
+
+  }
+
+
+  if(
+   resizeCorner.includes("l")
+  )
+   left =
+    right-width;
+
+  if(
+   resizeCorner.includes("t")
+  )
+   top =
+    bottom-height;
+
+ }
+
+
+ crop = {
+
+  x:left,
+  y:top,
+  width:width,
+  height:height
+
+ };
+
+
+ updateCropBox();
+
+}
+
+
+/* TOUCH SUPPORT */
+
+cropBox.addEventListener(
+ "touchstart",
+ function(e){
+
+  const touch =
+   e.touches[0];
+
+  dragging = true;
+
+  startX =
+   touch.clientX;
+
+  startY =
+   touch.clientY;
+
+  startCrop =
+   {...crop};
+
+ },
+ {passive:true}
+);
+
+
+document.addEventListener(
+ "touchmove",
+ function(e){
+
+  if(!dragging)
+   return;
+
+  const touch =
+   e.touches[0];
+
+  const dx =
+   touch.clientX -
+   startX;
+
+  const dy =
+   touch.clientY -
+   startY;
+
+  crop.x =
+   startCrop.x +
+   dx;
+
+  crop.y =
+   startCrop.y +
+   dy;
+
+  updateCropBox();
+
+ },
+ {passive:true}
+);
+
+
+document.addEventListener(
+ "touchend",
+ function(){
+
+  dragging =
+   false;
+
+ });
+
+
+/* CREATE CROPPED IMAGE */
+
+cropBtn.onclick =
+function(){
+
+ if(!image.src){
+
+  alert(
+   "Please choose an image."
+  );
+
+  return;
+
+ }
+
+
+ const scaleX =
+  originalWidth /
+  canvas.width;
+
+ const scaleY =
+  originalHeight /
+  canvas.height;
+
+
+ const sx =
+  crop.x *
+  scaleX;
+
+ const sy =
+  crop.y *
+  scaleY;
+
+ const sw =
+  crop.width *
+  scaleX;
+
+ const sh =
+  crop.height *
+  scaleY;
+
+
+ const output =
+  document.createElement(
+   "canvas"
+  );
+
+
+ output.width =
+  Math.round(sw);
+
+ output.height =
+  Math.round(sh);
+
+
+ const outputCtx =
+  output.getContext(
+   "2d"
+  );
+
+
+ outputCtx.drawImage(
+  image,
+  sx,
+  sy,
+  sw,
+  sh,
+  0,
+  0,
+  output.width,
+  output.height
+ );
+
+
+ output.toBlob(
+  function(blob){
+
+   const url =
+    URL.createObjectURL(
+     blob
+    );
+
+   download.href =
+    url;
+
+   download.download =
+    "cropped-image.png";
+
+   status.style.display =
+    "block";
+
+  },
+  "image/png"
+ );
+
+};
+
+
+/* RESET */
+
+reset.onclick =
+function(){
+
+ image =
+  new Image();
+
+ fileInput.value =
+  "";
+
+ workspace.style.display =
+  "none";
+
+ upload.style.display =
+  "flex";
+
+ cropBox.style.display =
+  "none";
+
+ status.style.display =
+  "none";
+
+};
+
+
+/* REDRAW ON RESIZE */
+
+window.addEventListener(
+ "resize",
+ function(){
+
+  if(
+   workspace.style.display !==
+   "none"
+  ){
+
+   drawImage();
+
+   createInitialCrop();
+
+  }
+
+ });
+
+</script>
+
+</body>
+</html>
