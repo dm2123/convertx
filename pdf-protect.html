@@ -2,574 +2,663 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Protect PDF — ConvertX</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>PDF Protect — ConvertX</title>
 
 <style>
 *{box-sizing:border-box}
+
 body{
-margin:0;font-family:Arial,sans-serif;
-background:#070711;color:#fff
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#080b14;
+    color:#fff;
 }
-.container{width:min(850px,92%);margin:auto}
-.nav{
-margin:20px 0;padding:14px 18px;
-border:1px solid #ffffff1c;border-radius:18px;
-background:#ffffff08;display:flex;
-justify-content:space-between;align-items:center
+
+.wrap{
+    width:min(850px,92%);
+    margin:35px auto;
 }
-.logo{color:#fff;text-decoration:none;font-size:20px;font-weight:800}
-.back{color:#9999aa;text-decoration:none;font-size:13px}
-.hero{text-align:center;padding:55px 0 30px}
-.badge{
-display:inline-block;padding:7px 12px;border-radius:50px;
-background:#7c5cff18;border:1px solid #7c5cff44;
-color:#c6bcff;font-size:11px;font-weight:bold
+
+.back{
+    color:#aeb7ca;
+    text-decoration:none;
 }
-h1{
-font-size:clamp(40px,7vw,64px);
-letter-spacing:-3px;margin:20px 0 12px
+
+.header{
+    text-align:center;
+    margin:30px 0;
 }
-.gradient{
-background:linear-gradient(90deg,#8d72ff,#42b8ff);
--webkit-background-clip:text;color:transparent
+
+.logo{
+    font-size:34px;
+    font-weight:800;
 }
-.subtitle{color:#9999aa;line-height:1.7;max-width:600px;margin:auto}
-.tool{
-padding:12px;border:1px solid #ffffff1c;
-border-radius:25px;background:#ffffff08
+
+.logo span{
+    color:#8b6cff;
 }
-.upload{
-min-height:260px;border:2px dashed #ffffff25;
-border-radius:18px;display:flex;
-flex-direction:column;justify-content:center;
-align-items:center;text-align:center;
-cursor:pointer;padding:30px
+
+.subtitle{
+    color:#9da5b8;
+    margin-top:8px;
 }
-.upload:hover{border-color:#7c5cff;background:#7c5cff09}
-.upload-icon{font-size:45px;margin-bottom:15px}
-.upload h2{margin:5px 0}
-.upload p{color:#9999aa;font-size:13px}
-.choose,.protect{
-border:0;border-radius:11px;padding:13px 20px;
-background:linear-gradient(135deg,#7c5cff,#28a7ff);
-color:#fff;font-weight:bold;cursor:pointer
+
+.card{
+    background:#111624;
+    border:1px solid #273149;
+    border-radius:22px;
+    padding:28px;
+    box-shadow:0 20px 60px #0006;
 }
-input[type=file]{display:none}
-.workspace{display:none;padding:22px}
+
+.drop{
+    border:2px dashed #3a4560;
+    border-radius:18px;
+    padding:45px 20px;
+    text-align:center;
+    cursor:pointer;
+}
+
+.drop:hover{
+    border-color:#8b6cff;
+    background:#8b6cff12;
+}
+
+.icon{
+    font-size:55px;
+}
+
+input[type=file]{
+    display:none;
+}
+
+button{
+    border:0;
+    border-radius:11px;
+    padding:13px 20px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+.primary{
+    background:#8b6cff;
+    color:white;
+}
+
+.secondary{
+    background:#252d40;
+    color:white;
+}
+
 .file{
-display:flex;align-items:center;gap:14px;
-padding:16px;border:1px solid #ffffff1a;
-border-radius:14px;background:#ffffff06
+    display:none;
+    margin-top:20px;
+    padding:15px;
+    border-radius:12px;
+    background:#0b101c;
+    border:1px solid #29344b;
 }
-.file-icon{
-width:45px;height:45px;display:grid;
-place-items:center;border-radius:12px;
-background:#7c5cff18;font-size:22px
+
+.form{
+    margin-top:20px;
+    display:none;
 }
-.file-info{flex:1;min-width:0}
-.file-name{
-font-size:14px;font-weight:bold;
-overflow:hidden;white-space:nowrap;text-overflow:ellipsis
-}
-.file-size{color:#9999aa;font-size:11px;margin-top:5px}
-.settings{
-margin-top:20px;padding:18px;
-border:1px solid #ffffff1a;border-radius:15px
-}
+
 label{
-display:block;color:#9999aa;
-font-size:12px;margin-bottom:8px
+    display:block;
+    margin:15px 0 7px;
+    color:#b8c1d3;
 }
-.password-wrap{position:relative}
-input[type=password],
-input[type=text]{
-width:100%;padding:14px 45px 14px 14px;
-border-radius:11px;border:1px solid #ffffff1c;
-outline:none;background:#ffffff08;color:#fff;
-font-size:14px
+
+input[type=password]{
+    width:100%;
+    padding:14px;
+    border-radius:10px;
+    border:1px solid #303a52;
+    background:#090e19;
+    color:#fff;
+    outline:none;
 }
-.toggle{
-position:absolute;right:10px;top:9px;
-border:0;background:transparent;color:#aaa;
-cursor:pointer;padding:6px
+
+input[type=password]:focus{
+    border-color:#8b6cff;
 }
-.hint{
-margin-top:8px;color:#777788;
-font-size:11px;line-height:1.6
+
+.actions{
+    display:flex;
+    gap:12px;
+    margin-top:22px;
 }
-.actions{display:flex;gap:10px;margin-top:20px}
-.protect{flex:2}
-.reset{
-flex:1;border:1px solid #ffffff1c;
-border-radius:11px;background:#ffffff08;
-color:#fff;cursor:pointer
+
+.actions button{
+    flex:1;
 }
+
 .status{
-display:none;margin-top:20px;padding:18px;
-border-radius:15px;text-align:center;
-background:#55e6a508;border:1px solid #55e6a533
+    margin-top:18px;
+    padding:13px;
+    background:#0b101c;
+    border-radius:10px;
+    color:#aeb7ca;
+    text-align:center;
 }
-.status-title{color:#9df3c8;font-weight:bold}
-.status-text{color:#9999aa;font-size:12px;margin-top:7px}
-.download{
-display:inline-block;margin-top:12px;
-padding:11px 18px;border-radius:10px;
-background:#55e6a5;color:#06130d;
-text-decoration:none;font-weight:bold;font-size:13px
+
+.warn{
+    margin-top:15px;
+    color:#f3c77b;
+    font-size:13px;
+    line-height:1.5;
 }
-.note{
-margin-top:18px;padding:14px;border-radius:12px;
-background:#ffffff05;color:#888899;
-font-size:11px;line-height:1.6
-}
+
 @media(max-width:600px){
-.actions{flex-direction:column}
+    .card{padding:18px}
+    .actions{flex-direction:column}
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<div class="wrap">
 
-<header class="nav">
-<a href="index.html" class="logo">↻ ConvertX</a>
-<a href="index.html" class="back">← Home</a>
-</header>
+<a class="back" href="index.html">← Back to ConvertX</a>
 
-<section class="hero">
+<div class="header">
+    <div class="logo">
+        Convert<span>X</span>
+    </div>
 
-<span class="badge">PDF SECURITY</span>
-
-<h1>
-Protect <span class="gradient">PDF</span>
-</h1>
-
-<p class="subtitle">
-Add a password to your PDF before sharing it.
-</p>
-
-</section>
-
-<div class="tool">
-
-<div class="upload" id="upload">
-
-<div class="upload-icon">🔐</div>
-
-<h2>Drop your PDF here</h2>
-
-<p>Choose a PDF file to protect</p>
-
-<button class="choose" id="choose">
-Choose PDF
-</button>
-
-<input
-id="fileInput"
-type="file"
-accept="application/pdf">
-
+    <div class="subtitle">
+        Protect PDF with real password encryption
+    </div>
 </div>
 
+<div class="card">
 
-<div class="workspace" id="workspace">
+    <div class="drop" id="drop">
+        <div class="icon">🔐</div>
 
-<div class="file">
+        <h2>Select PDF</h2>
 
-<div class="file-icon">📄</div>
+        <p>
+            Choose a PDF file to encrypt
+        </p>
 
-<div class="file-info">
+        <button
+            class="primary"
+            id="choose"
+            type="button">
+            Choose PDF
+        </button>
 
-<div class="file-name" id="fileName"></div>
+        <input
+            id="file"
+            type="file"
+            accept="application/pdf">
+    </div>
 
-<div class="file-size" id="fileSize"></div>
+    <div
+        class="file"
+        id="fileInfo">
+    </div>
 
-</div>
+    <div
+        class="form"
+        id="form">
 
-</div>
+        <label for="password">
+            User Password
+        </label>
 
+        <input
+            id="password"
+            type="password"
+            autocomplete="new-password"
+            placeholder="Enter PDF password">
 
-<div class="settings">
+        <label for="confirm">
+            Confirm Password
+        </label>
 
-<label for="password">
-Set PDF Password
-</label>
+        <input
+            id="confirm"
+            type="password"
+            autocomplete="new-password"
+            placeholder="Confirm password">
 
-<div class="password-wrap">
+        <div class="actions">
 
-<input
-id="password"
-type="password"
-placeholder="Enter password"
-autocomplete="off">
+            <button
+                class="secondary"
+                id="clear"
+                type="button">
+                Clear
+            </button>
 
-<button
-class="toggle"
-id="toggle">
-👁
-</button>
+            <button
+                class="primary"
+                id="protect"
+                type="button">
+                🔐 Protect PDF
+            </button>
 
-</div>
+        </div>
 
-<div class="hint">
-Use a password that is difficult for others to guess.
-Keep a copy somewhere safe because it cannot be
-recovered if forgotten.
-</div>
+        <div class="warn">
+            Your selected PDF is processed in the browser.
+            The password is not sent to ConvertX's server.
+        </div>
 
-</div>
+    </div>
 
-
-<div class="actions">
-
-<button class="reset" id="reset">
-Clear
-</button>
-
-<button class="protect" id="protect">
-Protect PDF
-</button>
-
-</div>
-
-
-<div class="status" id="status">
-
-<div class="status-title">
-✓ PDF created
-</div>
-
-<div class="status-text" id="statusText">
-</div>
-
-<a class="download" id="download">
-⬇ Download Protected PDF
-</a>
-
-</div>
-
-
-<div class="note">
-<strong>Important:</strong>
-This browser-only version prepares the PDF locally.
-Strong PDF encryption is not supported by pdf-lib itself,
-so for production-grade password encryption, a server-side
-PDF encryption engine should be added later.
-</div>
-
-</div>
+    <div
+        class="status"
+        id="status">
+        Select a PDF to begin.
+    </div>
 
 </div>
 
 </div>
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<!--
+IMPORTANT:
+This page expects the qpdf-run browser runtime to be available
+under /qpdf/ in your GitHub Pages repository.
+-->
 
-<script>
+<script type="module">
 
-const upload =
-document.getElementById("upload");
+import {
+    createQpdfRunner
+} from "/convertx/qpdf/qpdf-run.js";
 
-const choose =
-document.getElementById("choose");
 
 const fileInput =
-document.getElementById("fileInput");
+    document.getElementById("file");
 
-const workspace =
-document.getElementById("workspace");
+const choose =
+    document.getElementById("choose");
 
-const fileName =
-document.getElementById("fileName");
+const drop =
+    document.getElementById("drop");
 
-const fileSize =
-document.getElementById("fileSize");
+const fileInfo =
+    document.getElementById("fileInfo");
+
+const form =
+    document.getElementById("form");
 
 const password =
-document.getElementById("password");
+    document.getElementById("password");
 
-const toggle =
-document.getElementById("toggle");
+const confirmPassword =
+    document.getElementById("confirm");
 
 const protect =
-document.getElementById("protect");
+    document.getElementById("protect");
 
-const reset =
-document.getElementById("reset");
+const clear =
+    document.getElementById("clear");
 
 const status =
-document.getElementById("status");
+    document.getElementById("status");
 
-const statusText =
-document.getElementById("statusText");
-
-const download =
-document.getElementById("download");
 
 let selectedFile = null;
+let runner = null;
 
 
-/* OPEN FILE */
-
-choose.onclick = function(e){
-
-e.stopPropagation();
-
-fileInput.click();
-
-};
-
-upload.onclick = function(){
-
-fileInput.click();
-
-};
-
-
-/* FILE */
-
-fileInput.onchange = function(){
-
-if(this.files[0]){
-
-loadFile(this.files[0]);
-
-}
-
-};
-
-
-/* LOAD */
-
-function loadFile(file){
-
-if(file.type !== "application/pdf"){
-
-alert("Please select a PDF file.");
-
-return;
-
-}
-
-selectedFile = file;
-
-fileName.textContent =
-file.name;
-
-fileSize.textContent =
-formatBytes(file.size);
-
-upload.style.display =
-"none";
-
-workspace.style.display =
-"block";
-
-status.style.display =
-"none";
-
-password.value = "";
-
-}
-
-
-/* SHOW / HIDE PASSWORD */
-
-toggle.onclick = function(){
-
-if(password.type === "password"){
-
-password.type = "text";
-
-toggle.textContent = "🙈";
-
-}else{
-
-password.type = "password";
-
-toggle.textContent = "👁";
-
-}
-
-};
-
-
-/* PROTECT */
-
-protect.onclick = async function(){
-
-if(!selectedFile){
-
-alert("Please choose a PDF.");
-
-return;
-
-}
-
-const pass =
-password.value.trim();
-
-if(!pass){
-
-alert("Please enter a password.");
-
-password.focus();
-
-return;
-
-}
-
-if(pass.length < 4){
-
-alert("Please use at least 4 characters.");
-
-return;
-
-}
-
-protect.disabled = true;
-
-protect.textContent =
-"Preparing...";
-
-
-try{
-
-const bytes =
-await selectedFile.arrayBuffer();
-
-const source =
-await PDFLib.PDFDocument.load(bytes);
-
-const output =
-await PDFLib.PDFDocument.create();
-
-const copied =
-await output.copyPages(
-source,
-source.getPageIndices()
+choose.addEventListener(
+    "click",
+    () => fileInput.click()
 );
 
-copied.forEach(page => {
 
-output.addPage(page);
+fileInput.addEventListener(
+    "change",
+    () => {
 
-});
+        if(fileInput.files.length){
 
+            setFile(
+                fileInput.files[0]
+            );
 
-/*
-pdf-lib currently does not expose
-true password encryption.
+        }
 
-We therefore create a rebuilt copy.
-The password is not embedded as
-fake security.
-*/
-
-const result =
-await output.save({
-useObjectStreams:true
-});
-
-const blob =
-new Blob(
-[result],
-{type:"application/pdf"}
+    }
 );
 
-const url =
-URL.createObjectURL(blob);
 
-download.href =
-url;
+drop.addEventListener(
+    "dragover",
+    event => {
 
-download.download =
-"protected-" +
-selectedFile.name;
+        event.preventDefault();
 
-statusText.textContent =
-"PDF prepared successfully. " +
-"Production encryption can be connected " +
-"when the backend is added.";
+        drop.style.borderColor =
+            "#8b6cff";
 
-status.style.display =
-"block";
-
-
-}catch(error){
-
-console.error(error);
-
-alert(
-"Unable to process this PDF."
+    }
 );
+
+
+drop.addEventListener(
+    "dragleave",
+    () => {
+
+        drop.style.borderColor =
+            "";
+
+    }
+);
+
+
+drop.addEventListener(
+    "drop",
+    event => {
+
+        event.preventDefault();
+
+        drop.style.borderColor =
+            "";
+
+        const file =
+            event.dataTransfer.files[0];
+
+        if(
+            file &&
+            file.type ===
+            "application/pdf"
+        ){
+
+            setFile(file);
+
+        }
+
+    }
+);
+
+
+function setFile(file){
+
+    if(
+        file.type !==
+        "application/pdf"
+    ){
+
+        status.textContent =
+            "Please select a PDF file.";
+
+        return;
+
+    }
+
+    selectedFile = file;
+
+    fileInfo.style.display =
+        "block";
+
+    fileInfo.textContent =
+        "📄 " +
+        file.name +
+        " • " +
+        formatSize(file.size);
+
+    form.style.display =
+        "block";
+
+    status.textContent =
+        "PDF ready for protection.";
 
 }
 
-protect.disabled = false;
 
-protect.textContent =
-"Protect PDF";
+function formatSize(bytes){
 
-};
+    if(bytes < 1024)
+        return bytes + " B";
 
+    if(bytes < 1024*1024)
+        return (
+            bytes / 1024
+        ).toFixed(1) + " KB";
 
-/* RESET */
-
-reset.onclick = function(){
-
-selectedFile = null;
-
-fileInput.value = "";
-
-password.value = "";
-
-workspace.style.display =
-"none";
-
-upload.style.display =
-"flex";
-
-status.style.display =
-"none";
-
-};
-
-
-/* FORMAT */
-
-function formatBytes(bytes){
-
-if(bytes === 0)
-return "0 Bytes";
-
-const units =
-[
-"Bytes",
-"KB",
-"MB",
-"GB"
-];
-
-const i =
-Math.floor(
-Math.log(bytes) /
-Math.log(1024)
-);
-
-return (
-bytes /
-Math.pow(1024,i)
-).toFixed(2)
-+
-" "
-+
-units[i];
+    return (
+        bytes /
+        (1024*1024)
+    ).toFixed(1) + " MB";
 
 }
+
+
+clear.addEventListener(
+    "click",
+    () => {
+
+        selectedFile = null;
+
+        fileInput.value = "";
+
+        password.value = "";
+
+        confirmPassword.value = "";
+
+        fileInfo.style.display =
+            "none";
+
+        form.style.display =
+            "none";
+
+        status.textContent =
+            "Select a PDF to begin.";
+
+    }
+);
+
+
+async function getRunner(){
+
+    if(runner)
+        return runner;
+
+    status.textContent =
+        "Loading PDF encryption engine...";
+
+    runner =
+        await createQpdfRunner({
+            assetBaseUrl:
+                "/convertx/qpdf/"
+        });
+
+    return runner;
+
+}
+
+
+protect.addEventListener(
+    "click",
+    async () => {
+
+        if(!selectedFile){
+
+            status.textContent =
+                "Please select a PDF first.";
+
+            return;
+
+        }
+
+        const pass =
+            password.value;
+
+        const confirm =
+            confirmPassword.value;
+
+
+        if(!pass){
+
+            status.textContent =
+                "Please enter a password.";
+
+            password.focus();
+
+            return;
+
+        }
+
+
+        if(pass.length < 6){
+
+            status.textContent =
+                "Use a password of at least 6 characters.";
+
+            password.focus();
+
+            return;
+
+        }
+
+
+        if(pass !== confirm){
+
+            status.textContent =
+                "Passwords do not match.";
+
+            confirmPassword.focus();
+
+            return;
+
+        }
+
+
+        protect.disabled = true;
+
+        protect.textContent =
+            "Encrypting...";
+
+
+        try{
+
+            const inputBytes =
+                new Uint8Array(
+                    await selectedFile.arrayBuffer()
+                );
+
+
+            const qpdf =
+                await getRunner();
+
+
+            /*
+             * Real PDF encryption.
+             *
+             * 256-bit encryption is used.
+             * User password is required to open
+             * the resulting PDF.
+             */
+
+            const result =
+                await qpdf.run({
+
+                    inputs:{
+                        "input.pdf":
+                            inputBytes
+                    },
+
+                    args:[
+                        "--encrypt",
+                        pass,
+                        pass,
+                        "256",
+                        "--",
+                        "input.pdf",
+                        "protected.pdf"
+                    ],
+
+                    outputs:[
+                        "protected.pdf"
+                    ]
+
+                });
+
+
+            const output =
+                result.outputs[
+                    "protected.pdf"
+                ];
+
+
+            const blob =
+                new Blob(
+                    [output],
+                    {
+                        type:
+                        "application/pdf"
+                    }
+                );
+
+
+            const url =
+                URL.createObjectURL(blob);
+
+
+            const a =
+                document.createElement("a");
+
+            a.href = url;
+
+            a.download =
+                selectedFile.name
+                    .replace(
+                        /\.pdf$/i,
+                        ""
+                    ) +
+                "-protected.pdf";
+
+            document.body.appendChild(a);
+
+            a.click();
+
+            a.remove();
+
+            setTimeout(
+                () => URL.revokeObjectURL(url),
+                1000
+            );
+
+
+            status.textContent =
+                "✅ Protected PDF created successfully.";
+
+        }
+        catch(error){
+
+            console.error(error);
+
+            status.textContent =
+                "❌ Encryption failed: " +
+                (
+                    error?.message ||
+                    "Unknown error"
+                );
+
+        }
+        finally{
+
+            protect.disabled = false;
+
+            protect.textContent =
+                "🔐 Protect PDF";
+
+        }
+
+    }
+);
 
 </script>
 
