@@ -1,4 +1,4 @@
-import { HashRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { ThemeProvider } from './hooks/useTheme'
 import Header from './components/Header'
 import Footer from './components/Footer'
@@ -10,6 +10,7 @@ import Privacy from './pages/Privacy'
 import Terms from './pages/Terms'
 import ToolPage from './pages/ToolPage'
 import ScrollToTop from './components/ScrollToTop'
+import AdBanner from './components/AdBanner'
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <ScrollToTop />
         <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 transition-colors duration-300">
           <Header />
+          <AdBanner slot="7783395864" />
           <main className="flex-1">
             <Routes>
               <Route path="/" element={<Home />} />
@@ -29,6 +31,7 @@ function App() {
               <Route path="/terms" element={<Terms />} />
             </Routes>
           </main>
+          <AdBanner slot="5597000041" autorelaxed />
           <Footer />
         </div>
       </Router>

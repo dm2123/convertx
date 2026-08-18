@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /api/
 
-Sitemap: https://convertx.app/sitemap.xml
+Sitemap: https://convertx2026.netlify.app/sitemap.xml

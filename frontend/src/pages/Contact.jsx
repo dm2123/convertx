@@ -35,7 +35,7 @@ export default function Contact() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
           {[
-            { icon: Mail, title: 'Email', desc: 'support@convertx.app', detail: 'We respond within 24 hours' },
+            { icon: Mail, title: 'Email', desc: 'dm7178072@gmail.com', detail: 'We respond within 24 hours' },
             { icon: MessageSquare, title: 'Feedback', desc: 'Share your ideas', detail: 'Help us improve ConvertX' },
             { icon: FileText, title: 'Documentation', desc: 'Browse our guides', detail: 'Learn how to use every tool' },
           ].map((item, i) => (

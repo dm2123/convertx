@@ -5,6 +5,7 @@ import tools, { categories, searchTools, getToolsByCategory } from '../data/tool
 import ToolCard from '../components/ToolCard'
 import SearchBar from '../components/SearchBar'
 import CategoryFilter from '../components/CategoryFilter'
+import SeoUpdater from '../components/SeoUpdater'
 
 export default function Home() {
   const [query, setQuery] = useState('')
@@ -25,6 +26,11 @@ export default function Home() {
 
   return (
     <div>
+      <SeoUpdater
+        title="ConvertX - 71+ Free Online File Tools | PDF Converter, Compressor & More"
+        description="Convert, compress, merge, split and edit PDFs and documents online for free. 71+ tools, no signup required, no watermarks."
+        canonicalPath="/"
+      />
       {/* Hero */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-brand-50 via-white to-purple-50 dark:from-gray-950 dark:via-gray-900 dark:to-brand-950/20" />

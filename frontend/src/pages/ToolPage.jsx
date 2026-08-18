@@ -2,6 +2,7 @@ import { useState, useCallback } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { getToolBySlug, iconMap, categoryColors } from '../data/tools'
 import { ChevronRight, Home, AlertCircle } from 'lucide-react'
+import SeoUpdater from '../components/SeoUpdater'
 import FileUploader from '../components/FileUploader'
 import ProgressBar from '../components/ProgressBar'
 import ResultCard from '../components/ResultCard'
@@ -253,6 +254,7 @@ export default function ToolPage() {
   if (!tool) {
     return (
       <div className="py-20 text-center">
+        <SeoUpdater title="Tool Not Found | ConvertX" canonicalPath="/tools" />
         <div className="w-16 h-16 bg-gray-100 dark:bg-gray-800 rounded-2xl flex items-center justify-center mx-auto mb-4">
           <AlertCircle className="w-8 h-8 text-gray-400" />
         </div>
@@ -263,10 +265,55 @@ export default function ToolPage() {
     )
   }
 
-  const ToolComponent = toolComponents[slug]
-  if (ToolComponent) {
-    return <ToolComponent tool={tool} />
+  const seoTitle = `${tool.name} Online Free - No Signup Required | ConvertX`
+  const seoDesc = `${tool.name} online free tool. ${tool.description} Fast, secure and no registration needed. ${tool.formats?.join(', ') || 'PDF'} supported.`
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    name: `${tool.name} - ConvertX`,
+    url: `https://convertx2026.netlify.app/tools/${slug}`,
+    description: seoDesc,
+    applicationCategory: 'UtilityApplication',
+    operatingSystem: 'Any',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
   }
 
-  return <DefaultToolPage tool={tool} />
+  const ToolComponent = toolComponents[slug]
+  const faqJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: `How does ${tool.name} work?`,
+        acceptedAnswer: { '@type': 'Answer', text: `${tool.name} processes your files directly in your browser or through our secure server. Simply upload your file, configure options, and download the result.` },
+      },
+      {
+        '@type': 'Question',
+        name: 'Is my data safe?',
+        acceptedAnswer: { '@type': 'Answer', text: 'Yes. We process files securely and do not store your data. All files are automatically deleted from our servers after processing.' },
+      },
+      {
+        '@type': 'Question',
+        name: 'What file formats are supported?',
+        acceptedAnswer: { '@type': 'Answer', text: `${tool.name} supports ${tool.formats?.join(', ') || 'various formats'}. More formats are added regularly.` },
+      },
+    ],
+  }
+
+  if (ToolComponent) {
+    return (
+      <>
+        <SeoUpdater title={seoTitle} description={seoDesc} canonicalPath={`/tools/${slug}`} jsonLd={jsonLd} />
+        <ToolComponent tool={tool} />
+      </>
+    )
+  }
+
+  return (
+    <>
+      <SeoUpdater title={seoTitle} description={seoDesc} canonicalPath={`/tools/${slug}`} jsonLd={faqJsonLd} />
+      <DefaultToolPage tool={tool} />
+    </>
+  )
 }

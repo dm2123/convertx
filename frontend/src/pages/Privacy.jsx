@@ -52,10 +52,32 @@ export default function Privacy() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-3">4. Cookies and Analytics</h2>
+            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-3">4. Cookies, Advertising and Analytics</h2>
             <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
               We use essential cookies for theme preferences and basic functionality. We may use privacy-respecting
-              analytics to understand how our tools are used. We do not use third-party advertising trackers.
+              analytics to understand how our tools are used.
+            </p>
+            <p className="text-gray-600 dark:text-gray-400 leading-relaxed mt-3">
+              <strong>Advertising:</strong> ConvertX is free to use and is supported by advertising. We use Google
+              AdSense, a third-party advertising service provided by Google LLC, to display advertisements on our site.
+              Google, as a third-party vendor, uses cookies (including the DART cookie) to serve ads based on your
+              prior visits to our site and other websites. Google's use of advertising cookies enables it and its
+              partners to serve ads to you based on your visits to this site and/or other sites on the Internet.
+            </p>
+            <p className="text-gray-600 dark:text-gray-400 leading-relaxed mt-3">
+              You can opt out of personalized advertising by visiting{' '}
+              <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener noreferrer" className="text-brand-600 dark:text-brand-400 hover:underline">
+                Google Ads Settings
+              </a>. You can also opt out of some third-party vendors' use of cookies for personalized advertising by
+              visiting <a href="https://www.aboutads.info" target="_blank" rel="noopener noreferrer" className="text-brand-600 dark:text-brand-400 hover:underline">www.aboutads.info</a>.
+            </p>
+            <p className="text-gray-600 dark:text-gray-400 leading-relaxed mt-3">
+              When you visit our site, third-party ad networks may collect information such as your IP address,
+              browser type, and pages visited to measure ad performance and deliver relevant ads. To learn more
+              about how Google uses data, visit{' '}
+              <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener noreferrer" className="text-brand-600 dark:text-brand-400 hover:underline">
+                How Google uses information from sites that use its services
+              </a>.
             </p>
           </section>
 
@@ -71,9 +93,10 @@ export default function Privacy() {
           <section>
             <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-3">6. Third-Party Services</h2>
             <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-              ConvertX does not sell, trade, or otherwise transfer your information to third parties. AI-powered
-              tools may send document content to AI providers for processing; this is clearly indicated in the tool
-              description.
+              ConvertX does not sell, trade, or otherwise transfer your personal information to third parties.
+              Third-party advertising partners (including Google AdSense) may use cookies as described above to
+              serve ads on our site. AI-powered tools may send document content to AI providers for processing;
+              this is clearly indicated in the tool description.
             </p>
           </section>
 
@@ -95,7 +118,9 @@ export default function Privacy() {
           <section>
             <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-3">9. Contact</h2>
             <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-              If you have questions about this privacy policy, please contact us through our{' '}
+              If you have questions about this privacy policy, please contact us at{' '}
+              <a href="mailto:dm7178072@gmail.com" className="text-brand-600 dark:text-brand-400 hover:underline">dm7178072@gmail.com</a>{' '}
+              or through our{' '}
               <Link to="/contact" className="text-brand-600 dark:text-brand-400 hover:underline">contact page</Link>.
             </p>
           </section>

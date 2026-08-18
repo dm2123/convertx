@@ -4,6 +4,7 @@ import tools, { searchTools, getToolsByCategory } from '../data/tools'
 import ToolCard from '../components/ToolCard'
 import SearchBar from '../components/SearchBar'
 import CategoryFilter from '../components/CategoryFilter'
+import SeoUpdater from '../components/SeoUpdater'
 
 export default function Tools() {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -45,6 +46,11 @@ export default function Tools() {
 
   return (
     <div className="py-12">
+      <SeoUpdater
+        title="All PDF & File Tools - 71+ Free Online Tools | ConvertX"
+        description="Browse all 71+ free online PDF and file tools at ConvertX. Compress, merge, split, convert, edit and secure your documents - no signup required."
+        canonicalPath="/tools"
+      />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-10">
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
