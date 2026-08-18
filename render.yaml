@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: convertx-api
+    runtime: node
+    plan: free
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: FRONTEND_URLS
+        sync: false
+      - key: MAX_FILE_SIZE
+        value: 52428800
