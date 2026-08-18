@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 
 const SITE = 'https://convertx2026.netlify.app'
 
-export default function SeoUpdater({ title, description, canonicalPath, jsonLd }) {
+export default function SeoUpdater({ title, description, canonicalPath, jsonLd, keywords }) {
   useEffect(() => {
     if (title) document.title = title
     if (description) {
@@ -13,6 +13,15 @@ export default function SeoUpdater({ title, description, canonicalPath, jsonLd }
         document.head.appendChild(el)
       }
       el.content = description
+    }
+    if (keywords && keywords.length) {
+      let el = document.querySelector('meta[name="keywords"]')
+      if (!el) {
+        el = document.createElement('meta')
+        el.name = 'keywords'
+        document.head.appendChild(el)
+      }
+      el.content = keywords.join(', ')
     }
     if (canonicalPath) {
       let el = document.querySelector('link[rel="canonical"]')
@@ -35,7 +44,7 @@ export default function SeoUpdater({ title, description, canonicalPath, jsonLd }
     } else if (ld) {
       ld.remove()
     }
-  }, [title, description, canonicalPath, jsonLd])
+  }, [title, description, canonicalPath, jsonLd, keywords])
 
   return null
 }

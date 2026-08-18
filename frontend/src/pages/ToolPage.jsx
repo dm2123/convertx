@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { getToolBySlug, iconMap, categoryColors } from '../data/tools'
+import { getSeoForSlug } from '../data/seoContent'
 import { ChevronRight, Home, AlertCircle } from 'lucide-react'
 import SeoUpdater from '../components/SeoUpdater'
 import FileUploader from '../components/FileUploader'
@@ -66,7 +67,7 @@ const toolComponents = {
   'ai-question-generator': AiSummarizerTool,
 }
 
-function DefaultToolPage({ tool }) {
+function DefaultToolPage({ tool, extraFaqs = [], seoDescription }) {
   const [files, setFiles] = useState([])
   const [processing, setProcessing] = useState(false)
   const [progress, setProgress] = useState(0)
@@ -149,6 +150,7 @@ function DefaultToolPage({ tool }) {
   }
 
   const faqs = [
+    ...(extraFaqs || []),
     { q: `How does ${tool.name} work?`, a: `${tool.name} processes your files directly in your browser or through our secure server. Simply upload your file, configure options, and download the result.` },
     { q: 'Is my data safe?', a: 'Yes. We process files securely and do not store your data. All files are automatically deleted from our servers after processing.' },
     { q: 'What file formats are supported?', a: `${tool.name} supports ${tool.formats?.join(', ') || 'various formats'}. More formats are added regularly.` },
@@ -200,7 +202,7 @@ function DefaultToolPage({ tool }) {
             <Icon className={`w-7 h-7 ${colors.text}`} />
           </div>
           <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2">{tool.name}</h1>
-          <p className="text-gray-600 dark:text-gray-400">{tool.description}</p>
+          <p className="text-gray-600 dark:text-gray-400">{seoDescription || tool.description}</p>
         </div>
 
         <div className="card p-6 mb-8">
@@ -265,8 +267,10 @@ export default function ToolPage() {
     )
   }
 
+  const seo = getSeoForSlug(slug)
   const seoTitle = `${tool.name} Online Free - No Signup Required | ConvertX`
-  const seoDesc = `${tool.name} online free tool. ${tool.description} Fast, secure and no registration needed. ${tool.formats?.join(', ') || 'PDF'} supported.`
+  const seoDesc = seo?.description || `${tool.name} online free tool. ${tool.description} Fast, secure and no registration needed. ${tool.formats?.join(', ') || 'PDF'} supported.`
+  const seoKeywords = seo?.keywords || [`${tool.name} online free`, tool.name.toLowerCase()]
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
@@ -304,16 +308,17 @@ export default function ToolPage() {
   if (ToolComponent) {
     return (
       <>
-        <SeoUpdater title={seoTitle} description={seoDesc} canonicalPath={`/tools/${slug}`} jsonLd={jsonLd} />
+        <SeoUpdater title={seoTitle} description={seoDesc} canonicalPath={`/tools/${slug}`} jsonLd={jsonLd} keywords={seoKeywords} />
         <ToolComponent tool={tool} />
       </>
     )
   }
 
+  const extraFaqs = seo?.faqs || []
   return (
     <>
-      <SeoUpdater title={seoTitle} description={seoDesc} canonicalPath={`/tools/${slug}`} jsonLd={faqJsonLd} />
-      <DefaultToolPage tool={tool} />
+      <SeoUpdater title={seoTitle} description={seoDesc} canonicalPath={`/tools/${slug}`} jsonLd={faqJsonLd} keywords={seoKeywords} />
+      <DefaultToolPage tool={tool} extraFaqs={extraFaqs} seoDescription={seo?.description} />
     </>
   )
 }
