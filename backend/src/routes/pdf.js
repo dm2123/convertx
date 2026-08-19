@@ -38,7 +38,7 @@ async function sofficeToDocx(inputPath, outDir) {
   return serial(async () => {
     let stderr = ''
     try {
-      await execFileP('soffice', ['--headless', '--norestore', '--nolockcheck', '--nodefault', '--nologo', '--convert-to', 'docx', '--outdir', outDir, inputPath], {
+      await execFileP('soffice', ['--headless', '--norestore', '--nolockcheck', '--nodefault', '--nologo', '--infilter=writer_pdf_import', '--convert-to', 'docx', '--outdir', outDir, inputPath], {
         timeout: 120000,
         env: { ...process.env, SAL_USE_VCLPLUGIN: 'svp' },
       })
