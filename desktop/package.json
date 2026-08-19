@@ -1,0 +1,31 @@
+{
+  "name": "convertx-desktop",
+  "version": "1.0.0",
+  "description": "ConvertX - 71 free online tools desktop app",
+  "main": "main.js",
+  "author": "ConvertX",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --win portable"
+  },
+  "build": {
+    "appId": "com.convertx.desktop",
+    "productName": "ConvertX",
+    "files": [
+      "main.js",
+      "dist/**/*"
+    ],
+    "win": {
+      "target": "portable",
+      "icon": "build/icon.png"
+    },
+    "portable": {
+      "artifactName": "ConvertX-Setup.exe"
+    }
+  },
+  "devDependencies": {
+    "electron": "^31.0.0",
+    "electron-builder": "^24.13.3"
+  }
+}
