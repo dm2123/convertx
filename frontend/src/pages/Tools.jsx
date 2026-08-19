@@ -47,8 +47,8 @@ export default function Tools() {
   return (
     <div className="py-12">
       <SeoUpdater
-        title="All PDF & File Tools - 79+ Free Online Tools | ConvertX"
-        description="Browse all 79+ free online PDF and file tools at ConvertX. Compress, merge, split, convert, edit and secure your documents - no signup required."
+        title="All PDF & File Tools - 82+ Free Online Tools | ConvertX"
+        description="Browse all 82+ free online PDF and file tools at ConvertX. Compress, merge, split, convert, edit and secure your documents - no signup required."
         canonicalPath="/tools"
       />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -88,4 +88,5 @@ export default function Tools() {
     </div>
   )
 }
+
 

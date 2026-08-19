@@ -3,7 +3,7 @@ import { FileText, ArrowRightLeft, Shield, Sparkles, Zap, Globe, Heart, Users, P
 
 export default function About() {
   const stats = [
-    { num: '79', label: 'Professional Tools', icon: Zap },
+    { num: '82', label: 'Professional Tools', icon: Zap },
     { num: '5', label: 'Categories', icon: Globe },
     { num: '100%', label: 'Free to Use', icon: Heart },
     { num: '24/7', label: 'Always Available', icon: Users },
@@ -121,3 +121,4 @@ export default function About() {
     </div>
   )
 }
+

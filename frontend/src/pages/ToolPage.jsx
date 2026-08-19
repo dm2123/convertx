@@ -38,6 +38,9 @@ import PasswordGeneratorTool from '../tools/PasswordGeneratorTool'
 import JsonFormatterTool from '../tools/JsonFormatterTool'
 import Base64Tool from '../tools/Base64Tool'
 import AgeCalculatorTool from '../tools/AgeCalculatorTool'
+import PasswordStrengthTool from '../tools/PasswordStrengthTool'
+import HashGeneratorTool from '../tools/HashGeneratorTool'
+import FileEncryptorTool from '../tools/FileEncryptorTool'
 
 const toolComponents = {
   'compress-pdf': PdfCompressTool,
@@ -81,6 +84,9 @@ const toolComponents = {
   'json-formatter': JsonFormatterTool,
   'base64-encode-decode': Base64Tool,
   'age-calculator': AgeCalculatorTool,
+  'password-strength-checker': PasswordStrengthTool,
+  'hash-generator': HashGeneratorTool,
+  'file-encryptor': FileEncryptorTool,
 }
 
 function DefaultToolPage({ tool, extraFaqs = [], seoDescription }) {

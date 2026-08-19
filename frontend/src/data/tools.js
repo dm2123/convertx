@@ -96,10 +96,15 @@ const tools = [
   { id: 73, name: "Image Converter", slug: "image-converter", category: "Utilities", description: "Convert JPG, PNG, WebP images to any format instantly in your browser.", icon: "FileImage", implemented: true, clientSide: true },
   { id: 74, name: "Image Compressor", slug: "image-compressor", category: "Utilities", description: "Compress images online free - reduce JPG, PNG, WebP file size without losing quality.", icon: "Minimize2", implemented: true, clientSide: true },
   { id: 75, name: "Word Counter", slug: "word-counter", category: "Utilities", description: "Count words, characters, sentences and paragraphs in your text instantly.", icon: "Type", implemented: true, clientSide: true },
-  { id: 76, name: "Password Generator", slug: "password-generator", category: "Utilities", description: "Generate strong random passwords with custom length and character types.", icon: "Shield", implemented: true, clientSide: true },
+  { id: 76, name: "Password Generator", slug: "password-generator", category: "Security", description: "Generate strong random passwords with custom length and character types.", icon: "Shield", implemented: true, clientSide: true },
   { id: 77, name: "JSON Formatter", slug: "json-formatter", category: "Utilities", description: "Format, validate and minify JSON data online free.", icon: "Braces", implemented: true, clientSide: true },
   { id: 78, name: "Base64 Encoder/Decoder", slug: "base64-encode-decode", category: "Utilities", description: "Encode text to Base64 or decode Base64 to text instantly.", icon: "ArrowDownUp", implemented: true, clientSide: true },
   { id: 79, name: "Age Calculator", slug: "age-calculator", category: "Utilities", description: "Calculate exact age in years, months, days, weeks and hours online.", icon: "CalendarDays", implemented: true, clientSide: true },
+
+  // SECURITY (80-82)
+  { id: 80, name: "Password Strength Checker", slug: "password-strength-checker", category: "Security", description: "Check how strong your password is - score and improvement tips.", icon: "Shield", implemented: true, clientSide: true },
+  { id: 81, name: "Hash Generator", slug: "hash-generator", category: "Security", description: "Generate MD5, SHA1, SHA256, SHA512 hashes from any text instantly.", icon: "Hash", implemented: true, clientSide: true },
+  { id: 82, name: "File Encryptor", slug: "file-encryptor", category: "Security", description: "Encrypt and decrypt files with AES-256 - 100% browser-based, nothing uploaded.", icon: "Lock", implemented: true, clientSide: true },
 ]
 
 export const categories = ["All", "PDF", "Convert", "Edit", "Security", "AI", "Utilities"]
@@ -121,7 +126,7 @@ export const iconMap = {
   HelpCircle, Scan, Image, FileSpreadsheet, Presentation, FileCode,
   FileImage, File, FileType, FileOutput, ArrowRightLeft, Grid3X3,
   Maximize2, Minimize2, Eye, EyeOff, Lock, AlignLeft, QrCode, Braces,
-  Type, CalendarDays, ArrowDownUp
+  Type, CalendarDays, ArrowDownUp, Hash
 }
 
 export const getToolBySlug = (slug) => {

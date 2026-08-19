@@ -27,8 +27,8 @@ export default function Home() {
   return (
     <div>
       <SeoUpdater
-        title="ConvertX - 79+ Free Online File Tools | PDF Converter, Compressor & More"
-        description="Convert, compress, merge, split and edit PDFs and documents online for free. 79+ tools, no signup required, no watermarks."
+        title="ConvertX - 82+ Free Online File Tools | PDF Converter, Compressor & More"
+        description="Convert, compress, merge, split and edit PDFs and documents online for free. 82+ tools, no signup required, no watermarks."
         canonicalPath="/"
       />
       {/* Hero */}
@@ -42,7 +42,7 @@ export default function Home() {
           <div className="text-center max-w-3xl mx-auto">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-brand-100 dark:bg-brand-900/30 text-brand-700 dark:text-brand-300 rounded-full text-sm font-medium mb-6 animate-fade-in">
               <Zap className="w-4 h-4" />
-              79 Professional Tools
+              82 Professional Tools
             </div>
             <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 animate-slide-up">
               <span className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 dark:from-white dark:via-gray-100 dark:to-white bg-clip-text text-transparent">
@@ -70,7 +70,7 @@ export default function Home() {
 
           <div className="mt-16 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 max-w-4xl mx-auto">
             {[
-              { num: '79+', label: 'Tools' },
+              { num: '82+', label: 'Tools' },
               { num: '5', label: 'Categories' },
               { num: '100%', label: 'Free' },
               { num: '24/7', label: 'Available' },
@@ -111,7 +111,7 @@ export default function Home() {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Explore 79 Tools</h2>
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Explore 82 Tools</h2>
             <p className="text-gray-600 dark:text-gray-400 mb-8">
               Find the perfect tool for your document processing needs.
             </p>
@@ -172,4 +172,5 @@ export default function Home() {
     </div>
   )
 }
+
 

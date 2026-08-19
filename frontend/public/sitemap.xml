@@ -86,4 +86,7 @@
   <url><loc>https://convertx2026.netlify.app/tools/json-formatter</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://convertx2026.netlify.app/tools/base64-encode-decode</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://convertx2026.netlify.app/tools/age-calculator</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://convertx2026.netlify.app/tools/password-strength-checker</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://convertx2026.netlify.app/tools/hash-generator</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://convertx2026.netlify.app/tools/file-encryptor</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
 </urlset>

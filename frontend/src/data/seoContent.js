@@ -252,6 +252,39 @@ export const seoContent = {
       { q: 'Is my birth date stored?', a: 'No, everything is calculated in your browser - nothing is saved.' },
     ],
   },
+  'password-strength-checker': {
+    keywords: ['password strength checker', 'password check karo', 'strong password check', 'password kitna safe hai', 'password test'],
+    description: 'Free Password Strength Checker - test how strong your password is. Get a score out of 100 with tips to make it stronger.',
+    faqs: [
+      { q: 'How to check password strength?', a: 'Type your password and get an instant score out of 100 with specific improvement tips.' },
+      { q: 'What makes a password strong?', a: 'Length (12+), uppercase, lowercase, numbers and special characters all increase strength.' },
+      { q: 'Is my password saved anywhere?', a: 'No, everything is checked locally in your browser. Nothing is sent to any server.' },
+      { q: 'Is the password checker free?', a: 'Yes, unlimited use with no signup.' },
+      { q: 'Can I check others passwords too?', a: 'Yes, type any password to test its strength.' },
+    ],
+  },
+  'hash-generator': {
+    keywords: ['hash generator', 'md5 hash', 'sha256 generator', 'hash calculator', 'text ka hash nikalo'],
+    description: 'Free Hash Generator - generate MD5, SHA1, SHA256, SHA512 hashes from any text. Instant, accurate, 100% private.',
+    faqs: [
+      { q: 'What is a hash?', a: 'A hash is a unique fixed-length string generated from any text. Same text always produces the same hash.' },
+      { q: 'Which hash should I use?', a: 'SHA256 is recommended for most uses. MD5 is outdated but still common. SHA512 for extra security.' },
+      { q: 'Is my text stored when hashing?', a: 'No, hashing happens in your browser. Your text never leaves your device.' },
+      { q: 'Is the hash generator free?', a: 'Yes, unlimited hashing with no signup.' },
+      { q: 'Can I verify a hash?', a: 'Generate the hash of your text and compare it with the given hash.' },
+    ],
+  },
+  'file-encryptor': {
+    keywords: ['file encryptor', 'encrypt file online', 'aes encryption', 'file encrypt karo', 'password protect file'],
+    description: 'Free File Encryptor - encrypt and decrypt files with AES-256 encryption. 100% browser-based, nothing uploaded to any server.',
+    faqs: [
+      { q: 'How to encrypt a file?', a: 'Select your file, enter a strong password, click Encrypt, and download the encrypted .encrypted file.' },
+      { q: 'How secure is AES-256?', a: 'AES-256 is military-grade encryption used by banks and governments. Impossible to crack without the password.' },
+      { q: 'Is my file uploaded anywhere?', a: 'No! Encryption happens entirely in your browser. Your file never leaves your device.' },
+      { q: 'How to decrypt a file?', a: 'Select the .encrypted file, enter the same password, select Decrypt mode, and download the original file.' },
+      { q: 'Is file encryptor free?', a: 'Yes, unlimited encryption/decryption with no signup.' },
+    ],
+  },
 }
 
 export function getSeoForSlug(slug) {
