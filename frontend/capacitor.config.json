@@ -1,0 +1,8 @@
+{
+  "appId": "com.convertx.tools",
+  "appName": "ConvertX",
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "https"
+  }
+}
