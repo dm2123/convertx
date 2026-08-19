@@ -26,7 +26,8 @@
         }
       ],
       "icon": "build/icon.png",
-      "signAndEditExecutable": false
+      "signAndEditExecutable": false,
+      "artifactName": "ConvertX-Windows.zip"
     },
     "mac": {
       "target": [
@@ -36,7 +37,8 @@
         }
       ],
       "icon": "build/icon.png",
-      "category": "public.app-category.utilities"
+      "category": "public.app-category.utilities",
+      "artifactName": "ConvertX-macOS.dmg"
     },
     "linux": {
       "target": [
@@ -46,9 +48,9 @@
         }
       ],
       "icon": "build/icon.png",
-      "category": "Utility"
-    },
-    "artifactName": "ConvertX-${os}-${version}.${ext}"
+      "category": "Utility",
+      "artifactName": "ConvertX-Linux.AppImage"
+    }
   },
   "devDependencies": {
     "electron": "^31.0.0",
