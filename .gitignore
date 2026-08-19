@@ -18,3 +18,7 @@ Thumbs.db
 .vscode/
 .idea/
 frontend/android/app/build/
+convertx-release.keystore
+ConvertX-Android*.apk
+desktop/ConvertX-Windows*.zip
+desktop/ConvertX-Windows/
