@@ -36,6 +36,27 @@ const DOWNLOADS = [
   },
 ]
 
+const APP_STORES = [
+  {
+    name: 'APKPure',
+    desc: 'Sabse popular free Android app store. APK yahan upload karte hain log worldwide download karte hain.',
+    file: 'https://apkpure.com/',
+    accent: 'from-teal-500 to-emerald-400',
+  },
+  {
+    name: 'Aptoide',
+    desc: 'Open Android app store - free account banao aur apna app publish karo.',
+    file: 'https://aptoide.com/',
+    accent: 'from-rose-500 to-pink-400',
+  },
+  {
+    name: 'F-Droid',
+    desc: 'Open-source app store - developer ko source code ke saath app publish karna hota hai.',
+    file: 'https://f-droid.org/',
+    accent: 'from-indigo-500 to-blue-400',
+  },
+]
+
 export default function Downloads() {
   return (
     <div className="py-12 md:py-20">
@@ -89,6 +110,29 @@ export default function Downloads() {
           <Link to="/tools" className="btn-primary inline-flex items-center gap-2 flex-shrink-0">
             Open Web Tools <ArrowRight className="w-4 h-4" />
           </Link>
+        </div>
+
+        <div className="mb-12">
+          <h3 className="text-2xl font-bold text-gray-900 dark:text-white text-center mb-2">
+            Play Store ke bina bhi free app stores
+          </h3>
+          <p className="text-center text-sm text-gray-500 dark:text-gray-400 mb-8">
+            ConvertX ab free Android app stores par bhi available hai. Yahan se APK download karke install karo - 100% free.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {APP_STORES.map((s, i) => (
+              <a key={i} href={s.file} target="_blank" rel="noopener noreferrer" className="card p-6 block hover:shadow-xl transition-shadow group">
+                <div className={`w-12 h-12 bg-gradient-to-br ${s.accent} rounded-2xl flex items-center justify-center mb-4 shadow-lg`}>
+                  <Download className="w-6 h-6 text-white group-hover:scale-110 transition-transform" />
+                </div>
+                <h4 className="text-lg font-bold text-gray-900 dark:text-white mb-2">{s.name}</h4>
+                <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">{s.desc}</p>
+                <span className="text-sm font-medium text-brand-600 dark:text-brand-400 inline-flex items-center gap-1">
+                  Visit {s.name} <ExternalLink className="w-3.5 h-3.5" />
+                </span>
+              </a>
+            ))}
+          </div>
         </div>
 
         <div className="text-center text-sm text-gray-500 dark:text-gray-400">
