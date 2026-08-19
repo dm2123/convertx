@@ -12,18 +12,24 @@ const { PDFDocument, degrees, rgb, StandardFonts } = require('pdf-lib')
 const OFFICE_EXTS = ['.doc', '.docx', '.ppt', '.pptx', '.xls', '.xlsx', '.odt', '.ods', '.odp', '.rtf', '.txt', '.csv', '.epub']
 
 async function sofficeToPdf(inputPath, outDir) {
-  await execFileP('soffice', ['--headless', '--convert-to', 'pdf', '--outdir', outDir, inputPath], { timeout: 120000 })
+  let stderr = ''
+  try {
+    await execFileP('soffice', ['--headless', '--convert-to', 'pdf', '--outdir', outDir, inputPath], { timeout: 120000 })
+  } catch (e) { stderr = e.message }
   const base = path.basename(inputPath, path.extname(inputPath))
   const out = path.join(outDir, `${base}.pdf`)
-  if (!fs.existsSync(out)) throw new Error('LibreOffice conversion produced no output. Is LibreOffice installed?')
+  if (!fs.existsSync(out)) throw new Error(`LibreOffice conversion produced no output. ${stderr}`)
   return out
 }
 
 async function sofficeToDocx(inputPath, outDir) {
-  await execFileP('soffice', ['--headless', '--convert-to', 'docx', '--outdir', outDir, inputPath], { timeout: 120000 })
+  let stderr = ''
+  try {
+    await execFileP('soffice', ['--headless', '--infilter="writer_pdf_import"', '--convert-to', 'docx', '--outdir', outDir, inputPath], { timeout: 120000 })
+  } catch (e) { stderr = e.message }
   const base = path.basename(inputPath, path.extname(inputPath))
   const out = path.join(outDir, `${base}.docx`)
-  if (!fs.existsSync(out)) throw new Error('LibreOffice conversion produced no output.')
+  if (!fs.existsSync(out)) throw new Error(`LibreOffice conversion produced no output. ${stderr}`)
   return out
 }
 
