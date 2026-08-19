@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useTheme } from '../hooks/useTheme'
-import { Search, Sun, Moon, Menu, X, Zap } from 'lucide-react'
+import { Search, Sun, Moon, Menu, X } from 'lucide-react'
 
 export default function Header() {
   const { dark, toggle } = useTheme()
@@ -22,6 +22,7 @@ export default function Header() {
   const navLinks = [
     { to: '/', label: 'Home' },
     { to: '/tools', label: 'Tools' },
+    { to: '/downloads', label: 'Downloads' },
     { to: '/about', label: 'About' },
     { to: '/contact', label: 'Contact' },
   ]
@@ -30,10 +31,12 @@ export default function Header() {
     <header className="sticky top-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl border-b border-gray-200/50 dark:border-gray-800/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <Link to="/" className="flex items-center gap-2 group">
-            <div className="w-9 h-9 bg-gradient-to-br from-brand-500 to-brand-700 rounded-xl flex items-center justify-center shadow-lg shadow-brand-500/25 group-hover:shadow-brand-500/40 transition-shadow">
-              <Zap className="w-5 h-5 text-white" />
-            </div>
+          <Link to="/" className="flex items-center gap-2.5 group">
+            <img
+              src="/logo.svg"
+              alt="ConvertX logo"
+              className="w-9 h-9 rounded-xl shadow-lg shadow-brand-500/25 group-hover:shadow-brand-500/40 transition-shadow"
+            />
             <span className="text-xl font-bold bg-gradient-to-r from-brand-600 to-brand-500 dark:from-brand-400 dark:to-brand-300 bg-clip-text text-transparent">
               ConvertX
             </span>

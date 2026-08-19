@@ -5,6 +5,7 @@ import Footer from './components/Footer'
 import Home from './pages/Home'
 import Tools from './pages/Tools'
 import About from './pages/About'
+import Downloads from './pages/Downloads'
 import Contact from './pages/Contact'
 import Privacy from './pages/Privacy'
 import Terms from './pages/Terms'
@@ -26,6 +27,7 @@ function App() {
               <Route path="/tools" element={<Tools />} />
               <Route path="/tools/:slug" element={<ToolPage />} />
               <Route path="/about" element={<About />} />
+              <Route path="/downloads" element={<Downloads />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/terms" element={<Terms />} />

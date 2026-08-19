@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Zap, Github, Twitter } from 'lucide-react'
+import { Github, Instagram, Mail } from 'lucide-react'
 
 export default function Footer() {
   const toolCategories = [
@@ -11,6 +11,7 @@ export default function Footer() {
   ]
 
   const pages = [
+    { label: 'Downloads', to: '/downloads' },
     { label: 'About', to: '/about' },
     { label: 'Contact', to: '/contact' },
     { label: 'Privacy Policy', to: '/privacy' },
@@ -23,9 +24,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="md:col-span-1">
             <Link to="/" className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 bg-gradient-to-br from-brand-500 to-brand-700 rounded-xl flex items-center justify-center">
-                <Zap className="w-4 h-4 text-white" />
-              </div>
+              <img src="/logo.svg" alt="ConvertX logo" className="w-8 h-8 rounded-lg" />
               <span className="text-lg font-bold text-gray-900 dark:text-white">ConvertX</span>
             </Link>
             <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
@@ -79,11 +78,14 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} ConvertX by Dinesh Maurya. All rights reserved.
           </p>
           <div className="flex items-center gap-3">
-            <a href="#" className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors" aria-label="GitHub">
+            <a href="https://github.com/dm2123/convertx" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors" aria-label="GitHub">
               <Github className="w-5 h-5" />
             </a>
-            <a href="#" className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors" aria-label="Twitter">
-              <Twitter className="w-5 h-5" />
+            <a href="https://instagram.com/mr_dinesh_hacker" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors" aria-label="Instagram">
+              <Instagram className="w-5 h-5" />
+            </a>
+            <a href="mailto:dm7178072@gmail.com" className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors" aria-label="Email">
+              <Mail className="w-5 h-5" />
             </a>
           </div>
         </div>
