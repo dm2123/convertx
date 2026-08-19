@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom'
 import { Github, Instagram, Mail } from 'lucide-react'
+import { Capacitor } from '@capacitor/core'
 
 export default function Footer() {
+  const isApp = Capacitor.isNativePlatform()
   const toolCategories = [
     { label: 'PDF Tools', to: '/tools?category=PDF' },
     { label: 'Convert', to: '/tools?category=Convert' },
@@ -11,7 +13,7 @@ export default function Footer() {
   ]
 
   const pages = [
-    { label: 'Downloads', to: '/downloads' },
+    ...(!isApp ? [{ label: 'Downloads', to: '/downloads' }] : []),
     { label: 'About', to: '/about' },
     { label: 'Contact', to: '/contact' },
     { label: 'Privacy Policy', to: '/privacy' },

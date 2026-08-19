@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useTheme } from '../hooks/useTheme'
 import { Search, Sun, Moon, Menu, X } from 'lucide-react'
+import { Capacitor } from '@capacitor/core'
 
 export default function Header() {
   const { dark, toggle } = useTheme()
@@ -9,6 +10,7 @@ export default function Header() {
   const [searchOpen, setSearchOpen] = useState(false)
   const [query, setQuery] = useState('')
   const navigate = useNavigate()
+  const isApp = Capacitor.isNativePlatform()
 
   const handleSearch = (e) => {
     e.preventDefault()
@@ -22,7 +24,7 @@ export default function Header() {
   const navLinks = [
     { to: '/', label: 'Home' },
     { to: '/tools', label: 'Tools' },
-    { to: '/downloads', label: 'Downloads' },
+    ...(!isApp ? [{ to: '/downloads', label: 'Downloads' }] : []),
     { to: '/about', label: 'About' },
     { to: '/contact', label: 'Contact' },
   ]
