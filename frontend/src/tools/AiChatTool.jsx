@@ -48,7 +48,7 @@ export default function AiChatTool({ tool }) {
         formData.append('file', file)
         formData.append('question', question)
 
-        const response = await fetch('/api/ai/chat', {
+        const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/ai/chat`, {
           method: 'POST',
           body: formData,
         })

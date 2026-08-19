@@ -37,7 +37,7 @@ export default function AiSummarizerTool({ tool }) {
       setProgress(30)
       setStatus('Analyzing content with AI...')
 
-      const response = await fetch('/api/ai/summarize', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/ai/summarize`, {
         method: 'POST',
         body: formData,
       })

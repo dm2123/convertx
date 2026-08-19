@@ -38,7 +38,8 @@ export default function GenericConversionTool({ tool }) {
       setProgress(20)
       setStatus('Converting on server...')
 
-      const response = await fetch(`/api/convert/${tool.slug}`, {
+      const apiUrl = import.meta.env.VITE_API_URL || ''
+      const response = await fetch(`${apiUrl}/api/convert/${tool.slug}`, {
         method: 'POST',
         body: formData,
       })
