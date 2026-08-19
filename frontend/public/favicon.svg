@@ -5,12 +5,11 @@
       <stop offset="0.55" stop-color="#8b5cf6"/>
       <stop offset="1" stop-color="#ec4899"/>
     </linearGradient>
-    <marker id="ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
-      <path d="M 0 0 L 10 5 L 0 10 z" fill="#ffffff"/>
-    </marker>
   </defs>
   <rect x="2" y="2" width="60" height="60" rx="16" fill="url(#g)"/>
-  <path d="M 16 40 A 17.9 17.9 0 0 0 40 16" stroke="#ffffff" stroke-width="5.5" fill="none" stroke-linecap="round" marker-end="url(#ah)"/>
-  <path d="M 48 24 A 17.9 17.9 0 0 0 24 48" stroke="#ffffff" stroke-width="5.5" fill="none" stroke-linecap="round" marker-end="url(#ah)"/>
+  <path d="M 16 40 A 17.9 17.9 0 0 0 40 16" stroke="#ffffff" stroke-width="5.5" fill="none" stroke-linecap="round"/>
+  <path d="M 37 13 L 43 16 L 37 19" stroke="#ffffff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M 48 24 A 17.9 17.9 0 0 0 24 48" stroke="#ffffff" stroke-width="5.5" fill="none" stroke-linecap="round"/>
+  <path d="M 27 51 L 21 48 L 27 45" stroke="#ffffff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
   <path d="M 34.5 21 L 26.5 33.5 h 4.5 l -2.5 9.5 L 38.5 29.5 h -5 l 4 -8.5 z" fill="#ffffff"/>
 </svg>
