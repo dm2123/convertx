@@ -30,6 +30,14 @@ import HtmlToPdfTool from '../tools/HtmlToPdfTool'
 import GenericConversionTool from '../tools/GenericConversionTool'
 import AiChatTool from '../tools/AiChatTool'
 import AiSummarizerTool from '../tools/AiSummarizerTool'
+import QrCodeTool from '../tools/QrCodeTool'
+import ImageConverterTool from '../tools/ImageConverterTool'
+import ImageCompressorTool from '../tools/ImageCompressorTool'
+import WordCounterTool from '../tools/WordCounterTool'
+import PasswordGeneratorTool from '../tools/PasswordGeneratorTool'
+import JsonFormatterTool from '../tools/JsonFormatterTool'
+import Base64Tool from '../tools/Base64Tool'
+import AgeCalculatorTool from '../tools/AgeCalculatorTool'
 
 const toolComponents = {
   'compress-pdf': PdfCompressTool,
@@ -65,6 +73,14 @@ const toolComponents = {
   'ai-summarizer': AiSummarizerTool,
   'pdf-intelligence': AiSummarizerTool,
   'ai-question-generator': AiSummarizerTool,
+  'qr-code-generator': QrCodeTool,
+  'image-converter': ImageConverterTool,
+  'image-compressor': ImageCompressorTool,
+  'word-counter': WordCounterTool,
+  'password-generator': PasswordGeneratorTool,
+  'json-formatter': JsonFormatterTool,
+  'base64-encode-decode': Base64Tool,
+  'age-calculator': AgeCalculatorTool,
 }
 
 function DefaultToolPage({ tool, extraFaqs = [], seoDescription }) {
@@ -280,6 +296,22 @@ export default function ToolPage() {
     applicationCategory: 'UtilityApplication',
     operatingSystem: 'Any',
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    publisher: {
+      '@type': 'Organization',
+      name: 'ConvertX',
+      url: 'https://convertx2026.netlify.app',
+      logo: { '@type': 'ImageObject', url: 'https://convertx2026.netlify.app/logo.svg' },
+    },
+  }
+
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://convertx2026.netlify.app/' },
+      { '@type': 'ListItem', position: 2, name: 'Tools', item: 'https://convertx2026.netlify.app/tools' },
+      { '@type': 'ListItem', position: 3, name: tool.name, item: `https://convertx2026.netlify.app/tools/${slug}` },
+    ],
   }
 
   const ToolComponent = toolComponents[slug]
@@ -308,7 +340,7 @@ export default function ToolPage() {
   if (ToolComponent) {
     return (
       <>
-        <SeoUpdater title={seoTitle} description={seoDesc} canonicalPath={`/tools/${slug}`} jsonLd={jsonLd} keywords={seoKeywords} />
+        <SeoUpdater title={seoTitle} description={seoDesc} canonicalPath={`/tools/${slug}`} jsonLd={[jsonLd, breadcrumbJsonLd]} keywords={seoKeywords} />
         <ToolComponent tool={tool} />
       </>
     )
@@ -317,7 +349,7 @@ export default function ToolPage() {
   const extraFaqs = seo?.faqs || []
   return (
     <>
-      <SeoUpdater title={seoTitle} description={seoDesc} canonicalPath={`/tools/${slug}`} jsonLd={faqJsonLd} keywords={seoKeywords} />
+      <SeoUpdater title={seoTitle} description={seoDesc} canonicalPath={`/tools/${slug}`} jsonLd={[faqJsonLd, breadcrumbJsonLd]} keywords={seoKeywords} />
       <DefaultToolPage tool={tool} extraFaqs={extraFaqs} seoDescription={seo?.description} />
     </>
   )

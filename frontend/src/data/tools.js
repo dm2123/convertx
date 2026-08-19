@@ -5,7 +5,8 @@ import {
   Shield, Layers, GitCompare, Bot, MessageSquare, Sparkles, Languages,
   HelpCircle, Scan, Image, FileSpreadsheet, Presentation, FileCode,
   FileImage, File, FileType, FileOutput, ArrowRightLeft, Grid3X3,
-  Maximize2, Minimize2, Eye, EyeOff, Lock, AlignLeft
+  Maximize2, Minimize2, Eye, EyeOff, Lock, AlignLeft, QrCode, Braces,
+  Type, CalendarDays, ArrowDownUp
 } from 'lucide-react'
 
 const tools = [
@@ -89,9 +90,19 @@ const tools = [
   { id: 69, name: "Crop PDF", slug: "crop-pdf-2", category: "PDF", description: "Crop and resize PDF pages.", icon: "Crop", implemented: true, formats: [".pdf"], duplicateOf: 15 },
   { id: 70, name: "Edit PDF", slug: "edit-pdf-2", category: "PDF", description: "Edit text, images and content in your PDF.", icon: "Edit3", implemented: true, formats: [".pdf"], duplicateOf: 11 },
   { id: 71, name: "PDF Forms", slug: "pdf-forms-2", category: "PDF", description: "Create and manage interactive PDF forms.", icon: "FileCheck", implemented: true, formats: [".pdf"], duplicateOf: 19 },
+
+  // UTILITIES (72-79)
+  { id: 72, name: "QR Code Generator", slug: "qr-code-generator", category: "Utilities", description: "Generate QR codes for links, text, WiFi and more - free with custom colors.", icon: "QrCode", implemented: true, clientSide: true },
+  { id: 73, name: "Image Converter", slug: "image-converter", category: "Utilities", description: "Convert JPG, PNG, WebP images to any format instantly in your browser.", icon: "FileImage", implemented: true, clientSide: true },
+  { id: 74, name: "Image Compressor", slug: "image-compressor", category: "Utilities", description: "Compress images online free - reduce JPG, PNG, WebP file size without losing quality.", icon: "Minimize2", implemented: true, clientSide: true },
+  { id: 75, name: "Word Counter", slug: "word-counter", category: "Utilities", description: "Count words, characters, sentences and paragraphs in your text instantly.", icon: "Type", implemented: true, clientSide: true },
+  { id: 76, name: "Password Generator", slug: "password-generator", category: "Utilities", description: "Generate strong random passwords with custom length and character types.", icon: "Shield", implemented: true, clientSide: true },
+  { id: 77, name: "JSON Formatter", slug: "json-formatter", category: "Utilities", description: "Format, validate and minify JSON data online free.", icon: "Braces", implemented: true, clientSide: true },
+  { id: 78, name: "Base64 Encoder/Decoder", slug: "base64-encode-decode", category: "Utilities", description: "Encode text to Base64 or decode Base64 to text instantly.", icon: "ArrowDownUp", implemented: true, clientSide: true },
+  { id: 79, name: "Age Calculator", slug: "age-calculator", category: "Utilities", description: "Calculate exact age in years, months, days, weeks and hours online.", icon: "CalendarDays", implemented: true, clientSide: true },
 ]
 
-export const categories = ["All", "PDF", "Convert", "Edit", "Security", "AI"]
+export const categories = ["All", "PDF", "Convert", "Edit", "Security", "AI", "Utilities"]
 
 export const categoryColors = {
   PDF: { bg: "bg-blue-100 dark:bg-blue-900/30", text: "text-blue-700 dark:text-blue-300", border: "border-blue-200 dark:border-blue-800" },
@@ -99,6 +110,7 @@ export const categoryColors = {
   Edit: { bg: "bg-green-100 dark:bg-green-900/30", text: "text-green-700 dark:text-green-300", border: "border-green-200 dark:border-green-800" },
   Security: { bg: "bg-red-100 dark:bg-red-900/30", text: "text-red-700 dark:text-red-300", border: "border-red-200 dark:border-red-800" },
   AI: { bg: "bg-amber-100 dark:bg-amber-900/30", text: "text-amber-700 dark:text-amber-300", border: "border-amber-200 dark:border-amber-800" },
+  Utilities: { bg: "bg-teal-100 dark:bg-teal-900/30", text: "text-teal-700 dark:text-teal-300", border: "border-teal-200 dark:border-teal-800" },
 }
 
 export const iconMap = {
@@ -108,7 +120,8 @@ export const iconMap = {
   Shield, Layers, GitCompare, Bot, MessageSquare, Sparkles, Languages,
   HelpCircle, Scan, Image, FileSpreadsheet, Presentation, FileCode,
   FileImage, File, FileType, FileOutput, ArrowRightLeft, Grid3X3,
-  Maximize2, Minimize2, Eye, EyeOff, Lock, AlignLeft
+  Maximize2, Minimize2, Eye, EyeOff, Lock, AlignLeft, QrCode, Braces,
+  Type, CalendarDays, ArrowDownUp
 }
 
 export const getToolBySlug = (slug) => {

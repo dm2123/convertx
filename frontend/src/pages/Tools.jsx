@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+﻿import { useState, useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import tools, { searchTools, getToolsByCategory } from '../data/tools'
 import ToolCard from '../components/ToolCard'
@@ -47,8 +47,8 @@ export default function Tools() {
   return (
     <div className="py-12">
       <SeoUpdater
-        title="All PDF & File Tools - 71+ Free Online Tools | ConvertX"
-        description="Browse all 71+ free online PDF and file tools at ConvertX. Compress, merge, split, convert, edit and secure your documents - no signup required."
+        title="All PDF & File Tools - 79+ Free Online Tools | ConvertX"
+        description="Browse all 79+ free online PDF and file tools at ConvertX. Compress, merge, split, convert, edit and secure your documents - no signup required."
         canonicalPath="/tools"
       />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -78,7 +78,7 @@ export default function Tools() {
         ) : (
           <div className="text-center py-16">
             <div className="w-16 h-16 bg-gray-100 dark:bg-gray-800 rounded-2xl flex items-center justify-center mx-auto mb-4">
-              <span className="text-2xl">🔍</span>
+              <span className="text-2xl">ðŸ”</span>
             </div>
             <p className="text-lg font-medium text-gray-900 dark:text-white mb-2">No tools found</p>
             <p className="text-gray-500 dark:text-gray-400">Try a different search term or category.</p>
@@ -88,3 +88,4 @@ export default function Tools() {
     </div>
   )
 }
+

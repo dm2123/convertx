@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+﻿import { Link } from 'react-router-dom'
 import { Monitor, Apple, Terminal, Smartphone, Download, ExternalLink, Zap, ArrowRight } from 'lucide-react'
 
 const DOWNLOADS = [
@@ -29,7 +29,7 @@ const DOWNLOADS = [
   {
     os: 'Android',
     icon: Smartphone,
-    desc: 'Android 7+ ke liye APK. ConvertX app phone mein install karo - saare 71 tools mobile par.',
+    desc: 'Android 7+ ke liye APK. ConvertX app phone mein install karo - saare 79 tools mobile par.',
     file: 'https://github.com/dm2123/convertx/releases/latest/download/ConvertX-Android.apk',
     size: '~3.4 MB',
     accent: 'from-green-500 to-emerald-400',
@@ -48,7 +48,7 @@ export default function Downloads() {
             Download <span className="bg-gradient-to-r from-brand-600 via-purple-600 to-pink-500 bg-clip-text text-transparent">ConvertX</span>
           </h1>
           <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            Saare 71 tools ab desktop app aur mobile app ke roop mein bhi available hain.
+            saare 79 tools ab desktop app aur mobile app ke roop mein bhi available hain.
             Apne OS ke liye download karo - bilkul free, koi signup nahi.
           </p>
         </div>

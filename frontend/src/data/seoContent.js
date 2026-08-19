@@ -164,6 +164,94 @@ export const seoContent = {
       { q: 'Can I convert large text files?', a: 'Yes, large text files are handled without issues.' },
     ],
   },
+  'qr-code-generator': {
+    keywords: ['qr code generator', 'qr code banaye', 'free qr code generator online', 'qr code maker', 'whatsapp qr code'],
+    description: 'Free QR Code Generator online - make QR codes for links, text, WhatsApp and more. Custom colors and sizes, download PNG, no signup.',
+    faqs: [
+      { q: 'How to make a QR code free?', a: 'Enter your link or text, click Generate QR Code, and download the PNG instantly. 100% free.' },
+      { q: 'Can I customize QR code colors?', a: 'Yes, choose foreground and background colors to match your brand or design.' },
+      { q: 'Where can I use QR codes?', a: 'Print on business cards, posters, menus, WhatsApp stickers - anywhere people scan with their phone camera.' },
+      { q: 'Do QR codes expire?', a: 'No, generated QR codes work forever - they are just images.' },
+      { q: 'Is the QR code generator free?', a: 'Yes, unlimited free QR codes with no signup or watermark.' },
+    ],
+  },
+  'image-converter': {
+    keywords: ['image converter', 'jpg to png', 'png to jpg', 'webp to png', 'image format converter online'],
+    description: 'Free online Image Converter - convert JPG to PNG, PNG to JPG, WebP and more in your browser. No upload, no signup, 100% private.',
+    faqs: [
+      { q: 'How to convert image format online?', a: 'Select your image, choose the target format (PNG, JPG, WebP), and download the result.' },
+      { q: 'Does the image converter upload my files?', a: 'No! Everything happens in your browser. Your images never leave your device.' },
+      { q: 'Can I convert WebP to JPG?', a: 'Yes, WebP, JPG, PNG all supported formats.' },
+      { q: 'Is there a file size limit?', a: 'No limit - the conversion runs locally on your device.' },
+      { q: 'Can I control output quality?', a: 'Yes, adjust quality with the slider before converting.' },
+    ],
+  },
+  'image-compressor': {
+    keywords: ['image compressor', 'compress image online', 'reduce image size', 'jpg compressor', 'photo compress karne ka tarika'],
+    description: 'Compress images online free - reduce JPG, PNG and WebP file size up to 90% without visible quality loss. No upload, instant, unlimited.',
+    faqs: [
+      { q: 'How to compress an image online free?', a: 'Select your image, adjust compression level, and download the smaller file. Files are processed in your browser.' },
+      { q: 'How much can I reduce image size?', a: 'Usually 50-90% size reduction depending on the image and compression level.' },
+      { q: 'Does image compression lose quality?', a: 'Lower compression levels keep quality almost identical while reducing size significantly.' },
+      { q: 'Is my image uploaded to a server?', a: 'No, compression happens locally in your browser - your photos stay private.' },
+      { q: 'Can I compress multiple images?', a: 'Compress images one by one - unlimited images, completely free.' },
+    ],
+  },
+  'word-counter': {
+    keywords: ['word counter', 'word count tool', 'character counter', 'shabd ginti', 'essay word count'],
+    description: 'Free Word Counter - count words, characters, sentences and paragraphs instantly. Perfect for essays, assignments, tweets and SEO content.',
+    faqs: [
+      { q: 'How does the word counter work?', a: 'Type or paste your text and the counter updates live - words, characters, sentences and reading time.' },
+      { q: 'Is the word counter free?', a: 'Yes, unlimited use with no signup.' },
+      { q: 'Does it count characters without spaces?', a: 'Yes, both with and without spaces are shown.' },
+      { q: 'Can I use it for essay word limits?', a: 'Yes, perfect for checking your assignment or essay meets the required word count.' },
+      { q: 'Does my text get saved anywhere?', a: 'No, everything stays in your browser. Nothing is uploaded.' },
+    ],
+  },
+  'password-generator': {
+    keywords: ['password generator', 'strong password generator', 'random password', 'password banane ka tarika', 'secure password'],
+    description: 'Free strong Password Generator - create secure random passwords with letters, numbers and symbols. Custom length, instant, 100% private.',
+    faqs: [
+      { q: 'How to generate a strong password?', a: 'Choose length and character types, click Generate Password, and copy the result.' },
+      { q: 'Are generated passwords secure?', a: 'Yes, they use your browser cryptographic random generator - truly random and unpredictable.' },
+      { q: 'Why is a longer password better?', a: 'Each extra character makes the password exponentially harder to crack. 16+ characters is recommended.' },
+      { q: 'Does the tool save my passwords?', a: 'No, passwords are generated locally and never leave your device.' },
+      { q: 'Is the password generator free?', a: 'Yes, unlimited password generation with no signup.' },
+    ],
+  },
+  'json-formatter': {
+    keywords: ['json formatter', 'json pretty print', 'json validator', 'json format online', 'json minify'],
+    description: 'Free online JSON Formatter - format, validate and minify JSON data in seconds. Pretty print or compress your JSON instantly.',
+    faqs: [
+      { q: 'How to format JSON online?', a: 'Paste your JSON, click Format JSON, and get a clean readable output. Invalid JSON is detected automatically.' },
+      { q: 'Can I validate JSON?', a: 'Yes, the tool checks your JSON syntax and shows the exact error if invalid.' },
+      { q: 'What is JSON minify?', a: 'Minify removes all whitespace to compress JSON for storage or transfer.' },
+      { q: 'Is the JSON formatter free?', a: 'Yes, unlimited formatting with no signup.' },
+      { q: 'Is my JSON data safe?', a: 'Yes, everything is processed in your browser - nothing is uploaded.' },
+    ],
+  },
+  'base64-encode-decode': {
+    keywords: ['base64 encoder', 'base64 decoder', 'base64 decode online', 'text to base64', 'base64 converter'],
+    description: 'Free Base64 Encoder/Decoder online - convert text to Base64 and decode Base64 to text instantly. Simple, fast, 100% private.',
+    faqs: [
+      { q: 'What is Base64?', a: 'Base64 is a way to encode binary or text data into ASCII characters, often used for email and web data transfer.' },
+      { q: 'How to encode text to Base64?', a: 'Select Encode, paste your text, and click the button. Output is copied easily.' },
+      { q: 'How to decode Base64?', a: 'Select Decode, paste the Base64 string, and click the button to get plain text.' },
+      { q: 'Is the Base64 tool free?', a: 'Yes, unlimited encoding and decoding with no signup.' },
+      { q: 'Does it support Unicode text?', a: 'Yes, Unicode text like Hindi and emojis are fully supported.' },
+    ],
+  },
+  'age-calculator': {
+    keywords: ['age calculator', 'umar calculator', 'date of birth age', 'age calculator by date of birth', 'kitni umar hai'],
+    description: 'Free Age Calculator - find your exact age in years, months, days, weeks and hours from your date of birth. Instant results.',
+    faqs: [
+      { q: 'How to calculate age from date of birth?', a: 'Select your birth date and click Calculate Age - you get exact years, months and days.' },
+      { q: 'Does it show age in months and weeks?', a: 'Yes, total months, weeks, days and even hours are all displayed.' },
+      { q: 'Can I find my next birthday countdown?', a: 'Yes, the tool shows days remaining until your next birthday.' },
+      { q: 'Is the age calculator free?', a: 'Yes, unlimited use with no signup.' },
+      { q: 'Is my birth date stored?', a: 'No, everything is calculated in your browser - nothing is saved.' },
+    ],
+  },
 }
 
 export function getSeoForSlug(slug) {

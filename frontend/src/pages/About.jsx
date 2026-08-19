@@ -1,9 +1,9 @@
-import { Link } from 'react-router-dom'
+﻿import { Link } from 'react-router-dom'
 import { FileText, ArrowRightLeft, Shield, Sparkles, Zap, Globe, Heart, Users, Phone, Mail, Instagram, MessageCircle, ArrowRight } from 'lucide-react'
 
 export default function About() {
   const stats = [
-    { num: '71', label: 'Professional Tools', icon: Zap },
+    { num: '79', label: 'Professional Tools', icon: Zap },
     { num: '5', label: 'Categories', icon: Globe },
     { num: '100%', label: 'Free to Use', icon: Heart },
     { num: '24/7', label: 'Always Available', icon: Users },
