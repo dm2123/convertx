@@ -29,9 +29,15 @@ export default function ToolCard({ tool, index }) {
         <span className={`text-xs font-medium px-2.5 py-1 rounded-full ${colors.bg} ${colors.text}`}>
           {tool.category}
         </span>
-        <div className="flex items-center gap-1 text-sm font-medium text-brand-600 dark:text-brand-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          Open <ArrowRight className="w-4 h-4" />
-        </div>
+        {tool.comingSoon ? (
+          <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400">
+            Coming Soon
+          </span>
+        ) : (
+          <div className="flex items-center gap-1 text-sm font-medium text-brand-600 dark:text-brand-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            Open <ArrowRight className="w-4 h-4" />
+          </div>
+        )}
       </div>
     </Link>
   )

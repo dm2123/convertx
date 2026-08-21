@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { ThemeProvider } from './hooks/useTheme'
 import Header from './components/Header'
 import Footer from './components/Footer'
+import AppLayout from './components/AppLayout'
 import Home from './pages/Home'
 import Tools from './pages/Tools'
 import About from './pages/About'
@@ -13,28 +14,55 @@ import ToolPage from './pages/ToolPage'
 import ScrollToTop from './components/ScrollToTop'
 import AdBanner from './components/AdBanner'
 
+function AppContent() {
+  const isApp = typeof window !== 'undefined' && window.location?.protocol === 'capacitor:'
+
+  if (isApp) {
+    return (
+      <AppLayout>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/tools" element={<Tools />} />
+          <Route path="/tools/:slug" element={<ToolPage />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/downloads" element={<Downloads />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/terms" element={<Terms />} />
+        </Routes>
+      </AppLayout>
+    )
+  }
+
+  return (
+    <>
+      <Header />
+      <AdBanner slot="7783395864" />
+      <main className="flex-1">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/tools" element={<Tools />} />
+          <Route path="/tools/:slug" element={<ToolPage />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/downloads" element={<Downloads />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/terms" element={<Terms />} />
+        </Routes>
+      </main>
+      <AdBanner slot="5597000041" autorelaxed />
+      <Footer />
+    </>
+  )
+}
+
 function App() {
   return (
     <ThemeProvider>
       <Router>
         <ScrollToTop />
         <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 transition-colors duration-300">
-          <Header />
-          <AdBanner slot="7783395864" />
-          <main className="flex-1">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/tools" element={<Tools />} />
-              <Route path="/tools/:slug" element={<ToolPage />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/downloads" element={<Downloads />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/privacy" element={<Privacy />} />
-              <Route path="/terms" element={<Terms />} />
-            </Routes>
-          </main>
-          <AdBanner slot="5597000041" autorelaxed />
-          <Footer />
+          <AppContent />
         </div>
       </Router>
     </ThemeProvider>

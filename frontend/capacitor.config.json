@@ -3,6 +3,8 @@
   "appName": "ConvertX",
   "webDir": "dist",
   "server": {
-    "androidScheme": "https"
+    "androidScheme": "https",
+    "url": "https://convertx2026.netlify.app",
+    "cleartext": true
   }
 }

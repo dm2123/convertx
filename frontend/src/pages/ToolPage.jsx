@@ -2,7 +2,7 @@ import { useState, useCallback } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { getToolBySlug, iconMap, categoryColors } from '../data/tools'
 import { getSeoForSlug } from '../data/seoContent'
-import { ChevronRight, Home, AlertCircle } from 'lucide-react'
+import { ChevronRight, Home, AlertCircle, Clock, ArrowRight } from 'lucide-react'
 import SeoUpdater from '../components/SeoUpdater'
 import FileUploader from '../components/FileUploader'
 import ProgressBar from '../components/ProgressBar'
@@ -341,6 +341,45 @@ export default function ToolPage() {
         acceptedAnswer: { '@type': 'Answer', text: `${tool.name} supports ${tool.formats?.join(', ') || 'various formats'}. More formats are added regularly.` },
       },
     ],
+  }
+
+  if (tool.comingSoon) {
+    return (
+      <>
+        <SeoUpdater title={seoTitle} description={seoDesc} canonicalPath={`/tools/${slug}`} jsonLd={[jsonLd, breadcrumbJsonLd]} keywords={seoKeywords} />
+        <div className="py-12">
+          <div className="max-w-2xl mx-auto px-4 sm:px-6 text-center">
+            <nav className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-8">
+              <Link to="/" className="hover:text-brand-600 dark:hover:text-brand-400 transition-colors"><Home className="w-4 h-4" /></Link>
+              <ChevronRight className="w-4 h-4" />
+              <Link to="/tools" className="hover:text-brand-600 dark:hover:text-brand-400 transition-colors">Tools</Link>
+              <ChevronRight className="w-4 h-4" />
+              <span className="text-gray-900 dark:text-white">{tool.name}</span>
+            </nav>
+            <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 ${colors.bg}`}>
+              <Icon className={`w-8 h-8 ${colors.text}`} />
+            </div>
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-3">{tool.name}</h1>
+            <p className="text-gray-600 dark:text-gray-400 mb-8">{tool.description}</p>
+            <div className="card p-8 mb-8">
+              <div className="w-14 h-14 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center mx-auto mb-5">
+                <Clock className="w-7 h-7 text-amber-600 dark:text-amber-400" />
+              </div>
+              <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-3">Coming Soon</h2>
+              <p className="text-gray-500 dark:text-gray-400 mb-6 max-w-md mx-auto">
+                This tool is under development and will be available soon. We are working hard to bring you the best experience.
+              </p>
+              <Link
+                to="/tools"
+                className="inline-flex items-center gap-2 btn-primary"
+              >
+                Browse Other Tools <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </>
+    )
   }
 
   if (ToolComponent) {
