@@ -44,6 +44,7 @@ export default function Home() {
               <Zap className="w-4 h-4" />
               82 Professional Tools
             </div>
+            <p className="text-xs font-medium text-gray-400 dark:text-gray-500 mb-2 tracking-wide uppercase">by Maurya Software Technologies</p>
             <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 animate-slide-up">
               <span className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 dark:from-white dark:via-gray-100 dark:to-white bg-clip-text text-transparent">
                 Powerful File Tools.

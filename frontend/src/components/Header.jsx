@@ -39,9 +39,12 @@ export default function Header() {
               alt="ConvertX logo"
               className="w-9 h-9 rounded-xl shadow-lg shadow-brand-500/25 group-hover:shadow-brand-500/40 transition-shadow"
             />
-            <span className="text-xl font-bold bg-gradient-to-r from-brand-600 to-brand-500 dark:from-brand-400 dark:to-brand-300 bg-clip-text text-transparent">
-              ConvertX
-            </span>
+            <div className="flex flex-col">
+              <span className="text-xl font-bold bg-gradient-to-r from-brand-600 to-brand-500 dark:from-brand-400 dark:to-brand-300 bg-clip-text text-transparent leading-tight">
+                ConvertX
+              </span>
+              <span className="text-[9px] font-medium text-gray-400 dark:text-gray-500 leading-tight hidden sm:block">by Maurya Software Technologies</span>
+            </div>
           </Link>
 
           <nav className="hidden md:flex items-center gap-1">
