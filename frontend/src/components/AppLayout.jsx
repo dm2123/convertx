@@ -21,6 +21,7 @@ export default function AppLayout({ children }) {
               <Zap className="w-5 h-5 text-white" />
             </div>
             <span className="text-lg font-bold text-white tracking-tight">ConvertX</span>
+            <span className="text-[10px] text-white/60 -mt-1 hidden">by Maurya Software Technologies</span>
           </Link>
           <div className="flex items-center gap-2">
             <button

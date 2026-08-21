@@ -27,7 +27,7 @@ export default function About() {
             About <span className="bg-gradient-to-r from-brand-600 via-purple-600 to-pink-500 bg-clip-text text-transparent">ConvertX</span>
           </h1>
           <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            ConvertX is a multiple-file-tools platform created by <strong className="text-gray-900 dark:text-white">Dinesh Maurya</strong>.
+            ConvertX is a multiple-file-tools platform developed by <strong className="text-gray-900 dark:text-white">Maurya Software Technologies</strong>.
             Powerful, easy-to-use tools for processing, converting, and managing your documents - 100% free.
           </p>
         </div>
@@ -83,9 +83,9 @@ export default function About() {
           <div className="absolute -top-10 -right-10 w-48 h-48 bg-white/10 rounded-full" />
           <div className="absolute -bottom-16 -left-10 w-56 h-56 bg-white/10 rounded-full" />
           <div className="relative">
-            <h2 className="text-2xl md:text-3xl font-bold mb-2">Creator - Dinesh Maurya</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-2">Maurya Software Technologies</h2>
             <p className="text-white/85 mb-8 max-w-xl">
-              ConvertX was created by Dinesh Maurya with the vision of making professional file tools
+              ConvertX was developed by Maurya Software Technologies with the vision of making professional file tools
               accessible to everyone. Koi sawal, suggestion ya bug report ho toh bina jhijhak contact karo.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

@@ -77,7 +77,7 @@ export default function Footer() {
 
         <div className="mt-10 pt-8 border-t border-gray-200 dark:border-gray-800 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-sm text-gray-400 dark:text-gray-500">
-            &copy; {new Date().getFullYear()} ConvertX by Dinesh Maurya. All rights reserved.
+            &copy; {new Date().getFullYear()} ConvertX by Maurya Software Technologies. All rights reserved.
           </p>
           <div className="flex items-center gap-3">
             <a href="https://github.com/dm2123/convertx" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors" aria-label="GitHub">
