@@ -41,6 +41,17 @@ import AgeCalculatorTool from '../tools/AgeCalculatorTool'
 import PasswordStrengthTool from '../tools/PasswordStrengthTool'
 import HashGeneratorTool from '../tools/HashGeneratorTool'
 import FileEncryptorTool from '../tools/FileEncryptorTool'
+import OCRTool from '../tools/OCRTool'
+import AnnotateTool from '../tools/AnnotateTool'
+import FormFillerTool from '../tools/FormFillerTool'
+import CreateFormTool from '../tools/CreateFormTool'
+import SharePDFTool from '../tools/SharePDFTool'
+import SignPDFTool from '../tools/SignPDFTool'
+import RequestSignaturesTool from '../tools/RequestSignaturesTool'
+import TranslatePDFTool from '../tools/TranslatePDFTool'
+import ZipToPdfTool from '../tools/ZipToPdfTool'
+import HwpToPdfTool from '../tools/HwpToPdfTool'
+import PagesToPdfTool from '../tools/PagesToPdfTool'
 
 const toolComponents = {
   'compress-pdf': PdfCompressTool,
@@ -87,6 +98,21 @@ const toolComponents = {
   'password-strength-checker': PasswordStrengthTool,
   'hash-generator': HashGeneratorTool,
   'file-encryptor': FileEncryptorTool,
+  'ocr-pdf': OCRTool,
+  'pdf-annotator': AnnotateTool,
+  'pdf-form-filler': FormFillerTool,
+  'pdf-forms': CreateFormTool,
+  'pdf-forms-2': CreateFormTool,
+  'share-pdf': SharePDFTool,
+  'sign-pdf': SignPDFTool,
+  'request-signatures': RequestSignaturesTool,
+  'translate-pdf': TranslatePDFTool,
+  'zip-to-pdf': ZipToPdfTool,
+  'hwp-to-pdf': HwpToPdfTool,
+  'pages-to-pdf': PagesToPdfTool,
+  'pdf-to-powerpoint': GenericConversionTool,
+  'pdf-to-excel': GenericConversionTool,
+  'pdf-to-ppt': GenericConversionTool,
 }
 
 function DefaultToolPage({ tool, extraFaqs = [], seoDescription }) {

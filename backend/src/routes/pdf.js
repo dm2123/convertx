@@ -253,13 +253,56 @@ router.post('/:slug', upload.array('files', 20), async (req, res) => {
       return
     }
 
-    if (ext === '.pdf' && ['pdf-to-excel', 'pdf-to-powerpoint', 'pdf-to-ppt'].includes(slug)) {
-      req.files.forEach(f => cleanupFile(f.path))
-      fs.rmSync(outDir, { recursive: true, force: true })
-      return res.status(501).json({
-        error: `${slug} conversion is not available on the free server yet.`,
-        message: 'This conversion needs additional server software. Please try the DOCX converter instead.',
-      })
+    if (ext === '.pdf' && ['pdf-to-powerpoint', 'pdf-to-ppt'].includes(slug)) {
+      try {
+        const converted = await serial(async () => {
+          await execFileP('soffice', ['--headless', '--norestore', '--nolockcheck', '--nodefault', '--nologo', '--convert-to', 'pptx', '--outdir', outDir, firstFile.path], {
+            timeout: 120000,
+            env: { ...process.env, SAL_USE_VCLPLUGIN: 'svp' },
+          })
+          const base = path.basename(firstFile.path, '.pdf')
+          const out = path.join(outDir, `${base}.pptx`)
+          if (!fs.existsSync(out)) throw new Error('LibreOffice PPTX conversion produced no output.')
+          return out
+        })
+        const buf = fs.readFileSync(converted)
+        res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.presentationml.presentation')
+        res.setHeader('Content-Disposition', `attachment; filename="${path.basename(firstFile.originalname, '.pdf')}.pptx"`)
+        res.send(Buffer.from(buf))
+        req.files.forEach(f => cleanupFile(f.path))
+        fs.rmSync(outDir, { recursive: true, force: true })
+        return
+      } catch (e) {
+        req.files.forEach(f => cleanupFile(f.path))
+        fs.rmSync(outDir, { recursive: true, force: true })
+        return res.status(500).json({ error: 'PDF to PowerPoint conversion failed. ' + e.message })
+      }
+    }
+
+    if (ext === '.pdf' && slug === 'pdf-to-excel') {
+      try {
+        const docxPath = await serial(async () => {
+          await execFileP('soffice', ['--headless', '--norestore', '--nolockcheck', '--nodefault', '--nologo', '--convert-to', 'xlsx', '--outdir', outDir, firstFile.path], {
+            timeout: 120000,
+            env: { ...process.env, SAL_USE_VCLPLUGIN: 'svp' },
+          })
+          const base = path.basename(firstFile.path, '.pdf')
+          const out = path.join(outDir, `${base}.xlsx`)
+          if (!fs.existsSync(out)) throw new Error('LibreOffice XLSX conversion produced no output.')
+          return out
+        })
+        const buf = fs.readFileSync(docxPath)
+        res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+        res.setHeader('Content-Disposition', `attachment; filename="${path.basename(firstFile.originalname, '.pdf')}.xlsx"`)
+        res.send(Buffer.from(buf))
+        req.files.forEach(f => cleanupFile(f.path))
+        fs.rmSync(outDir, { recursive: true, force: true })
+        return
+      } catch (e) {
+        req.files.forEach(f => cleanupFile(f.path))
+        fs.rmSync(outDir, { recursive: true, force: true })
+        return res.status(500).json({ error: 'PDF to Excel conversion failed. ' + e.message })
+      }
     }
 
     const pdfa = require('pdf-lib')
