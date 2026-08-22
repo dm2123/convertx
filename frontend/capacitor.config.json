@@ -4,7 +4,7 @@
   "webDir": "dist",
   "server": {
     "androidScheme": "https",
-    "url": "https://convertx2026.netlify.app",
+    "url": "https://dm2123.github.io/convertx",
     "cleartext": true
   }
 }

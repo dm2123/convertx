@@ -323,7 +323,7 @@ export default function ToolPage() {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
     name: `${tool.name} - ConvertX`,
-    url: `https://convertx2026.netlify.app/tools/${slug}`,
+    url: `https://dm2123.github.io/convertx/tools/${slug}`,
     description: seoDesc,
     applicationCategory: 'UtilityApplication',
     operatingSystem: 'Any',
@@ -331,8 +331,8 @@ export default function ToolPage() {
     publisher: {
       '@type': 'Organization',
       name: 'ConvertX',
-      url: 'https://convertx2026.netlify.app',
-      logo: { '@type': 'ImageObject', url: 'https://convertx2026.netlify.app/logo.svg' },
+      url: 'https://dm2123.github.io/convertx',
+      logo: { '@type': 'ImageObject', url: 'https://dm2123.github.io/convertx/logo.svg' },
     },
   }
 
@@ -340,9 +340,9 @@ export default function ToolPage() {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://convertx2026.netlify.app/' },
-      { '@type': 'ListItem', position: 2, name: 'Tools', item: 'https://convertx2026.netlify.app/tools' },
-      { '@type': 'ListItem', position: 3, name: tool.name, item: `https://convertx2026.netlify.app/tools/${slug}` },
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://dm2123.github.io/convertx/' },
+      { '@type': 'ListItem', position: 2, name: 'Tools', item: 'https://dm2123.github.io/convertx/tools' },
+      { '@type': 'ListItem', position: 3, name: tool.name, item: `https://dm2123.github.io/convertx/tools/${slug}` },
     ],
   }
 

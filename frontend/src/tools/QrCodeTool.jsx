@@ -4,7 +4,7 @@ import { Download, RefreshCw, QrCode } from 'lucide-react'
 import FaqSection from '../components/FaqSection'
 
 export default function QrCodeTool({ tool }) {
-  const [text, setText] = useState('https://convertx2026.netlify.app')
+  const [text, setText] = useState('https://dm2123.github.io/convertx')
   const [size, setSize] = useState(300)
   const [fg, setFg] = useState('#111827')
   const [bg, setBg] = useState('#ffffff')

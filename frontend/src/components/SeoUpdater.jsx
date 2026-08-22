@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-const SITE = 'https://convertx2026.netlify.app'
+const SITE = 'https://dm2123.github.io/convertx'
 
 export default function SeoUpdater({ title, description, canonicalPath, jsonLd, keywords }) {
   useEffect(() => {
