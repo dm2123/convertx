@@ -2,10 +2,12 @@
   "name": "convertx-backend",
   "version": "1.0.0",
   "description": "ConvertX Backend API",
-  "main": "src/server.js",
+  "main": "dist/server.js",
   "scripts": {
-    "start": "node src/server.js",
-    "dev": "node --watch src/server.js"
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "dev": "ts-node src/server.ts",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -16,5 +18,15 @@
     "multer": "^1.4.5-lts.1",
     "pdf-lib": "^1.17.1",
     "uuid": "^10.0.0"
+  },
+  "devDependencies": {
+    "@types/cors": "latest",
+    "@types/express": "latest",
+    "@types/express-rate-limit": "latest",
+    "@types/multer": "latest",
+    "@types/node": "latest",
+    "@types/uuid": "^11.0.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.0"
   }
 }
