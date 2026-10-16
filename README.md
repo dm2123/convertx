@@ -129,3 +129,4 @@ The registry (`frontend/src/data/tools.ts`) holds **82 entries**: **76 unique to
 ## License
 
 All rights reserved — ConvertX.
+
