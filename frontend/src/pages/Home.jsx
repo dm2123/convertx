@@ -1,6 +1,6 @@
-﻿import { useState } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight, Zap, Shield, Sparkles, FileText, ArrowRightLeft, Layers } from 'lucide-react'
+import { ArrowRight, Zap, Shield, Gauge, MonitorSmartphone, Search } from 'lucide-react'
 import tools, { categories, searchTools, getToolsByCategory } from '../data/tools'
 import ToolCard from '../components/ToolCard'
 import SearchBar from '../components/SearchBar'
@@ -15,116 +15,98 @@ export default function Home() {
     ? searchTools(query)
     : getToolsByCategory(category)
 
+  const scrollToTools = () => {
+    document.getElementById('tools')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+
+  const pickCategory = (cat) => {
+    setCategory(cat)
+    setQuery('')
+    scrollToTools()
+  }
+
   const features = [
-    { icon: FileText, title: 'PDF Tools', desc: 'Compress, merge, split, edit and manage your PDF files with ease.' },
-    { icon: ArrowRightLeft, title: 'File Conversion', desc: 'Convert between PDF, Word, Excel, PowerPoint, images and more.' },
-    { icon: Shield, title: 'Security', desc: 'Protect, encrypt and digitally sign your documents securely.' },
-    { icon: Sparkles, title: 'AI Powered', desc: 'Summarize, chat and analyze documents with AI assistance.' },
-    { icon: Layers, title: 'Batch Processing', desc: 'Process multiple files simultaneously for maximum efficiency.' },
-    { icon: Zap, title: 'Lightning Fast', desc: 'Optimized processing engine for instant results in your browser.' },
+    { icon: Shield, title: 'Clear, focused workflow', desc: 'Simple controls keep each task easy to understand from the first click.' },
+    { icon: Gauge, title: 'Fast to navigate', desc: 'Search and category filters bring the right tool into view instantly.' },
+    { icon: MonitorSmartphone, title: 'Designed for every screen', desc: 'The workspace adapts cleanly across desktop, tablet and mobile.' },
   ]
 
   return (
     <div>
       <SeoUpdater
-        title="ConvertX - 82+ Free Online File Tools | PDF Converter, Compressor & More"
-        description="Convert, compress, merge, split and edit PDFs and documents online for free. 82+ tools, no signup required, no watermarks."
+        title="ConvertX - 82 Free Online File Tools | PDF Converter, Compressor & More"
+        description="Every file tool you need in one place. Merge, split, compress, convert and secure PDFs and documents online for free. 82 tools, no signup required."
         canonicalPath="/"
       />
+
       {/* Hero */}
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-brand-50 via-white to-purple-50 dark:from-gray-950 dark:via-gray-900 dark:to-brand-950/20" />
-        <div className="absolute inset-0">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-brand-400/20 dark:bg-brand-600/10 rounded-full blur-3xl" />
-          <div className="absolute bottom-10 right-10 w-96 h-96 bg-purple-400/20 dark:bg-purple-600/10 rounded-full blur-3xl" />
+        <div className="absolute inset-0 bg-gradient-to-b from-brand-50/70 via-white to-white dark:from-brand-950/20 dark:via-gray-950 dark:to-gray-950" />
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[560px] h-[560px] bg-brand-400/10 dark:bg-brand-600/10 rounded-full blur-3xl" />
         </div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
-          <div className="text-center max-w-3xl mx-auto">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-brand-100 dark:bg-brand-900/30 text-brand-700 dark:text-brand-300 rounded-full text-sm font-medium mb-6 animate-fade-in">
-              <Zap className="w-4 h-4" />
-              82 Professional Tools
-            </div>
-            <p className="text-xs font-medium text-gray-400 dark:text-gray-500 mb-2 tracking-wide uppercase">by Maurya Software Technologies</p>
-            <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 animate-slide-up">
-              <span className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 dark:from-white dark:via-gray-100 dark:to-white bg-clip-text text-transparent">
-                Powerful File Tools.
-              </span>
-              <br />
-              <span className="bg-gradient-to-r from-brand-600 to-purple-600 dark:from-brand-400 dark:to-purple-400 bg-clip-text text-transparent">
-                One Simple Platform.
-              </span>
-            </h1>
-            <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto animate-slide-up">
-              Convert, compress, edit, organize and manage your documents with ConvertX.
-              Everything you need for document processing in one place.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-slide-up">
-              <Link to="/tools" className="btn-primary flex items-center gap-2 text-base">
-                Explore All Tools
-                <ArrowRight className="w-5 h-5" />
-              </Link>
-              <Link to="/about" className="btn-secondary flex items-center gap-2 text-base">
-                Learn More
-              </Link>
-            </div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 md:pt-28 pb-14 md:pb-20 text-center">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-brand-100 dark:bg-brand-900/30 text-brand-700 dark:text-brand-300 rounded-full text-sm font-medium mb-6">
+            <Zap className="w-4 h-4" />
+            82 Professional Tools — 100% Free
+          </div>
+          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-5 max-w-3xl mx-auto text-gray-900 dark:text-white">
+            Every file tool you need,{' '}
+            <span className="bg-gradient-to-r from-brand-600 to-purple-600 dark:from-brand-400 dark:to-purple-400 bg-clip-text text-transparent">
+              in one place
+            </span>
+          </h1>
+          <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400 mb-9 max-w-2xl mx-auto">
+            Merge, split, compress, convert and secure your files with just a few clicks.
+            All tools are free and easy to use.
+          </p>
+
+          <div className="max-w-xl mx-auto" onFocus={scrollToTools}>
+            <SearchBar
+              value={query}
+              onChange={setQuery}
+              placeholder="What do you want to do with your file?"
+            />
           </div>
 
-          <div className="mt-16 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 max-w-4xl mx-auto">
-            {[
-              { num: '82+', label: 'Tools' },
-              { num: '5', label: 'Categories' },
-              { num: '100%', label: 'Free' },
-              { num: '24/7', label: 'Available' },
-            ].map((stat, i) => (
-              <div key={i} className="text-center p-4 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-200/50 dark:border-gray-700/50">
-                <div className="text-2xl font-bold text-brand-600 dark:text-brand-400">{stat.num}</div>
-                <div className="text-sm text-gray-500 dark:text-gray-400">{stat.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Features */}
-      <section className="py-20 bg-white dark:bg-gray-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Everything You Need</h2>
-            <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-              A complete suite of file processing tools designed for professionals and everyday users alike.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {features.map((f, i) => (
-              <div key={i} className="card p-6 hover:-translate-y-1 group">
-                <div className="w-12 h-12 bg-brand-100 dark:bg-brand-900/30 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                  <f.icon className="w-6 h-6 text-brand-600 dark:text-brand-400" />
-                </div>
-                <h3 className="font-semibold text-gray-900 dark:text-white mb-2">{f.title}</h3>
-                <p className="text-sm text-gray-500 dark:text-gray-400">{f.desc}</p>
-              </div>
+          <div className="mt-6 flex flex-wrap justify-center gap-2">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => pickCategory(cat)}
+                className={`px-4 py-2 rounded-full text-sm font-medium border transition-all duration-200 ${
+                  category === cat && !query
+                    ? 'bg-brand-600 border-brand-600 text-white shadow-md shadow-brand-600/25'
+                    : 'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:border-brand-300 dark:hover:border-brand-700 hover:text-brand-600 dark:hover:text-brand-400'
+                }`}
+              >
+                {cat}
+              </button>
             ))}
           </div>
         </div>
       </section>
 
       {/* Tools Directory */}
-      <section className="py-20">
+      <section id="tools" className="py-14 md:py-20 scroll-mt-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-10">
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Explore 82 Tools</h2>
-            <p className="text-gray-600 dark:text-gray-400 mb-8">
-              Find the perfect tool for your document processing needs.
-            </p>
-            <div className="max-w-xl mx-auto mb-6">
-              <SearchBar value={query} onChange={setQuery} placeholder="Search tools... (e.g., PDF, compress, merge)" />
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
+            <div>
+              <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-gray-900 dark:text-white">
+                Popular tools
+              </h2>
+              <p className="text-gray-600 dark:text-gray-400 mt-2">
+                Pick a task and get straight to work.
+              </p>
             </div>
-            <CategoryFilter selected={category} onSelect={(c) => { setCategory(c); setQuery('') }} />
+            <div className="text-sm text-gray-500 dark:text-gray-400 whitespace-nowrap">
+              {displayTools.length} tool{displayTools.length !== 1 ? 's' : ''}
+              {query && <span> for &ldquo;{query}&rdquo;</span>}
+            </div>
           </div>
 
-          <div className="mt-8 mb-4 text-sm text-gray-500 dark:text-gray-400 text-center">
-            Showing {displayTools.length} tool{displayTools.length !== 1 ? 's' : ''}
-            {query && <span> for "{query}"</span>}
+          <div className="mb-8">
+            <CategoryFilter selected={category} onSelect={(c) => { setCategory(c); setQuery('') }} />
           </div>
 
           {displayTools.length > 0 ? (
@@ -134,16 +116,16 @@ export default function Home() {
               ))}
             </div>
           ) : (
-            <div className="text-center py-16">
+            <div className="text-center py-16 border border-dashed border-gray-200 dark:border-gray-700 rounded-2xl">
               <div className="w-16 h-16 bg-gray-100 dark:bg-gray-800 rounded-2xl flex items-center justify-center mx-auto mb-4">
                 <Search className="w-8 h-8 text-gray-400" />
               </div>
               <p className="text-lg font-medium text-gray-900 dark:text-white mb-2">No tools found</p>
-              <p className="text-gray-500 dark:text-gray-400">Try a different search term or category.</p>
+              <p className="text-gray-500 dark:text-gray-400">Try a shorter search such as &ldquo;PDF&rdquo;, &ldquo;image&rdquo; or &ldquo;password&rdquo;.</p>
             </div>
           )}
 
-          <div className="text-center mt-10">
+          <div className="text-center mt-12">
             <Link to="/tools" className="btn-primary inline-flex items-center gap-2">
               View All Tools <ArrowRight className="w-5 h-5" />
             </Link>
@@ -151,21 +133,35 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-20 bg-gradient-to-br from-brand-600 to-brand-800 relative overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
-          <div className="absolute bottom-0 left-0 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl translate-y-1/2 -translate-x-1/3" />
+      {/* Feature band */}
+      <section className="border-y border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3">
+          {features.map((f, i) => (
+            <div
+              key={i}
+              className={`py-10 md:py-12 px-2 md:px-8 flex gap-4 ${i > 0 ? 'md:border-l border-gray-200 dark:border-gray-800 border-t md:border-t-0' : ''}`}
+            >
+              <f.icon className="w-6 h-6 text-brand-600 dark:text-brand-400 shrink-0 mt-0.5" />
+              <div>
+                <h3 className="font-semibold text-gray-900 dark:text-white mb-1.5">{f.title}</h3>
+                <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">{f.desc}</p>
+              </div>
+            </div>
+          ))}
         </div>
-        <div className="relative max-w-4xl mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            Ready to Transform Your Workflow?
+      </section>
+
+      {/* CTA */}
+      <section className="py-20">
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-gray-900 dark:text-white mb-4">
+            Find your next tool
           </h2>
-          <p className="text-lg text-brand-100 mb-8 max-w-2xl mx-auto">
-            Start using ConvertX today and experience the power of professional file tools.
+          <p className="text-lg text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto">
+            Browse the complete collection by category, or search for the exact task you have in mind.
           </p>
-          <Link to="/tools" className="inline-flex items-center gap-2 bg-white text-brand-700 px-8 py-4 rounded-xl font-semibold hover:bg-brand-50 transition-all duration-200 hover:shadow-xl active:scale-[0.98]">
-            Get Started Free
+          <Link to="/tools" className="btn-primary inline-flex items-center gap-2 text-base">
+            Browse All Tools
             <ArrowRight className="w-5 h-5" />
           </Link>
         </div>
@@ -173,5 +169,3 @@ export default function Home() {
     </div>
   )
 }
-
-
